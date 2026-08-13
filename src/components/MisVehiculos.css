@@ -1,0 +1,248 @@
+
+.garaje-layout {
+    min-height: 100vh;
+    background: 
+        linear-gradient(135deg, rgba(10, 10, 10, 0.95) 0%, rgba(20, 20, 20, 0.98) 100%),
+        url('https://images.unsplash.com/photo-1610647752706-3bb12232b3ab?q=80&w=1920&auto=format&fit=crop') center center / cover fixed;
+    color: #fff;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    padding-bottom: 50px;
+}
+
+/* Navbar del Garaje */
+.garaje-nav {
+    padding: 20px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(10, 10, 10, 0.85);
+    backdrop-filter: blur(15px);
+    border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.btn-nav {
+    background: transparent;
+    border: 1px solid #D4AF37;
+    color: #D4AF37;
+    padding: 8px 20px;
+    border-radius: 20px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+}
+
+.btn-nav:hover {
+    background: #D4AF37;
+    color: #000;
+    box-shadow: 0 0 15px rgba(212, 175, 55, 0.3);
+}
+
+.btn-nav-primary {
+    background: linear-gradient(135deg, #D4AF37 0%, #aa8822 100%);
+    color: #000;
+    border: none;
+}
+
+.btn-nav-primary:hover {
+    background: #fff;
+    transform: translateY(-2px);
+}
+
+/* Encabezado */
+.garaje-header {
+    text-align: center;
+    padding: 40px 20px;
+    animation: fadeInDown 0.6s ease-out;
+}
+
+.garaje-title {
+    color: #D4AF37;
+    font-size: 2.8rem;
+    font-weight: 800;
+    letter-spacing: 2px;
+    text-shadow: 0 0 20px rgba(212, 175, 55, 0.3);
+}
+
+/* Cuadrícula de Vehículos */
+.vehiculos-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 30px;
+    padding: 0 40px;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+/* Tarjeta Individual del Vehículo */
+.vehiculo-card {
+    background: rgba(25, 25, 25, 0.6);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border: 1px solid rgba(212, 175, 55, 0.15);
+    border-radius: 20px;
+    padding: 25px;
+    transition: all 0.4s ease;
+    position: relative;
+    overflow: hidden;
+    animation: fadeInUp 0.5s ease-out;
+}
+
+.vehiculo-card:hover {
+    transform: translateY(-10px);
+    border-color: rgba(212, 175, 55, 0.6);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.8), 0 0 20px rgba(212, 175, 55, 0.2);
+    background: rgba(30, 30, 30, 0.8);
+}
+
+/* Ícono de fondo (Marca de agua) */
+.vehiculo-watermark {
+    position: absolute;
+    top: -20px;
+    right: -20px;
+    font-size: 8rem;
+    opacity: 0.05;
+    transform: rotate(-15deg);
+    transition: all 0.4s ease;
+}
+
+.vehiculo-card:hover .vehiculo-watermark {
+    opacity: 0.15;
+    transform: rotate(0deg) scale(1.1);
+}
+
+/* Contenido de la Tarjeta */
+.vehiculo-tipo-badge {
+    display: inline-block;
+    background: rgba(212, 175, 55, 0.1);
+    color: #D4AF37;
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: bold;
+    border: 1px solid rgba(212, 175, 55, 0.3);
+    margin-bottom: 15px;
+}
+
+.vehiculo-alias {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #fff;
+    margin-bottom: 5px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.vehiculo-modelo {
+    color: #a0a0a0;
+    font-size: 1rem;
+    margin-bottom: 20px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    padding-bottom: 15px;
+}
+
+.vehiculo-detalles {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+    margin-bottom: 25px;
+}
+
+.detalle-item {
+    display: flex;
+    flex-direction: column;
+}
+
+.detalle-label {
+    font-size: 0.75rem;
+    color: #777;
+    text-transform: uppercase;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
+.detalle-valor {
+    font-size: 1.1rem;
+    color: #fff;
+    font-weight: 600;
+}
+
+.placa-box {
+    background: rgba(0, 0, 0, 0.5);
+    border: 2px dashed #D4AF37;
+    text-align: center;
+    padding: 8px;
+    border-radius: 8px;
+    font-size: 1.2rem;
+    letter-spacing: 2px;
+    font-weight: bold;
+    color: #D4AF37;
+}
+
+/* Botones de Acción */
+.vehiculo-acciones {
+    display: flex;
+    gap: 10px;
+}
+
+.btn-accion {
+    flex: 1;
+    padding: 10px;
+    border-radius: 10px;
+    border: none;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 0.9rem;
+}
+
+.btn-mantenimiento {
+    background: rgba(212, 175, 55, 0.15);
+    color: #D4AF37;
+    border: 1px solid rgba(212, 175, 55, 0.3);
+}
+
+.btn-mantenimiento:hover {
+    background: #D4AF37;
+    color: #000;
+}
+
+/* Estado Vacío (Sin vehículos) */
+.empty-state {
+    text-align: center;
+    padding: 80px 20px;
+    background: rgba(20, 20, 20, 0.6);
+    border: 1px dashed rgba(212, 175, 55, 0.4);
+    border-radius: 20px;
+    max-width: 600px;
+    margin: 40px auto;
+    backdrop-filter: blur(10px);
+}
+
+.empty-icon {
+    font-size: 5rem;
+    margin-bottom: 20px;
+    filter: grayscale(100%) opacity(0.5);
+}
+
+/* Animaciones */
+@keyframes fadeInDown {
+    from { opacity: 0; transform: translateY(-30px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Responsivo */
+@media (max-width: 768px) {
+    .vehiculos-grid { padding: 0 20px; }
+    .garaje-nav { padding: 15px 20px; }
+    .garaje-title { font-size: 2.2rem; }
+}

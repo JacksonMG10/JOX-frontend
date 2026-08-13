@@ -1,0 +1,108 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+.introduccion {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background:
+        radial-gradient(circle at top left, #1e3a8a, transparent 35%),
+        radial-gradient(circle at bottom right, #312e81, transparent 35%),
+        #050816;
+    color: white;
+    font-family: Arial, sans-serif;
+    padding: 30px;
+}
+
+.introduccion-contenido {
+    width: 100%;
+    max-width: 750px;
+    text-align: center;
+}
+
+.logo {
+    font-size: 64px;
+    font-weight: 900;
+    letter-spacing: 8px;
+    margin-bottom: 35px;
+}
+
+.introduccion h1 {
+    font-size: clamp(40px, 7vw, 72px);
+    line-height: 1.1;
+    margin-bottom: 25px;
+}
+
+.introduccion h1 span {
+    display: block;
+    color: #60a5fa;
+}
+
+.introduccion p {
+    max-width: 600px;
+    margin: 0 auto 40px;
+    color: #aeb8cc;
+    font-size: 18px;
+    line-height: 1.7;
+}
+
+.botones {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.btn {
+    border: none;
+    padding: 15px 30px;
+    border-radius: 12px;
+    font-size: 15px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.25s;
+}
+
+.btn-principal {
+    background: #2563eb;
+    color: white;
+}
+
+.btn-principal:hover {
+    background: #3b82f6;
+    transform: translateY(-2px);
+}
+
+.btn-secundario {
+    background: transparent;
+    color: white;
+    border: 1px solid #475569;
+}
+
+.btn-secundario:hover {
+    background: rgba(255, 255, 255, 0.08);
+    transform: translateY(-2px);
+}
+
+@media (max-width: 600px) {
+
+    .logo {
+        font-size: 48px;
+    }
+
+    .introduccion p {
+        font-size: 16px;
+    }
+
+    .botones {
+        flex-direction: column;
+    }
+
+    .btn {
+        width: 100%;
+    }
+}

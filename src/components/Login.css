@@ -1,0 +1,103 @@
+.login-layout {
+    min-height: 100vh;
+    /* Fondo con imagen de Moto (City Night Style) */
+    background: 
+        linear-gradient(135deg, rgba(0, 0, 0, 0.85) 0%, rgba(20, 20, 20, 0.9) 100%),
+        url('https://images.unsplash.com/photo-1599819811279-d5ad9cccf838?q=80&w=1920&auto=format&fit=crop') center center / cover fixed;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+/* Tarjeta de cristal */
+.login-card {
+    background: rgba(25, 25, 25, 0.7);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border: 1px solid rgba(212, 175, 55, 0.2);
+    border-radius: 20px;
+    padding: 50px 40px;
+    width: 100%;
+    max-width: 420px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.7);
+    text-align: center;
+    animation: fadeIn 0.8s ease-out;
+}
+
+.login-subtitle {
+    color: #a0a0a0;
+    font-size: 0.85rem;
+    margin-top: -10px;
+    margin-bottom: 30px;
+}
+
+/* Grupos de Input */
+.login-input-group {
+    margin-bottom: 25px;
+    text-align: left;
+}
+
+.login-label {
+    display: block;
+    color: #D4AF37;
+    font-weight: 700;
+    font-size: 0.75rem;
+    letter-spacing: 1.2px;
+    margin-bottom: 8px;
+    text-transform: uppercase;
+}
+
+.login-input {
+    width: 100%;
+    background: rgba(0, 0, 0, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    padding: 14px;
+    color: #fff;
+    transition: all 0.3s ease;
+}
+
+.login-input:focus {
+    outline: none;
+    border-color: #D4AF37;
+    background: rgba(0, 0, 0, 0.6);
+    box-shadow: 0 0 10px rgba(212, 175, 55, 0.2);
+}
+
+/* Botón Premium */
+.btn-login {
+    width: 100%;
+    background: linear-gradient(135deg, #D4AF37 0%, #aa8822 100%);
+    color: #000;
+    border: none;
+    padding: 16px;
+    border-radius: 10px;
+    font-weight: 800;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 10px;
+}
+
+.btn-login:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(212, 175, 55, 0.4);
+}
+
+.login-link {
+    color: #D4AF37;
+    text-decoration: none;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.login-link:hover {
+    color: #fff;
+    text-shadow: 0 0 8px rgba(212, 175, 55, 0.5);
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}

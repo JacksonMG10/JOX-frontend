@@ -1,0 +1,167 @@
+/* =========================================================
+   ESTILOS REGISTRO DE VEHÍCULOS
+   ========================================================= */
+
+   .reg-vehiculo-layout {
+    min-height: 100vh;
+    background: 
+        linear-gradient(135deg, rgba(10, 10, 10, 0.96) 0%, rgba(20, 20, 20, 0.98) 100%),
+        url('https://images.unsplash.com/photo-1486467562984-7f415383792d?q=80&w=1920&auto=format&fit=crop') center center / cover fixed;
+    color: #fff;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Nav del formulario */
+.reg-nav {
+    padding: 15px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(10, 10, 10, 0.8);
+    backdrop-filter: blur(15px);
+    border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.btn-volver {
+    background: transparent;
+    border: 1px solid #D4AF37;
+    color: #D4AF37;
+    padding: 8px 20px;
+    border-radius: 20px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-volver:hover {
+    background: #D4AF37;
+    color: #000;
+    box-shadow: 0 0 15px rgba(212, 175, 55, 0.3);
+}
+
+/* Tarjeta Principal del Formulario */
+.reg-card {
+    background: rgba(22, 22, 22, 0.75);
+    backdrop-filter: blur(25px);
+    -webkit-backdrop-filter: blur(25px);
+    border: 1px solid rgba(212, 175, 55, 0.15);
+    border-radius: 20px;
+    padding: 45px;
+    width: 100%;
+    max-width: 850px; /* Más ancho para los nuevos campos */
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.6);
+    margin-bottom: 40px;
+}
+
+.reg-icon {
+    font-size: 4rem;
+    display: block;
+    margin-bottom: 10px;
+    filter: drop-shadow(0 0 15px rgba(212, 175, 55, 0.3));
+}
+
+/* Inputs Estilizados */
+.reg-input {
+    width: 100%;
+    background: rgba(0, 0, 0, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    padding: 12px 15px;
+    color: #fff;
+    transition: all 0.3s ease;
+}
+
+.reg-input:focus {
+    outline: none;
+    border-color: #D4AF37;
+    background: rgba(30, 30, 30, 0.8);
+    box-shadow: 0 0 15px rgba(212, 175, 55, 0.15);
+}
+
+.reg-input::placeholder { color: #777; }
+
+/* Para los select y datalist */
+select.reg-input option {
+    background: #141414;
+    color: #fff;
+}
+
+/* Estilo especial para la placa */
+.placa-input {
+    background: rgba(212, 175, 55, 0.05);
+    border: 2px dashed rgba(212, 175, 55, 0.5);
+    letter-spacing: 3px;
+    text-transform: uppercase;
+}
+
+.placa-input:focus { border: 2px solid #D4AF37; }
+
+/* Botón de Subida de Archivos (Custom) */
+.file-upload-wrapper { position: relative; width: 100%; }
+
+.file-upload-input {
+    opacity: 0;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+    z-index: 2;
+}
+
+.file-upload-label {
+    display: block;
+    width: 100%;
+    padding: 30px;
+    background: rgba(0, 0, 0, 0.3);
+    border: 2px dashed rgba(255, 255, 255, 0.2);
+    border-radius: 15px;
+    text-align: center;
+    color: #a0a0a0;
+    transition: all 0.3s ease;
+    z-index: 1;
+}
+
+.file-upload-input:hover + .file-upload-label {
+    border-color: #D4AF37;
+    background: rgba(212, 175, 55, 0.05);
+    color: #fff;
+}
+
+/* Botón Submit Principal */
+.btn-reg-submit {
+    width: 100%;
+    background: linear-gradient(135deg, #D4AF37 0%, #aa8822 100%);
+    color: #000;
+    border: none;
+    padding: 16px;
+    border-radius: 15px;
+    font-weight: bold;
+    font-size: 1.2rem;
+    cursor: pointer;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.btn-reg-submit:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 30px rgba(212, 175, 55, 0.4);
+}
+
+.btn-reg-submit:disabled {
+    background: #555;
+    color: #888;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
+/* Responsivo */
+@media (max-width: 768px) {
+    .reg-card { padding: 25px; margin: 20px 10px; }
+    .reg-nav { padding: 15px 20px; }
+    .placa-input { font-size: 1.1rem !important; }
+}

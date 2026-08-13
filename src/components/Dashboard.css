@@ -1,0 +1,316 @@
+/* =========================================
+   ESTILOS GENERALES Y LAYOUT
+   ========================================= */
+.spinner-custom {
+    width: 3rem;
+    height: 3rem;
+}
+
+.loading-text {
+    letter-spacing: 2px;
+}
+
+.dash-logo {
+    width: 40px;
+    margin-right: 15px;
+    mix-blend-mode: lighten;
+}
+
+.dash-logo-text {
+    letter-spacing: 1px;
+}
+
+/* =========================================
+   TARJETAS KPI Y DOCUMENTOS (SOAT/TECNO)
+   ========================================= */
+.kpi-card-aisha {
+    height: 400px;
+    display: flex;
+    flex-direction: column;
+    background: linear-gradient(145deg, #1a1a1a, #0d0d0d);
+    border: 1px solid rgba(212, 175, 55, 0.2);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+}
+
+.kpi-card-doc {
+    height: 400px;
+    background: linear-gradient(145deg, #1a1a1a, #0d0d0d);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.card-doc-title {
+    font-size: 0.9rem;
+    letter-spacing: 1px;
+}
+
+.doc-date {
+    text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+}
+.doc-date.has-data {
+    font-size: 2.2rem;
+}
+.doc-date.no-data {
+    font-size: 1.2rem;
+}
+
+.card-info-badge {
+    font-size: 0.85rem;
+    white-space: normal;
+    line-height: 1.4;
+}
+
+.card-nav {
+    border-top: 1px solid rgba(255,255,255,0.05);
+}
+
+.card-nav-btn {
+    width: 32px;
+    height: 32px;
+    padding: 0;
+}
+
+/* =========================================
+   TARJETA SOS (EMERGENCIA)
+   ========================================= */
+.kpi-card-sos {
+    height: 400px;
+    background: linear-gradient(135deg, #dc3545, #8b0000);
+    cursor: pointer;
+    box-shadow: 0 8px 32px rgba(220, 53, 69, 0.3);
+    border: 1px solid #ff4d4d;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.kpi-card-sos:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 40px rgba(220, 53, 69, 0.5);
+}
+
+.sos-icon {
+    font-size: 4.5rem;
+    filter: drop-shadow(0 0 15px rgba(255,255,255,0.4));
+}
+
+.sos-title {
+    letter-spacing: 2px;
+}
+
+.sos-desc {
+    font-size: 0.9rem;
+}
+
+.sos-btn {
+    font-size: 1.2rem;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+    text-transform: uppercase;
+}
+
+/* =========================================
+   ASISTENTE IA (CHAT)
+   ========================================= */
+.chat-header {
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    flex-shrink: 0;
+}
+
+.chat-title {
+    letter-spacing: 1px;
+}
+
+.chat-vehicle-selector {
+    border: 1px solid rgba(212, 175, 55, 0.3);
+}
+
+.chat-nav-btn {
+    font-size: 0.8rem;
+    outline: none;
+}
+
+.chat-nav-text {
+    font-size: 0.75rem;
+    max-width: 70px;
+    font-weight: 500;
+}
+
+.chat-body {
+    flex: 1;
+    min-height: 0;
+    overflow-y: auto;
+    padding-right: 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(212, 175, 55, 0.5) transparent;
+}
+
+.chat-msg-container {
+    max-width: 90%;
+    animation: fadeIn 0.3s ease-in-out;
+    display: flex;
+    flex-direction: column;
+}
+.chat-msg-container.user { align-self: flex-end; }
+.chat-msg-container.ai { align-self: flex-start; }
+
+.chat-bubble {
+    padding: 10px 14px;
+    border-radius: 16px;
+    font-size: 0.85rem;
+    line-height: 1.4;
+    word-break: break-word;
+    white-space: pre-wrap;
+}
+.chat-bubble.user {
+    background-color: #D4AF37;
+    color: #000;
+    border-bottom-right-radius: 4px;
+}
+.chat-bubble.ai {
+    background-color: #2A2A2A;
+    color: #EAEAEA;
+    border-bottom-left-radius: 4px;
+}
+
+.chat-role {
+    font-size: 0.65rem;
+    color: #666;
+    margin-top: 4px;
+    font-weight: bold;
+}
+.chat-role.user { text-align: right; }
+.chat-role.ai { text-align: left; }
+
+.chat-typing-container {
+    align-self: flex-start;
+    max-width: 85%;
+}
+
+.chat-typing-bubble {
+    padding: 10px 16px;
+    border-radius: 16px;
+    border-bottom-left-radius: 4px;
+    background-color: #2A2A2A;
+    color: #aaa;
+    font-size: 0.8rem;
+    font-style: italic;
+}
+
+.chat-input-form {
+    flex-shrink: 0;
+}
+
+.chat-input-field {
+    background-color: rgba(0,0,0,0.4);
+    color: #fff;
+    border: 1px solid rgba(212, 175, 55, 0.3);
+    border-radius: 24px;
+    padding: 12px 45px 12px 16px;
+    font-size: 0.85rem;
+}
+
+.chat-submit-btn {
+    top: 50%;
+    right: 6px;
+    transform: translateY(-50%);
+    background-color: #D4AF37;
+    color: #000;
+    border-radius: 50%;
+    width: 34px;
+    height: 34px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    border: none;
+}
+.chat-submit-btn:disabled {
+    opacity: 0.5;
+}
+
+.chat-submit-arrow {
+    transform: translateX(1px);
+    font-size: 1rem;
+}
+
+/* =========================================
+   TOP VEHÍCULOS (BOTONES Y LISTAS)
+   ========================================= */
+.top-header {
+    border-bottom: 2px solid #D4AF37;
+    padding-bottom: 10px;
+}
+
+.top-list-btn {
+    border-radius: 12px;
+    transition: all 0.3s;
+    background: rgba(25, 25, 25, 0.6);
+    border: 1px solid rgba(212, 175, 55, 0.2);
+    box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+}
+
+.top-list-btn:hover {
+    transform: translateY(-3px);
+}
+
+.top-list-img {
+    width: 80px;
+    height: 60px;
+    object-fit: cover;
+    border-radius: 8px;
+    margin-right: 15px;
+}
+
+.top-list-brand {
+    font-size: 1.1rem;
+    line-height: 1.2;
+}
+
+.top-list-model {
+    font-size: 0.9rem;
+}
+
+/* =========================================
+   MÓDULO FLOTANTE DE IMAGEN Y ALERTAS
+   ========================================= */
+.floating-image-modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 9999;
+    background-color: rgba(20, 20, 20, 0.95);
+    padding: 15px;
+    border-radius: 15px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.8);
+    border: 2px solid #D4AF37;
+    pointer-events: none;
+}
+
+.floating-image-content {
+    width: 600px;
+    max-width: 90vw;
+    max-height: 80vh;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+.alert-custom-warning {
+    background: rgba(212, 175, 55, 0.1);
+    border: 1px solid #D4AF37;
+    color: #fff;
+    border-radius: 15px;
+}
+
+.alert-custom-info {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid #555;
+    color: #fff;
+    border-radius: 15px;
+}
+
+/* ANIMACIONES GLOBALES */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(5px); }
+    to { opacity: 1; transform: translateY(0); }
+}
