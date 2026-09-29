@@ -1,108 +1,252 @@
+/* Importar una fuente moderna como Inter */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+:root {
+    /* Paleta Dark Mode: Gris Oscuro, Azul y Dorado */
+    --primary-color: #3b82f6; /* Azul vibrante */
+    --primary-hover: #2563eb; /* Azul oscuro para hover */
+    --accent-gold: #fbbf24; /* Dorado elegante */
+    --accent-gold-hover: #f59e0b;
+    --text-main: #f8fafc; /* Texto principal casi blanco */
+    --text-muted: #94a3b8; /* Texto secundario gris claro */
+    --bg-main: #18181b; /* Fondo gris muy oscuro */
+    --bg-secondary: #27272a; /* Fondo gris un poco más claro */
+}
+
 * {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
 }
 
-.introduccion {
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: var(--bg-main);
+    color: var(--text-main);
+}
+
+/* Contenedor Principal (Pantalla Dividida) */
+.intro-container {
+    display: flex;
     min-height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background:
-        radial-gradient(circle at top left, #1e3a8a, transparent 35%),
-        radial-gradient(circle at bottom right, #312e81, transparent 35%),
-        #050816;
-    color: white;
-    font-family: Arial, sans-serif;
-    padding: 30px;
-}
-
-.introduccion-contenido {
     width: 100%;
-    max-width: 750px;
-    text-align: center;
 }
 
-.logo {
-    font-size: 64px;
-    font-weight: 900;
-    letter-spacing: 8px;
-    margin-bottom: 35px;
-}
-
-.introduccion h1 {
-    font-size: clamp(40px, 7vw, 72px);
-    line-height: 1.1;
-    margin-bottom: 25px;
-}
-
-.introduccion h1 span {
-    display: block;
-    color: #60a5fa;
-}
-
-.introduccion p {
-    max-width: 600px;
-    margin: 0 auto 40px;
-    color: #aeb8cc;
-    font-size: 18px;
-    line-height: 1.7;
-}
-
-.botones {
+/* --- SECCIÓN IZQUIERDA (CONTENIDO) --- */
+.intro-content {
+    flex: 1;
     display: flex;
+    flex-direction: column;
+    padding: 2rem 4rem;
     justify-content: center;
-    gap: 15px;
-    flex-wrap: wrap;
+    background-color: var(--bg-main);
+    position: relative;
+}
+
+.intro-header {
+    position: absolute;
+    top: 1rem;
+    left: 4rem;
+}
+
+/* Marca y Logo */
+.logo-jox {
+    font-size: 5.2rem;
+    font-weight: 800;
+    color: var(--text-main);
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    letter-spacing: -0.5px;
+}
+
+.logo-icon {
+    width: 195px;
+    height: 165px;
+    object-fit: contain;
+}
+
+/* Texto principal */
+.intro-text-wrap {
+    max-width: 550px;
+    margin-top: 8rem; /* Espacio extra para dar cabida al logo grande */
+}
+
+.intro-title {
+    font-size: 3.5rem;
+    font-weight: 800;
+    line-height: 1.1;
+    color: var(--text-main);
+    margin-bottom: 1.5rem;
+    letter-spacing: -1px;
+}
+
+/* Efecto degradado dorado para la palabra clave */
+.text-gradient {
+    background: linear-gradient(90deg, #fbbf24, #fde047, #f59e0b);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.intro-description {
+    font-size: 1.125rem;
+    line-height: 1.6;
+    color: var(--text-muted);
+    margin-bottom: 2.5rem;
+}
+
+/* Botones */
+.intro-actions {
+    display: flex;
+    gap: 1rem;
 }
 
 .btn {
-    border: none;
-    padding: 15px 30px;
-    border-radius: 12px;
-    font-size: 15px;
-    font-weight: bold;
+    padding: 0.875rem 1.5rem;
+    font-size: 1rem;
+    font-weight: 600;
+    border-radius: 8px;
     cursor: pointer;
-    transition: 0.25s;
+    transition: all 0.2s ease-in-out;
+    border: none;
+    outline: none;
 }
 
-.btn-principal {
-    background: #2563eb;
+/* Botón Primario: Azul */
+.btn-primary {
+    background-color: var(--primary-color);
     color: white;
+    box-shadow: 0 4px 6px -1px rgba(59, 130, 246, 0.3), 0 2px 4px -1px rgba(59, 130, 246, 0.2);
 }
 
-.btn-principal:hover {
-    background: #3b82f6;
+.btn-primary:hover {
+    background-color: var(--primary-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 10px 15px -3px rgba(59, 130, 246, 0.4);
+}
+
+/* Botón Secundario: Borde Dorado */
+.btn-secondary {
+    background-color: transparent;
+    color: var(--accent-gold);
+    border: 1px solid var(--accent-gold);
+}
+
+.btn-secondary:hover {
+    background-color: rgba(251, 191, 36, 0.1);
+    border-color: var(--accent-gold-hover);
+    color: var(--accent-gold-hover);
     transform: translateY(-2px);
 }
 
-.btn-secundario {
-    background: transparent;
-    color: white;
-    border: 1px solid #475569;
+/* --- SECCIÓN DERECHA (VISUAL) --- */
+.intro-visual {
+    flex: 1;
+    background: linear-gradient(135deg, #18181b 0%, #0f172a 100%);
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    border-left: 1px solid rgba(255, 255, 255, 0.05);
 }
 
-.btn-secundario:hover {
-    background: rgba(255, 255, 255, 0.08);
-    transform: translateY(-2px);
+/* Contenedor para las imágenes */
+.vehicles-showcase {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
-@media (max-width: 600px) {
+/* Estilo base para ambas imágenes de vehículos */
+.vehicle-image {
+    position: absolute;
+    max-width: 80%;
+    height: auto;
+    filter: drop-shadow(0 25px 35px rgba(0, 0, 0, 0.6)); 
+    transition: transform 0.3s ease-in-out;
+}
 
-    .logo {
-        font-size: 48px;
+/* Posicionamiento específico para la moto */
+.moto-float {
+    width: 350px; 
+    z-index: 2; 
+    top: 35%;
+    left: -5%;
+    animation: floatMoto 6s ease-in-out infinite;
+}
+
+/* Posicionamiento específico para el carro */
+.carro-float {
+    width: 550px; 
+    z-index: 1;
+    bottom: 15%;
+    right: -5%;
+    animation: floatCarro 8s ease-in-out infinite;
+}
+
+/* Animaciones de flotado */
+@keyframes floatMoto {
+    0%, 100% { transform: translate(0, 0) rotate(-2deg); }
+    50% { transform: translate(10px, -15px) rotate(1deg); }
+}
+
+@keyframes floatCarro {
+    0%, 100% { transform: translate(0, 0); }
+    50% { transform: translate(-10px, 10px); }
+}
+
+/* --- RESPONSIVE DESIGN --- */
+@media (max-width: 1200px) {
+    .moto-float {
+        width: 280px;
+        left: 10%;
     }
-
-    .introduccion p {
-        font-size: 16px;
+    .carro-float {
+        width: 450px;
+        left: 0%;
     }
+}
 
-    .botones {
+@media (max-width: 968px) {
+    .intro-container {
         flex-direction: column;
+    }
+    
+    .intro-visual {
+        display: none;
+    }
+
+    .intro-content {
+        padding: 2rem;
+        align-items: center;
+        text-align: center;
+    }
+
+    .intro-header {
+        position: static;
+        margin-bottom: 2rem;
+    }
+
+    .intro-text-wrap {
+        margin-top: 0;
+    }
+
+    .intro-actions {
+        justify-content: center;
+        flex-direction: column;
+        width: 100%;
     }
 
     .btn {
         width: 100%;
+    }
+
+    .intro-title {
+        font-size: 2.5rem;
     }
 }

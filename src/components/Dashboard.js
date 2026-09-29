@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import logo from '../assets/Logo.png';
-import './Dashboard.css'; // Asegúrate de importar el nuevo CSS aquí
+import './Dashboard.css';
 
 const Dashboard = () => {
     const [usuario, setUsuario] = useState(null);
