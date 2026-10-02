@@ -3,6 +3,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import logoImg from '../assets/Logo.png';
 import './Login.css';
+import API_BASE_URL from '../config';
 
 const Login = () => {
     const [correo, setCorreo] = useState('');
@@ -14,7 +15,7 @@ const Login = () => {
         e.preventDefault();
         setLoading(true);
         try {
-        const response = await axios.post('API_BASE_URL/api/usuarios/login', {
+        const response = await axios.post(`${API_BASE_URL}/api/usuarios/login`, {
             correo,
             contraseña
         });
