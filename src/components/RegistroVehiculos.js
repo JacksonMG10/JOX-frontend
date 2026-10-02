@@ -59,7 +59,7 @@ const RegistroVehiculos = () => {
         const token = localStorage.getItem('token');
         
         try {
-            await axios.post('http://localhost:3000/api/vehiculos/registrar', vehiculo, {
+            await axios.post('API_BASE_URL/api/vehiculos/registrar', vehiculo, {
                 headers: { Authorization: `Bearer ${token}` }
             });
             

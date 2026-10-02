@@ -29,7 +29,7 @@ const Registro = () => {
         e.preventDefault();
         setLoading(true);
         try {
-            await axios.post('http://localhost:3000/api/usuarios/registro', datos);
+            await axios.post('API_BASE_URL/api/usuarios/registro', datos);
             alert('¡Cuenta creada con éxito! Ahora puedes iniciar sesión.');
             navigate('/login');
         } catch (error) {

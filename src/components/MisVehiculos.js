@@ -21,7 +21,7 @@ const MisVehiculos = () => {
             }
 
             // Llamada a tu backend para traer los vehículos del usuario
-            const res = await axios.get('http://localhost:3000/api/vehiculos', {
+            const res = await axios.get('API_BASE_URL/api/vehiculos', {
                 headers: { Authorization: `Bearer ${token}` }
             });
             

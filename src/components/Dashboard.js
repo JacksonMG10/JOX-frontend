@@ -60,7 +60,7 @@ const Dashboard = () => {
         try {
             const vehiculoActual = listaVehiculos.length > 0 ? listaVehiculos[indiceVehiculo] : null;
 
-            const response = await axios.post('http://localhost:3000/api/ia/consultar', {
+            const response = await axios.post('API_BASE_URL/api/ia/consultar', {
                 mensaje: mensajeUsuario,
                 vehiculo: vehiculoActual,
                 historial: historialChat
@@ -182,12 +182,12 @@ const Dashboard = () => {
             }
 
             try {
-                const resUsuario = await axios.get('http://localhost:3000/api/usuarios/perfil', {
+                const resUsuario = await axios.get('API_BASE_URL/api/usuarios/perfil', {
                     headers: { Authorization: `Bearer ${token}` }
                 });
                 setUsuario(resUsuario.data);
                 
-                const resVehiculos = await axios.get('http://localhost:3000/api/vehiculos', {
+                const resVehiculos = await axios.get('API_BASE_URL/api/vehiculos', {
                     headers: { Authorization: `Bearer ${token}` }
                 });
                 

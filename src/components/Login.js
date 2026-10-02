@@ -14,7 +14,7 @@ const Login = () => {
         e.preventDefault();
         setLoading(true);
         try {
-        const response = await axios.post('http://localhost:3000/api/usuarios/login', {
+        const response = await axios.post('API_BASE_URL/api/usuarios/login', {
             correo,
             contraseña
         });
