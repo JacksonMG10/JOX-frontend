@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import logo from '../assets/Logo.png';
 import './Dashboard.css';
 
+const API_BASE_URL = process.env.REACT_APP_API_URL || 'https://jox-f0u1.onrender.com';
 const Dashboard = () => {
     const [usuario, setUsuario] = useState(null);
     const [busqueda, setBusqueda] = useState('');
@@ -106,6 +107,7 @@ const Dashboard = () => {
 
     const termino = busqueda.toLowerCase();
 
+    const vehiculosValidos = Array.isArray(listaVehiculos) ? listaVehiculos : [];
     const vehiculosFiltrados = listaVehiculos.filter(v => 
         (v.placa && v.placa.toLowerCase().includes(termino)) ||
         (v.marca && v.marca.toLowerCase().includes(termino)) ||
@@ -113,6 +115,7 @@ const Dashboard = () => {
         (v.alias && v.alias.toLowerCase().includes(termino))
     );
 
+    const soatValido = Array.isArray(listaSoat) ? listaSoat : [];
     const soatFiltrado = listaSoat.filter(v => 
         (v.placa && v.placa.toLowerCase().includes(termino)) ||
         (v.marca && v.marca.toLowerCase().includes(termino)) ||
@@ -120,6 +123,7 @@ const Dashboard = () => {
         (v.alias && v.alias.toLowerCase().includes(termino))
     );
 
+    const tecnoValida = Array.isArray(listaTecno) ? listaTecno : [];
     const tecnoFiltrado = listaTecno.filter(v => 
         (v.placa && v.placa.toLowerCase().includes(termino)) ||
         (v.marca && v.marca.toLowerCase().includes(termino)) ||
@@ -182,16 +186,18 @@ const Dashboard = () => {
             }
 
             try {
-                const resUsuario = await axios.get('API_BASE_URL/api/usuarios/perfil', {
-                    headers: { Authorization: `Bearer ${token}` }
-                });
-                setUsuario(resUsuario.data);
-                
-                const resVehiculos = await axios.get('API_BASE_URL/api/vehiculos', {
-                    headers: { Authorization: `Bearer ${token}` }
-                });
-                
-                const vehiculos = resVehiculos.data;
+            const resUsuario = await axios.get(`${API_BASE_URL}/api/usuarios/perfil`, {
+                headers: { Authorization: `Bearer ${token}` }
+            });
+            setUsuario(resUsuario.data);
+
+            const resVehiculos = await axios.get(`${API_BASE_URL}/api/vehiculos`, {
+                headers: { Authorization: `Bearer ${token}` }
+            });
+
+            // Validamos que sea un arreglo antes de asignarlo
+            const vehiculos = Array.isArray(resVehiculos.data) ? resVehiculos.data : [];
+            setListaVehiculos(vehiculos);
 
                 if (vehiculos.length > 0) {
                     setListaVehiculos(vehiculos);
