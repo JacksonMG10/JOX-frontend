@@ -10,7 +10,7 @@ import { SkeletonPost } from './SkeletonPost';
 // CONFIGURACIÓN Y SERVICIOS
 // -----------------------------------------------------------------------------
 const API_BASE_URL = process.env.REACT_APP_API_URL || 'https://jox-f0u1.onrender.com';
-const CLEAN_DOMAIN = BASE_DOMAIN.endsWith('/api') ? BASE_DOMAIN.replace('/api', '') : BASE_DOMAIN;
+const CLEAN_DOMAIN = API_BASE_URL.endsWith('/api') ? API_BASE_URL.replace('/api', '') : API_BASE_URL;
 
 const ENV = {
   API_URL: `${CLEAN_DOMAIN}/api`,
