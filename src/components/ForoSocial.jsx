@@ -10,11 +10,12 @@ import { SkeletonPost } from './SkeletonPost';
 // CONFIGURACIÓN Y SERVICIOS
 // -----------------------------------------------------------------------------
 const API_BASE_URL = process.env.REACT_APP_API_URL || 'https://jox-f0u1.onrender.com';
-const ENV = {
-  API_URL: process.env.REACT_APP_API_URL || `${API_BASE_URL}/api`,
-  SOCKET_URL: process.env.REACT_APP_SOCKET_URL || `${API_BASE_URL}`
-};
+const CLEAN_DOMAIN = BASE_DOMAIN.endsWith('/api') ? BASE_DOMAIN.replace('/api', '') : BASE_DOMAIN;
 
+const ENV = {
+  API_URL: `${CLEAN_DOMAIN}/api`,
+  SOCKET_URL: process.env.REACT_APP_SOCKET_URL || CLEAN_DOMAIN
+};
 // Instancia global de Axios
 const apiClient = axios.create({
   baseURL: ENV.API_URL,
