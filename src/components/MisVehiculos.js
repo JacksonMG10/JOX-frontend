@@ -3,6 +3,7 @@ import axios from 'axios';
 import { useNavigate, Link } from 'react-router-dom';
 import './MisVehiculos.css'; // Asegúrate de tener esta línea
 
+const API_BASE_URL = process.env.REACT_APP_API_URL || 'https://jox-f0u1.onrender.com';
 const MisVehiculos = () => {
     const [vehiculos, setVehiculos] = useState([]);
     const [cargando, setCargando] = useState(true);
@@ -21,7 +22,7 @@ const MisVehiculos = () => {
             }
 
             // Llamada a tu backend para traer los vehículos del usuario
-            const res = await axios.get('API_BASE_URL/api/vehiculos', {
+            const res = await axios.get(`${API_BASE_URL}/api/vehiculos`, {
                 headers: { Authorization: `Bearer ${token}` }
             });
             

@@ -61,7 +61,7 @@ const Dashboard = () => {
         try {
             const vehiculoActual = listaVehiculos.length > 0 ? listaVehiculos[indiceVehiculo] : null;
 
-            const response = await axios.post('API_BASE_URL/api/ia/consultar', {
+            const response = await axios.post( `${API_BASE_URL}/api/ia/consultar`, {
                 mensaje: mensajeUsuario,
                 vehiculo: vehiculoActual,
                 historial: historialChat

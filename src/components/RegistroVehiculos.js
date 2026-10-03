@@ -3,6 +3,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import '../RegistroVehiculos.css';
 
+const API_BASE_URL = process.env.REACT_APP_API_URL || 'https://jox-f0u1.onrender.com';
 const RegistroVehiculos = () => {
     const navigate = useNavigate();
     const [cargando, setCargando] = useState(false);
@@ -59,7 +60,7 @@ const RegistroVehiculos = () => {
         const token = localStorage.getItem('token');
         
         try {
-            await axios.post('API_BASE_URL/api/vehiculos/registrar', vehiculo, {
+            await axios.post(`${API_BASE_URL}/api/vehiculos/registrar`, vehiculo, {
                 headers: { Authorization: `Bearer ${token}` }
             });
             

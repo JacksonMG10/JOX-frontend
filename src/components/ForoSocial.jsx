@@ -9,9 +9,10 @@ import { SkeletonPost } from './SkeletonPost';
 // -----------------------------------------------------------------------------
 // CONFIGURACIÓN Y SERVICIOS
 // -----------------------------------------------------------------------------
+const API_BASE_URL = process.env.REACT_APP_API_URL || 'https://jox-f0u1.onrender.com';
 const ENV = {
-  API_URL: process.env.REACT_APP_API_URL || 'API_BASE_URL/api',
-  SOCKET_URL: process.env.REACT_APP_SOCKET_URL || 'API_BASE_URL'
+  API_URL: process.env.REACT_APP_API_URL || `${API_BASE_URL}/api`,
+  SOCKET_URL: process.env.REACT_APP_SOCKET_URL || `${API_BASE_URL}`
 };
 
 // Instancia global de Axios

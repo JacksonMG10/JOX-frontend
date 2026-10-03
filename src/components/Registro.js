@@ -3,6 +3,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import './Registro.css'; // Asegúrate de que esta línea esté aquí
 
+const API_BASE_URL = process.env.REACT_APP_API_URL || 'https://jox-f0u1.onrender.com';
 const Registro = () => {
     const [datos, setDatos] = useState({
         nombre: '',
@@ -29,7 +30,7 @@ const Registro = () => {
         e.preventDefault();
         setLoading(true);
         try {
-            await axios.post('API_BASE_URL/api/usuarios/registro', datos);
+            await axios.post(`${API_BASE_URL}/api/usuarios/registro`, datos);
             alert('¡Cuenta creada con éxito! Ahora puedes iniciar sesión.');
             navigate('/login');
         } catch (error) {
