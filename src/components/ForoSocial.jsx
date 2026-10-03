@@ -37,6 +37,24 @@ const getMediaUrl = (path) => {
 };
 
 // -----------------------------------------------------------------------------
+// IDENTIFICADORES SEGUROS DE USUARIO
+// Soporta las variantes que ya utiliza el backend/frontend de JOX.
+// -----------------------------------------------------------------------------
+const getUserId = (user) =>
+  user?.id_usuario ??
+  user?.id ??
+  user?.usuario_id ??
+  user?.userId ??
+  null;
+
+const getPostOwnerId = (post) =>
+  post?.usuario_id ??
+  post?.id_usuario ??
+  post?.user_id ??
+  post?.autor_id ??
+  null;
+
+// -----------------------------------------------------------------------------
 // HOOK DE DEBOUNCE
 // -----------------------------------------------------------------------------
 const useDebounce = (value, delay) => {
@@ -71,6 +89,14 @@ export default function ForoSocial() {
   const [suggestedUsers, setSuggestedUsers] = useState([]);
   const [userSearch, setUserSearch] = useState('');
 
+  // Estadísticas REALES del usuario autenticado.
+  // No dependen de la página, búsqueda o categoría que esté viendo.
+  const [myStats, setMyStats] = useState({
+    publicaciones: 0,
+    likes: 0,
+    comentarios: 0
+  });
+
   const debouncedSearch = useDebounce(search, 500);
   const token = localStorage.getItem('token');
 
@@ -85,6 +111,82 @@ export default function ForoSocial() {
       return null;
     }
   }, []);
+
+  // ---------------------------------------------------------------------------
+  // ESTADÍSTICAS REALES DEL USUARIO
+  // ---------------------------------------------------------------------------
+  const refreshMyStats = useCallback(async () => {
+    if (!currentUser) return;
+
+    const currentUserId = getUserId(currentUser);
+    if (currentUserId === null || currentUserId === undefined) return;
+
+    try {
+      const allPosts = [];
+      let statsPage = 1;
+      const statsLimit = 50;
+
+      // El endpoint actual del proyecto utiliza paginación.
+      // Recorremos todas las páginas para no confundir "posts cargados"
+      // con "posts reales del usuario".
+      while (statsPage <= 200) {
+        const response = await apiClient.get('/publicaciones/muro', {
+          params: {
+            page: statsPage,
+            limit: statsLimit
+          }
+        });
+
+        const batch = Array.isArray(response.data)
+          ? response.data
+          : Array.isArray(response.data?.posts)
+            ? response.data.posts
+            : [];
+
+        allPosts.push(...batch);
+
+        if (batch.length < statsLimit) {
+          break;
+        }
+
+        statsPage += 1;
+      }
+
+      const myPosts = allPosts.filter(post =>
+        String(getPostOwnerId(post)) === String(currentUserId)
+      );
+
+      const publicaciones = myPosts.length;
+
+      const likes = myPosts.reduce(
+        (total, post) =>
+          total + Number(post.total_likes || 0),
+        0
+      );
+
+      const comentarios = myPosts.reduce(
+        (total, post) =>
+          total + Number(post.comentarios?.length || 0),
+        0
+      );
+
+      setMyStats({
+        publicaciones,
+        likes,
+        comentarios
+      });
+
+    } catch (err) {
+      console.error(
+        'No se pudieron actualizar las estadísticas del usuario:',
+        err
+      );
+    }
+  }, [currentUser]);
+
+  useEffect(() => {
+    refreshMyStats();
+  }, [refreshMyStats]);
 
   // ---------------------------------------------------------------------------
   // REFS
@@ -379,6 +481,13 @@ export default function ForoSocial() {
     isLiked
   ) => {
 
+    const post = posts.find(
+      p => String(p.id) === String(postId)
+    );
+
+    const delta = isLiked ? -1 : 1;
+
+    // Actualización visual inmediata.
     setPosts(prev =>
       prev.map(p =>
         p.id === postId
@@ -386,12 +495,27 @@ export default function ForoSocial() {
               ...p,
               like_usuario: !isLiked,
               total_likes:
-                p.total_likes +
-                (isLiked ? -1 : 1)
+                Math.max(
+                  0,
+                  Number(p.total_likes || 0) + delta
+                )
             }
           : p
       )
     );
+
+    // Si la publicación es del usuario actual,
+    // actualizamos también su estadística personal.
+    if (
+      post &&
+      String(getPostOwnerId(post)) ===
+        String(getUserId(currentUser))
+    ) {
+      setMyStats(prev => ({
+        ...prev,
+        likes: Math.max(0, prev.likes + delta)
+      }));
+    }
 
     try {
 
@@ -402,8 +526,13 @@ export default function ForoSocial() {
         }
       );
 
+      // Volvemos a consultar las estadísticas reales
+      // después de confirmar el cambio en el backend.
+      await refreshMyStats();
+
     } catch (err) {
 
+      // Revertir cambio visual.
       setPosts(prev =>
         prev.map(p =>
           p.id === postId
@@ -411,12 +540,16 @@ export default function ForoSocial() {
                 ...p,
                 like_usuario: isLiked,
                 total_likes:
-                  p.total_likes +
-                  (isLiked ? 1 : -1)
+                  Math.max(
+                    0,
+                    Number(p.total_likes || 0) - delta
+                  )
               }
             : p
         )
       );
+
+      await refreshMyStats();
 
       addNotification(
         'Error al procesar el like',
@@ -424,7 +557,12 @@ export default function ForoSocial() {
       );
     }
 
-  }, [addNotification]);
+  }, [
+    posts,
+    currentUser,
+    refreshMyStats,
+    addNotification
+  ]);
 
   // COMENTARIO
  
@@ -433,15 +571,23 @@ export default function ForoSocial() {
     texto
   ) => {
 
+    if (!texto || !texto.trim()) {
+      return;
+    }
+
     try {
 
       await apiClient.post(
         '/publicaciones/comentar',
         {
           postId,
-          texto
+          texto: texto.trim()
         }
       );
+
+      // Recargar estadísticas reales para que el propietario
+      // vea inmediatamente el comentario recibido.
+      await refreshMyStats();
 
       addNotification(
         'Comentario publicado',
@@ -457,12 +603,35 @@ export default function ForoSocial() {
 
     }
 
-  }, [addNotification]);
+  }, [
+    refreshMyStats,
+    addNotification
+  ]);
 
   // ELIMINAR
   const handleDelete = useCallback(async (
     postId
   ) => {
+
+    const post = posts.find(
+      p => String(p.id) === String(postId)
+    );
+
+    const currentUserId = getUserId(currentUser);
+
+    // Primera barrera: nunca permitir desde la interfaz
+    // eliminar una publicación que no pertenece al usuario.
+    if (
+      !post ||
+      String(getPostOwnerId(post)) !==
+        String(currentUserId)
+    ) {
+      addNotification(
+        'Solo puedes eliminar tus propias publicaciones',
+        'error'
+      );
+      return;
+    }
 
     if (
       !window.confirm(
@@ -479,8 +648,13 @@ export default function ForoSocial() {
       );
 
       setPosts(prev =>
-        prev.filter(p => p.id !== postId)
+        prev.filter(
+          p => String(p.id) !== String(postId)
+        )
       );
+
+      // Recalcular desde la API para no depender del estado local.
+      await refreshMyStats();
 
       addNotification(
         'Publicación eliminada',
@@ -489,14 +663,23 @@ export default function ForoSocial() {
 
     } catch (err) {
 
+      const status = err?.response?.status;
+
       addNotification(
-        'Error al eliminar',
+        status === 403
+          ? 'No tienes permiso para eliminar esta publicación'
+          : 'Error al eliminar la publicación',
         'error'
       );
 
     }
 
-  }, [addNotification]);
+  }, [
+    posts,
+    currentUser,
+    refreshMyStats,
+    addNotification
+  ]);
 
   // CREAR PUBLICACIÓN
   const handleCreatePost = useCallback(async (
@@ -518,6 +701,11 @@ export default function ForoSocial() {
 
       setShowModal(false);
 
+      // Actualizar el muro y las estadísticas reales.
+      setPage(1);
+
+      await refreshMyStats();
+
       addNotification(
         'Publicación creada con éxito',
         'success'
@@ -533,7 +721,10 @@ export default function ForoSocial() {
       throw err;
     }
 
-  }, [addNotification]);
+  }, [
+    addNotification,
+    refreshMyStats
+  ]);
 
   // SEGURIDAD
   if (!currentUser) {
@@ -558,26 +749,11 @@ export default function ForoSocial() {
       .replace(/\s+/g, '');
 
   // ESTADÍSTICAS VISUALES
-  const totalPublicaciones =
-    posts.length;
-
-  const totalLikes =
-    posts.reduce(
-      (total, post) =>
-        total +
-        Number(post.total_likes || 0),
-      0
-    );
-
-  const totalComentarios =
-    posts.reduce(
-      (total, post) =>
-        total +
-        Number(
-          post.comentarios?.length || 0
-        ),
-      0
-    );
+  // IMPORTANTE: estos valores pertenecen SOLO al usuario actual.
+  // No se calculan con "posts", porque "posts" es el muro completo.
+  const totalPublicaciones = myStats.publicaciones;
+  const totalLikes = myStats.likes;
+  const totalComentarios = myStats.comentarios;
 
   return (
 
@@ -2047,7 +2223,8 @@ const PostCard = memo(({
   };
 
   const isOwner =
-    currentUser.id === post.usuario_id;
+    String(getUserId(currentUser)) ===
+    String(getPostOwnerId(post));
 
   return (
 
@@ -2397,6 +2574,9 @@ const PostCard = memo(({
 
     prevProps.post.like_usuario ===
       nextProps.post.like_usuario &&
+
+    getPostOwnerId(prevProps.post) ===
+      getPostOwnerId(nextProps.post) &&
 
     (
       prevProps.post.comentarios?.length ||
