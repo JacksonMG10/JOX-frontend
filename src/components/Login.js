@@ -14,25 +14,39 @@ const Login = () => {
     const manejarLogin = async (e) => {
         e.preventDefault();
         setLoading(true);
+
+        // 1. Limpiamos cualquier token previo antes de intentar autenticar
+        localStorage.removeItem('token');
+        localStorage.removeItem('user');
+
         try {
-        const response = await axios.post(`${API_BASE_URL}/api/usuarios/login`, {
-            correo,
-            contraseña
-        });
+            const response = await axios.post(`${API_BASE_URL}/api/usuarios/login`, {
+                correo,
+                contraseña
+            });
 
-        console.log(response.data);
+            console.log("Respuesta de login:", response.data);
 
-        localStorage.setItem('token', response.data.token);
-        localStorage.setItem('user', JSON.stringify(response.data.usuario));
+            // 2. Verificamos que el servidor haya retornado el token
+            if (response.data && response.data.token) {
+                localStorage.setItem('token', response.data.token);
+                localStorage.setItem('user', JSON.stringify(response.data.usuario));
+                
+                // Redirigimos solo si el token es válido
+                navigate('/dashboard');
+            } else {
+                alert('Respuesta inválida del servidor: No se recibió token de autenticación.');
+            }
 
-        navigate('/dashboard');
+        } catch (error) {
+            console.error("Error en manejarLogin:", error);
+            const mensajeError = error.response?.data?.mensaje || 'No se pudo conectar al servidor';
+            alert('Error al iniciar sesión: ' + mensajeError);
+        } finally {
+            setLoading(false);
+        }
+    };
 
-    } catch (error) {
-        alert('Error: ' + (error.response?.data?.mensaje || 'No se pudo conectar al servidor'));
-    } finally {
-        setLoading(false);
-    }
-};
     return (
         <div className="login-layout">
             <div className="login-card">
