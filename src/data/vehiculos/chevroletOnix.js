@@ -888,7 +888,7 @@ export const chevroletOnix2013 = {
     tipo: 'Hatchback / Sedán',
 
     imagen:
-        'https://chevrolet.com.co/content/dam/chevrolet/south-america/colombia/espanol/index/cars/onix/01-images/chevrolet-onix-2023.jpg',
+        'https://www.automarcalichevrolet.co/content/dam/chevrolet/sa/co/es/master/home/cars/onix-turbo-sedan/myr-2026/03-colorizer/jellys/premier-at/premier-at-azul-profundo.png?imwidth=1920',
 
     descripcion:
         'Plataforma educativa para Chevrolet Onix 2013 (Lanzamiento 1ª Generación con motor 1.4L SPE/4 y transmisión manual/automática).',
@@ -1266,7 +1266,7 @@ export const chevroletOnix = {
     tipo: 'Auto',
 
     imagen:
-        'https://chevrolet.com.co/content/dam/chevrolet/south-america/colombia/espanol/index/cars/onix/01-images/chevrolet-onix-2023.jpg',
+        'https://www.automarcalichevrolet.co/content/dam/chevrolet/sa/co/es/master/home/cars/onix-turbo-sedan/myr-2026/03-colorizer/jellys/premier-at/premier-at-azul-profundo.png?imwidth=1920',
 
     aniosDisponibles: [
         2013,
