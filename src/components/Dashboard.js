@@ -18,6 +18,8 @@ const Dashboard = () => {
     const [listaTecno, setListaTecno] = useState([]);
     const [indiceTecno, setIndiceTecno] = useState(0);
     
+    const [kilometrajeUsuario, setKilometrajeUsuario] = useState('');
+
     const [metricas, setMetricas] = useState({
         vehiculosRegistrados: 0,
         proximoMantenimiento: null,
@@ -236,6 +238,34 @@ const Dashboard = () => {
         navigate('/login');
     };
 
+    const calcularProximosMantenimientos = (km) => {
+        const kmNum = parseInt(km, 10);
+        if (isNaN(kmNum) || kmNum <= 0) return null;
+
+        const proxAceite = Math.ceil((kmNum + 1) / 5000) * 5000;
+        const faltanAceite = proxAceite - kmNum;
+
+        const proxFrenos = Math.ceil((kmNum + 1) / 10000) * 10000;
+        const faltanFrenos = proxFrenos - kmNum;
+
+        const proxCorrea = Math.ceil((kmNum + 1) / 50000) * 50000;
+        const faltanCorrea = proxCorrea - kmNum;
+
+        const proxBujias = Math.ceil((kmNum + 1) / 20000) * 20000;
+        const faltanBujias = proxBujias - kmNum;
+
+        const proxLlantas = Math.ceil((kmNum + 1) / 10000) * 10000;
+        const faltanLlantas = proxLlantas - kmNum;
+
+        return [
+            { id: 1, servicio: 'Cambio de Aceite y Filtro', proximoKm: proxAceite, faltan: faltanAceite, intervalo: 'cada 5,000 - 10,000 km' },
+            { id: 2, servicio: 'Revisión / Líquido de Frenos', proximoKm: proxFrenos, faltan: faltanFrenos, intervalo: 'cada 10,000 km' },
+            { id: 3, servicio: 'Rotación y Alineación de Llantas', proximoKm: proxLlantas, faltan: faltanLlantas, intervalo: 'cada 10,000 km' },
+            { id: 4, servicio: 'Cambio de Bujías y Filtro de Aire', proximoKm: proxBujias, faltan: faltanBujias, intervalo: 'cada 20,000 km' },
+            { id: 5, servicio: 'Correa de Distribución / Transmisión', proximoKm: proxCorrea, faltan: faltanCorrea, intervalo: 'cada 50,000 - 60,000 km' },
+        ];
+    };
+
     if (!usuario) return (
         <div className="dash-layout d-flex justify-content-center align-items-center">
             <div className="text-center fade-in">
@@ -276,6 +306,8 @@ const Dashboard = () => {
         const vehiculoActual = vehiculosFiltrados[actualIndiceVehiculo];
         infoVehiculoTecno = vehiculoActual.alias ? `${vehiculoActual.alias} (${vehiculoActual.placa})` : `Placa: ${vehiculoActual.placa}`;
     }
+
+    const recomendacionesKm = calcularProximosMantenimientos(kilometrajeUsuario);
 
     return (
         <div className="dash-layout fade-in">
@@ -478,6 +510,58 @@ const Dashboard = () => {
                                 </div>
                             </div>
                         )}
+
+                        {/* NUEVO APARTADO: CONTROL Y CALCULADORA DE KILOMETRAJE */}
+                        <div className="dash-card mb-4">
+                            <div className="d-flex align-items-center gap-2 mb-3">
+                                <span className="fs-3">🚘</span>
+                                <div>
+                                    <h3 className="text-gold fw-bold mb-0">Control de Mantenimiento por Kilometraje</h3>
+                                    <p className="text-light-gray mb-0">Ingresa el kilometraje actual de tu vehículo para calcular tus próximos mantenimientos.</p>
+                                </div>
+                            </div>
+
+                            <div className="row align-items-center g-3 mb-4">
+                                <div className="col-md-6 col-lg-4">
+                                    <label className="form-label text-light fw-bold">Kilometraje Actual (KM):</label>
+                                    <div className="input-group">
+                                        <input 
+                                            type="number" 
+                                            className="form-control bg-dark text-white border-warning" 
+                                            placeholder="Ej: 45000"
+                                            value={kilometrajeUsuario}
+                                            onChange={(e) => setKilometrajeUsuario(e.target.value)}
+                                        />
+                                        <span className="input-group-text bg-warning text-dark fw-bold">KM</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            {recomendacionesKm ? (
+                                <div className="row g-3">
+                                    {recomendacionesKm.map((item) => (
+                                        <div key={item.id} className="col-md-6 col-lg-4">
+                                            <div className="p-3 rounded bg-dark border border-secondary h-100">
+                                                <div className="d-flex justify-content-between align-items-center mb-2">
+                                                    <h6 className="text-gold fw-bold mb-0">{item.servicio}</h6>
+                                                    <span className={`badge ${item.faltan <= 1000 ? 'bg-danger' : 'bg-success'}`}>
+                                                        {item.faltan <= 0 ? '¡Revisar ahora!' : `Faltan ${item.faltan.toLocaleString()} km`}
+                                                    </span>
+                                                </div>
+                                                <p className="text-light mb-1 style-sm">
+                                                    Próximo cambio/revisión: <strong>{item.proximoKm.toLocaleString()} KM</strong>
+                                                </p>
+                                                <small className="text-muted d-block">Recomendado: {item.intervalo}</small>
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
+                            ) : (
+                                kilometrajeUsuario !== '' && (
+                                    <p className="text-warning mb-0">Ingresa un número de kilometraje válido para generar el cálculo.</p>
+                                )
+                            )}
+                        </div>
 
                         {metricas.vehiculosRegistrados === 0 && (
                             <div className="alert alert-custom-warning mb-4">
