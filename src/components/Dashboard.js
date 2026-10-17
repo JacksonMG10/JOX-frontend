@@ -43,7 +43,7 @@ const Dashboard = () => {
     ]);
     const [inputChat, setInputChat] = useState('');
     const [escribiendoAI, setEscribiendoAI] = useState(false);
-    chatEndRef = useRef(null);
+    const chatEndRef = useRef(null);
 
     useEffect(() => {
         chatEndRef.current?.scrollIntoView({ behavior: 'smooth' });
