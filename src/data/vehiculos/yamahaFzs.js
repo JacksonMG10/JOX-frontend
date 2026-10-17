@@ -604,7 +604,7 @@ const glosarioFZS = [
     {
         termino: 'TCI',
         significado:
-            'Transistor Controlled Ignition. Sistema de encendido controlado por transistores integrado en la ECU.'
+            'Transistor Controlled Ignition. Sistema de encendido controlled por transistores integrado en la ECU.'
     },
 
     {
@@ -1233,7 +1233,7 @@ export const yamahaFzs_2021 = {
 
 export const yamahaFzs_2022 = {
 
-    ...yamahaFzs_2022,
+    ...yamahaFzs_2021, // ✅ AHORA USA yamahaFzs_2021 CORRECTAMENTE
 
     anio: 2022,
 
