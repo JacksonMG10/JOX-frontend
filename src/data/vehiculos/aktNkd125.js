@@ -1,1444 +1,1455 @@
-export const aktNkd125 = {
-    marca: 'AKT',
-    modelo: 'NKD 125',
-    tipo: 'Moto',
-aniosDisponibles: [2005], 
-
-obtenerDiagnosticoPorAnio: function(anio) {
-        // 1. Transformamos tu arreglo de "fallasComunes" al formato que lee React
-        const sintomasMapeados = this.fallasComunes.map(falla => {
-            return {
-                titulo: falla.titulo,
-                dificultad: falla.dificultad,
-                descripcion: 'Posibles causas: ' + falla.posiblesCausas.join(', ') + '.',
-                notaEspecial: falla.recomendacion || 'Sigue la regla principal: ' + this.reglaPrincipal,
-                herramientas: this.herramientas.basicas, 
-                // Si la falla tiene un diagnóstico específico lo usamos, si no, usamos la secuencia general
-                pasos: falla.diagnostico ? falla.diagnostico : this.diagnosticoGeneral.secuencia
-            };
-        });
-
-        // 2. Retornamos el objeto con la estructura que espera ExplorarVehiculo.js
-        return {
-            tecnologia: 'Carburador ' + this.carburador.nombre,
-            arbolProblemas: {
-                fallas_generales: {
-                    titulo: 'Fallas Frecuentes',
-                    icono: '⚠️',
-                    subcategorias: [
-                        {
-                            nombre: 'Diagnóstico de Motor y Encendido',
-                            sintomas: sintomasMapeados
-                        }
-                    ]
-                }
-            }
-        };
-    },
-    imagen:
-        'https://acnews.blob.core.windows.net/imgnews/large/NAZ_edc56762d192479abca29ee51b2087dd.jpg',
-
-    descripcion:
-        'Plataforma educativa sobre la familia AKT 125 y su evolución. Incluye información histórica, funcionamiento del motor, mantenimiento, diagnóstico de fallas, reparación y aprendizaje mecánico.',
-
-    // =========================================================
-    // INFORMACIÓN HISTÓRICA
-    // =========================================================
-
-    informacionHistorica: {
-        titulo: 'Generación AKT 125 de 2005',
-
-        advertencia: `
-            La motocicleta de la generación 2005 corresponde históricamente
-            a la AK125 S. La denominación NKD 125 apareció posteriormente
-            dentro de la evolución de la familia AKT 125.
-
-            Por esta razón, la información de esta sección se utiliza para
-            enseñar el motor y la arquitectura mecánica de la generación
-            AKT 125 de 2005 sin confundirla con las versiones NKD posteriores.
-        `,
-
-        modeloHistorico: 'AK125 S',
-        anio: 2005,
-
-        familiaMotor: 'AKT 125',
-        tipoMotor: 'Motor de combustión interna de 4 tiempos',
-
-        arquitectura: 'Monocilíndrico OHV de 2 válvulas',
-        refrigeracion: 'Refrigerado por aire',
-
-        cilindrada: '124,1061 cc',
-        potencia: '11,14 HP a 8.500 rpm',
-        torque: '8,5 Nm a 6.000 rpm',
-
-        alimentacion: 'Carburador Keihin PZ26',
-        encendido: 'CDI',
-        sistemaElectrico: '12V',
-
-        arranque: [
-            'Arranque eléctrico',
-            'Arranque de pedal'
-        ],
-
-        transmision: 'Caja mecánica de 5 velocidades',
-
-        filosofia:
-            'Motor sencillo, mecánico y de fácil mantenimiento, diseñado para uso urbano y de trabajo.'
-    },
-
-    // =========================================================
-    // CONCEPTO GENERAL DEL MOTOR
-    // =========================================================
-
-    conceptoMotor: {
-        titulo: '¿Cómo funciona el motor?',
-
-        explicacion: `
-            El motor convierte la energía química almacenada en el combustible
-            en energía mecánica de rotación.
-
-            Para realizar este proceso utiliza cuatro etapas:
-            admisión, compresión, combustión/expansión y escape.
-
-            El movimiento vertical del pistón es convertido en movimiento
-            rotativo mediante la biela y el cigüeñal.
-        `,
-
-        flujoEnergia: [
-            'Combustible',
-            'Aire',
-            'Mezcla aire/combustible',
-            'Cámara de combustión',
-            'Chispa',
-            'Combustión',
-            'Movimiento del pistón',
-            'Movimiento de la biela',
-            'Rotación del cigüeñal',
-            'Embrague',
-            'Caja de cambios',
-            'Piñón de salida',
-            'Cadena',
-            'Rueda trasera'
-        ],
-
-        formulaSimple:
-            'Aire + combustible + chispa + compresión + sincronización = combustión controlada'
-    },
-
-    // =========================================================
-    // CICLO DE 4 TIEMPOS
-    // =========================================================
-
-    cicloCuatroTiempos: [
-        {
-            numero: 1,
-            nombre: 'Admisión',
-            descripcion: `
-                El pistón desciende desde el PMS hacia el PMI.
-                La válvula de admisión se abre y permite la entrada
-                de la mezcla de aire y combustible al cilindro.
-            `,
-            valvulas: {
-                admision: 'Abierta',
-                escape: 'Cerrada'
-            },
-            movimientoPiston: 'Desciende',
-            objetivo: 'Introducir la mezcla en el cilindro.'
-        },
-
-        {
-            numero: 2,
-            nombre: 'Compresión',
-            descripcion: `
-                El pistón asciende mientras las dos válvulas permanecen
-                cerradas. La mezcla queda comprimida dentro de la cámara
-                de combustión.
-            `,
-            valvulas: {
-                admision: 'Cerrada',
-                escape: 'Cerrada'
-            },
-            movimientoPiston: 'Asciende',
-            objetivo: 'Comprimir la mezcla antes de la combustión.'
-        },
-
-        {
-            numero: 3,
-            nombre: 'Combustión / Expansión',
-            descripcion: `
-                La bujía produce una chispa que enciende la mezcla comprimida.
-                La combustión genera presión y empuja el pistón hacia abajo.
-                Esta es la carrera que produce el trabajo útil principal.
-            `,
-            valvulas: {
-                admision: 'Cerrada',
-                escape: 'Cerrada'
-            },
-            movimientoPiston: 'Desciende',
-            objetivo: 'Convertir la energía de la combustión en movimiento mecánico.'
-        },
-
-        {
-            numero: 4,
-            nombre: 'Escape',
-            descripcion: `
-                El pistón vuelve a subir y la válvula de escape se abre.
-                Los gases producidos durante la combustión salen del cilindro.
-            `,
-            valvulas: {
-                admision: 'Cerrada',
-                escape: 'Abierta'
-            },
-            movimientoPiston: 'Asciende',
-            objetivo: 'Expulsar los gases quemados.'
-        }
-    ],
-
-    // =========================================================
-    // PARTES PRINCIPALES DEL MOTOR
-    // =========================================================
-
-    componentesMotor: [
-        {
-            nombre: 'Culata',
-            funcion:
-                'Contiene la cámara de combustión, válvulas, balancines y elementos relacionados con la distribución.',
-            fallas: [
-                'Fugas de compresión',
-                'Problemas de válvulas',
-                'Desgaste de guías',
-                'Problemas de sellado'
-            ]
-        },
-
-        {
-            nombre: 'Cilindro',
-            funcion:
-                'Proporciona la superficie sobre la cual se desplaza el pistón.',
-            fallas: [
-                'Desgaste',
-                'Rayaduras',
-                'Ovalamiento',
-                'Conicidad'
-            ]
-        },
-
-        {
-            nombre: 'Pistón',
-            funcion:
-                'Recibe la presión de la combustión y transmite la fuerza hacia la biela.',
-            fallas: [
-                'Desgaste',
-                'Rayaduras',
-                'Daños por sobrecalentamiento',
-                'Holgura excesiva'
-            ]
-        },
-
-        {
-            nombre: 'Aros del pistón',
-            funcion:
-                'Ayudan a sellar los gases de combustión y controlar el aceite.',
-            fallas: [
-                'Desgaste',
-                'Pérdida de compresión',
-                'Consumo de aceite',
-                'Humo'
-            ]
-        },
-
-        {
-            nombre: 'Bulón',
-            funcion:
-                'Une el pistón con la biela.',
-            fallas: [
-                'Desgaste',
-                'Holgura',
-                'Rayaduras'
-            ]
-        },
-
-        {
-            nombre: 'Biela',
-            funcion:
-                'Transmite el movimiento entre el pistón y el cigüeñal.',
-            fallas: [
-                'Holgura',
-                'Desgaste de rodamientos/cojinetes según diseño',
-                'Ruido metálico'
-            ]
-        },
-
-        {
-            nombre: 'Cigüeñal',
-            funcion:
-                'Convierte el movimiento alternativo del pistón en movimiento rotativo.',
-            fallas: [
-                'Desalineación',
-                'Desgaste',
-                'Holgura',
-                'Daños en rodamientos'
-            ]
-        },
-
-        {
-            nombre: 'Válvula de admisión',
-            funcion:
-                'Permite la entrada de la mezcla de aire y combustible.',
-            fallas: [
-                'Fuga',
-                'Desgaste',
-                'Quemadura',
-                'Juego incorrecto'
-            ]
-        },
-
-        {
-            nombre: 'Válvula de escape',
-            funcion:
-                'Permite la salida de los gases quemados.',
-            fallas: [
-                'Fuga',
-                'Quemadura',
-                'Desgaste',
-                'Juego incorrecto'
-            ]
-        },
-
-        {
-            nombre: 'Balancines',
-            funcion:
-                'Transmiten el movimiento del mecanismo de distribución hacia las válvulas.',
-            fallas: [
-                'Desgaste',
-                'Holgura',
-                'Ruido'
-            ]
-        },
-
-        {
-            nombre: 'Bujía',
-            funcion:
-                'Produce la chispa necesaria para iniciar la combustión.',
-            fallas: [
-                'Electrodos desgastados',
-                'Carbonización',
-                'Contaminación por aceite',
-                'Falla de chispa'
-            ]
-        },
-
-        {
-            nombre: 'Cárter',
-            funcion:
-                'Aloja y protege componentes internos del motor y contiene el aceite según el diseño.',
-            fallas: [
-                'Fugas',
-                'Golpes',
-                'Roscas dañadas',
-                'Fisuras'
-            ]
-        }
-    ],
-
-    // =========================================================
-    // PMS Y PMI
-    // =========================================================
-
-    posicionPiston: {
-        titulo: 'PMS y PMI',
-
-        PMS: {
-            nombre: 'Punto Muerto Superior',
-            descripcion:
-                'Posición en la que el pistón se encuentra en su punto más alto dentro del cilindro.',
-            usos: [
-                'Ajuste de válvulas',
-                'Verificación de distribución',
-                'Procedimientos de diagnóstico',
-                'Montaje del motor'
-            ]
-        },
-
-        PMI: {
-            nombre: 'Punto Muerto Inferior',
-            descripcion:
-                'Posición en la que el pistón se encuentra en su punto más bajo.',
-            usos: [
-                'Comprensión del ciclo del motor',
-                'Procedimientos de desmontaje y montaje'
-            ]
-        }
-    },
-
-    // =========================================================
-    // SISTEMA DE COMBUSTIBLE
-    // =========================================================
-
-    sistemaCombustible: {
-        titulo: 'Sistema de alimentación',
-
-        componentes: [
-            'Tanque de combustible',
-            'Llave de combustible',
-            'Manguera',
-            'Filtro',
-            'Carburador',
-            'Admisión',
-            'Culata',
-            'Cámara de combustión'
-        ],
-
-        flujo: [
-            'Tanque',
-            'Llave de combustible',
-            'Manguera',
-            'Carburador',
-            'Admisión',
-            'Cilindro'
-        ],
-
-        principio:
-            'El combustible debe llegar al carburador y mezclarse con la cantidad adecuada de aire antes de entrar al motor.'
-    },
-
-    // =========================================================
-    // CARBURADOR
-    // =========================================================
-
-    carburador: {
-        nombre: 'Keihin PZ26',
-
+const sistemasMotorNKD = [
+    {
+        nombre: 'Bloque del motor y Cilindro (Serie CGB / CXX 125cc)',
         funcion:
-            'Preparar y dosificar la mezcla de aire y combustible para el motor.',
-
-        componentes: [
-            {
-                nombre: 'Cuba',
-                funcion: 'Almacena una cantidad controlada de combustible.'
-            },
-            {
-                nombre: 'Flotador',
-                funcion: 'Controla el nivel de combustible dentro de la cuba.'
-            },
-            {
-                nombre: 'Aguja de entrada',
-                funcion: 'Controla el paso de combustible hacia la cuba.'
-            },
-            {
-                nombre: 'Chiclé de baja',
-                funcion: 'Participa principalmente en el circuito de baja y ralentí.'
-            },
-            {
-                nombre: 'Chiclé principal',
-                funcion: 'Dosifica combustible principalmente durante mayores aperturas del acelerador.'
-            },
-            {
-                nombre: 'Aguja',
-                funcion: 'Participa en la dosificación de combustible durante la transición y aceleración.'
-            },
-            {
-                nombre: 'Tornillo de ralentí',
-                funcion: 'Regula la apertura mínima necesaria para mantener el motor encendido.'
-            },
-            {
-                nombre: 'Tornillo de mezcla',
-                funcion: 'Permite ajustar la mezcla según el diseño específico del carburador.'
-            }
-        ],
-
-        fallasComunes: [
-            {
-                falla: 'Motor se ahoga',
-                posiblesCausas: [
-                    'Exceso de combustible',
-                    'Nivel incorrecto de flotador',
-                    'Aguja de entrada defectuosa',
-                    'Filtro de aire obstruido',
-                    'Procedimiento incorrecto de arranque en frío'
-                ]
-            },
-
-            {
-                falla: 'Motor no mantiene ralentí',
-                posiblesCausas: [
-                    'Chiclé de baja obstruido',
-                    'Entrada de aire',
-                    'Ajuste incorrecto',
-                    'Suciedad interna',
-                    'Problema de encendido'
-                ]
-            },
-
-            {
-                falla: 'Falta de aceleración',
-                posiblesCausas: [
-                    'Chiclé principal obstruido',
-                    'Problema de suministro de combustible',
-                    'Filtro de aire',
-                    'Mezcla incorrecta',
-                    'Problema de encendido',
-                    'Problema mecánico'
-                ]
-            }
-        ],
-
-        reglaDiagnostico:
-            'No reemplazar el carburador sin comprobar primero combustible, aire, limpieza, ajuste y funcionamiento del resto del motor.'
-    },
-
-    // =========================================================
-    // SISTEMA DE ENCENDIDO
-    // =========================================================
-
-    sistemaEncendido: {
-        titulo: 'Sistema de encendido CDI',
-
-        flujo: [
-            'Sistema generador',
-            'CDI',
-            'Bobina de encendido',
-            'Cable de alta',
-            'Capuchón',
-            'Bujía',
-            'Chispa'
-        ],
-
-        componentes: [
-            {
-                nombre: 'CDI',
-                funcion:
-                    'Controla el momento de disparo del sistema de encendido según la arquitectura del sistema.'
-            },
-
-            {
-                nombre: 'Bobina',
-                funcion:
-                    'Eleva la tensión para permitir que la bujía produzca la chispa.'
-            },
-
-            {
-                nombre: 'Bujía',
-                funcion:
-                    'Produce la chispa dentro de la cámara de combustión.'
-            },
-
-            {
-                nombre: 'Pulsor / captador',
-                funcion:
-                    'Proporciona información de posición para sincronizar el encendido.'
-            }
-        ],
-
-        fallaNoHayChispa: [
-            'Comprobar la bujía.',
-            'Comprobar el capuchón.',
-            'Comprobar el cable de alta.',
-            'Comprobar conexiones.',
-            'Comprobar bobina.',
-            'Comprobar alimentación o generación correspondiente.',
-            'Comprobar pulsor/captador.',
-            'Comprobar CDI siguiendo el procedimiento del manual.'
-        ],
-
-        reglaDiagnostico:
-            'La ausencia de chispa no significa automáticamente que la CDI esté dañada.'
-    },
-
-    // =========================================================
-    // SISTEMA DE LUBRICACIÓN
-    // =========================================================
-
-    lubricacion: {
-        titulo: 'Sistema de lubricación',
-
-        funcion: [
-            'Reducir fricción',
-            'Disminuir desgaste',
-            'Ayudar a controlar temperatura',
-            'Proteger superficies metálicas',
-            'Transportar contaminantes hacia el sistema de filtración/retención correspondiente'
-        ],
-
-        recorridoConceptual: [
-            'Aceite',
-            'Sistema de bombeo',
-            'Conductos',
-            'Componentes internos',
-            'Culata',
-            'Retorno'
-        ],
-
+            'Estructura de aleación de aluminio con camisa de hierro fundido refrigerada por aire que aloja el pistón, cigüeñal y cadena de distribución o varillas empujadoras (OHV/OHC).',
         fallas: [
-            {
-                nombre: 'Nivel de aceite bajo',
-                consecuencias: [
-                    'Lubricación insuficiente',
-                    'Mayor fricción',
-                    'Aumento de temperatura',
-                    'Desgaste acelerado',
-                    'Daño de componentes'
-                ]
-            },
-
-            {
-                nombre: 'Fuga de aceite',
-                posiblesCausas: [
-                    'Junta deteriorada',
-                    'Retén defectuoso',
-                    'Tornillo de drenaje',
-                    'Superficie de sellado',
-                    'Fisura'
-                ]
-            }
-        ],
-
-        mantenimiento:
-            'Verificar periódicamente nivel, estado y posibles fugas siguiendo el manual correspondiente.'
-    },
-
-    // =========================================================
-    // SISTEMA DE REFRIGERACIÓN
-    // =========================================================
-
-    refrigeracion: {
-        tipo: 'Refrigeración por aire',
-
-        funcionamiento:
-            'Las aletas del cilindro y culata aumentan la superficie disponible para disipar calor hacia el aire.',
-
-        elementos: [
-            'Aletas del cilindro',
-            'Aletas de la culata',
-            'Flujo de aire',
-            'Aceite'
-        ],
-
-        problemas: [
-            'Suciedad acumulada',
-            'Sobrecalentamiento',
-            'Mezcla incorrecta',
-            'Falta de aceite',
-            'Funcionamiento prolongado fuera de condiciones normales'
+            'Fugas de aceite por empaque de la base del cilindro o tapa de culata',
+            'Desgaste en la camisa por trabajar con nivel bajo o aceite degradado',
+            'Sobrecalentamiento por saturación de aletas de refrigeración con barro o suciedad',
+            'Humo azul en el escape por desgaste de anillos o sellos de válvula'
         ]
     },
 
-    // =========================================================
-    // DISTRIBUCIÓN
-    // =========================================================
-
-    distribucion: {
-        titulo: 'Sistema de distribución',
-
+    {
+        nombre: 'Culata SOHC 2V / OHV (2 Válvulas)',
         funcion:
-            'Controlar el momento en que las válvulas de admisión y escape se abren y cierran.',
-
-        elementos: [
-            'Cigüeñal',
-            'Sistema de sincronización',
-            'Mecanismo de accionamiento',
-            'Balancines',
-            'Válvula de admisión',
-            'Válvula de escape'
-        ],
-
-        importancia:
-            'La sincronización correcta es indispensable para que la admisión, compresión, combustión y escape ocurran en el momento adecuado.',
-
-        sintomasDistribucionIncorrecta: [
-            'Motor no arranca',
-            'Pérdida de potencia',
-            'Funcionamiento irregular',
-            'Explosiones por admisión o escape',
-            'Dificultad de arranque'
+            'Aloja las válvulas de admisión y escape, bujía y balancines de accionamiento.',
+        fallas: [
+            'Descalibración o holgura incorrecta en balancines (sonido de "cascabeleo" o válvulas pisadas)',
+            'Soplado de empaque de culata por apriete incorrecto o sobrecalentamiento',
+            'Fuga de compresión por sellado deficiente en asientos de válvula',
+            'Desgaste de sellos de válvula (causa humo blanco/azul al arrancar)'
         ]
     },
 
-    // =========================================================
-    // EMBRAGUE
-    // =========================================================
-
-    embrague: {
+    {
+        nombre: 'Cigüeñal y Biela con Cojinetes de Rodillo',
         funcion:
-            'Permitir conectar y desconectar temporalmente el motor de la transmisión.',
-
-        flujo: [
-            'Cigüeñal',
-            'Embrague',
-            'Caja de cambios',
-            'Piñón de salida',
-            'Cadena',
-            'Rueda'
-        ],
-
-        sintomas: [
-            {
-                nombre: 'Embrague patinando',
-                descripcion:
-                    'El motor aumenta de revoluciones pero la velocidad de la motocicleta no aumenta proporcionalmente.',
-                posiblesCausas: [
-                    'Discos desgastados',
-                    'Ajuste incorrecto',
-                    'Resortes deteriorados',
-                    'Contaminación del sistema'
-                ]
-            },
-
-            {
-                nombre: 'Dificultad para seleccionar cambios',
-                posiblesCausas: [
-                    'Ajuste del embrague',
-                    'Mecanismo selector',
-                    'Desgaste interno',
-                    'Problemas de transmisión'
-                ]
-            }
+            'Convierte el movimiento alternativo del pistón en rotación hacia la caja de cambios de 5 velocidades mediante el embrague húmedo.',
+        fallas: [
+            'Golpeteo grave en el cárter (ruido de biela) por falta de lubricación',
+            'Fuga de aceite por el retén del eje del piñón de salida o de la pata de cambios',
+            'Desgaste excesivo de la canastilla de biela'
         ]
     },
 
-    // =========================================================
-    // CAJA DE CAMBIOS
-    // =========================================================
-
-    cajaCambios: {
-        velocidades: 5,
-
-        relacionesDocumentadas: {
-            primera: '13/36',
-            segunda: '17/32',
-            tercera: '20/28',
-            cuarta: '23/26',
-            quinta: '25/24'
-        },
-
+    {
+        nombre: 'Pistón y Anillos de Fricción',
         funcion:
-            'Modificar la relación entre las revoluciones del motor y la velocidad de salida.',
-
-        componentesPrincipales: [
-            'Eje primario',
-            'Eje secundario',
-            'Engranajes',
-            'Selector',
-            'Horquillas',
-            'Mecanismo de cambio'
+            'Comprimen la mezcla aire/gasolina y transmiten la fuerza de combustión hacia la biela.',
+        fallas: [
+            'Anillos pegados por sedimentación de aceite degradado',
+            'Pérdida drástica de compresión (dificultad para encender)',
+            'Rayado de falda de pistón por trabajar sin filtro de aire'
         ]
     },
 
-    // =========================================================
-    // DIAGNÓSTICO GENERAL
-    // =========================================================
-
-    diagnosticoGeneral: {
-        principio:
-            'Nunca cambiar piezas al azar. Primero se confirma el síntoma, después se realizan pruebas y finalmente se determina la causa.',
-
-        secuencia: [
-            '1. Confirmar el síntoma.',
-            '2. Preguntar cuándo aparece.',
-            '3. Inspeccionar visualmente.',
-            '4. Comprobar combustible.',
-            '5. Comprobar aire.',
-            '6. Comprobar chispa.',
-            '7. Comprobar compresión.',
-            '8. Comprobar distribución.',
-            '9. Comprobar escape.',
-            '10. Comprobar transmisión cuando corresponda.',
-            '11. Medir componentes.',
-            '12. Reparar.',
-            '13. Volver a probar.'
+    {
+        nombre: 'Cadena de Distribución / Varillas Empujadoras y Tensor',
+        funcion:
+            'Mantiene la sincronización exacta entre el cigüeñal y el árbol de levas superior.',
+        fallas: [
+            'Estiramiento de la cadena de distribución con ruido metálico en la tapa izquierda',
+            'Falla del tensor mecánico/automático de la cadena',
+            'Desgaste de los patines guía de caucho internos'
         ]
     },
 
-    // =========================================================
-    // FALLAS COMUNES
-    // =========================================================
+    {
+        nombre: 'Sistema de Refrigeración por Aire Convectivo',
+        funcion:
+            'Disipa el calor generado en la cámara de combustión aprovechando el flujo de aire cuando la motocicleta está en movimiento.',
+        fallas: [
+            'Pérdida de potencia por sobrecalentamiento en tráfico pesado detenido',
+            'Aletas de disipación partidas o cubiertas de aceite/tierra'
+        ]
+    },
 
-    fallasComunes: [
+    {
+        nombre: 'Sistema de Lubricación por Bomba de Trocoide y Filtro Malla',
+        funcion:
+            'Circula aceite a presión hacia la culata, balancines, caja de cambios y embrague sumergido.',
+        fallas: [
+            'Malla/tamiz del cárter tapado con viruta o sellador RTV (impide el flujo de aceite)',
+            'Falta de lubricación en la culata (desgasta árbol de levas y balancines)',
+            'Desgaste de la bomba de aceite trocoide'
+        ]
+    }
+];
+
+
+// ============================================================
+// SISTEMA DE COMBUSTIBLE
+// ============================================================
+
+const sistemaCombustibleNKD = {
+
+    titulo: 'Sistema de Alimentación por Carburador de Cortina (PZ26) / Diafragma Euro 3',
+
+    funcionamiento:
+        'El combustible fluye por gravedad desde el tanque hacia la cuba del carburador. El paso de aire crea un efecto Venturi que aspira y pulveriza la gasolina a través de los boquereles (chicleres) de baja y alta.',
+
+    componentes: [
+        'Tanque de combustible de 2.6 galones con grifo/llave de reserva',
+        'Filtro de gasolina de elemento de papel/malla externa',
+        'Carburador de cortina PZ26 / Carburador de diafragma Euro 3',
+        'Boquerel (chicler) de baja / piloto y boquerel de alta',
+        'Cisne/Múltiple de admisión de aluminio con baquelita aislante',
+        'Filtro de aire de espuma lavable / elemento seco',
+        'Sistema de ahogador (choke) manual'
+    ],
+
+    flujo: [
+        '1. La gasolina baja por gravedad desde la llave de paso hacia el carburador.',
+        '2. El punzón accionado por el flotador regula el nivel constante de la cuba.',
+        '3. La apertura del puño del acelerador levanta la cortina/aguja permitiendo el paso de aire.',
+        '4. El aire pulveriza la gasolina formando la mezcla combustible.',
+        '5. La mezcla pasa por el múltiple de admisión hacia la válvula de la culata.'
+    ],
+
+    diagnostico: [
+        'Inspeccionar presencia de agua o mugre en el vaso/cuba del carburador.',
+        'Verificar que el boquerel de baja no esté obstruido si la moto no sostiene el ralentí.',
+        'Ajustar la aguja de aire/mezcla (1.5 a 2 vueltas desde el fondo como base).',
+        'Verificar que la baquelita del múltiple de admisión no tenga grietas que causen fugas de aire.'
+    ]
+};
+
+
+// ============================================================
+// SISTEMA DE ENCENDIDO
+// ============================================================
+
+const sistemaEncendidoNKD = {
+
+    titulo: 'Sistema de Encendido por Descarga de Condensador (CDI de C.A. o C.D.)',
+
+    funcionamiento:
+        'La bobina captadora (pulsora) en las bobinas de encendido envía una señal al módulo CDI, el cual descarga el voltaje acumulado hacia la bobina de alta tensión, generando la chispa en la bujía.',
+
+    componentes: [
         {
-            titulo: 'La moto no arranca',
-            dificultad: 'Intermedio 🟡',
-
-            posiblesCausas: [
-                'Sin combustible',
-                'Carburador obstruido',
-                'No existe chispa',
-                'Bujía defectuosa',
-                'Baja compresión',
-                'Problema de válvulas',
-                'Distribución incorrecta',
-                'Problema eléctrico'
-            ],
-
-            diagnostico: [
-                'Comprobar que el motor gira.',
-                'Comprobar combustible.',
-                'Comprobar chispa.',
-                'Comprobar compresión.',
-                'Comprobar sincronización.'
-            ]
+            nombre: 'Plato de Bobinas (Stator) y Bobina Pulsora',
+            funcion:
+                'Genera la corriente de carga y la señal de tiempo de encendido.'
         },
 
         {
-            titulo: 'La moto arranca y se apaga',
-            dificultad: 'Básico 🟢',
-
-            posiblesCausas: [
-                'Problema de ralentí',
-                'Chiclé de baja obstruido',
-                'Entrada de aire',
-                'Falta de combustible',
-                'Problema de encendido',
-                'Problema mecánico'
-            ]
+            nombre: 'Módulo de Encendido CDI',
+            funcion:
+                'Almacena energía y determina el avance de la chispa de acuerdo a las RPM.'
         },
 
         {
-            titulo: 'Pérdida de potencia',
-            dificultad: 'Intermedio 🟡',
-
-            posiblesCausas: [
-                'Filtro de aire',
-                'Carburación',
-                'Combustible',
-                'Bujía',
-                'Encendido',
-                'Compresión',
-                'Válvulas',
-                'Distribución',
-                'Escape',
-                'Embrague'
-            ]
+            nombre: 'Bobina de Alta Tensión y Capuchón de Bujía',
+            funcion:
+                'Eleva el voltaje de salida del CDI hasta más de 15.000V.'
         },
 
         {
-            titulo: 'Humo azul',
-            dificultad: 'Avanzado 🔴',
-
-            posiblesCausas: [
-                'Consumo de aceite',
-                'Aros desgastados',
-                'Cilindro desgastado',
-                'Pistón desgastado',
-                'Retenes de válvula',
-                'Problemas en guías'
-            ]
-        },
-
-        {
-            titulo: 'Humo negro',
-            dificultad: 'Intermedio 🟡',
-
-            posiblesCausas: [
-                'Mezcla excesivamente rica',
-                'Problemas de carburación',
-                'Filtro de aire obstruido',
-                'Exceso de combustible'
-            ]
-        },
-
-        {
-            titulo: 'Ruido metálico',
-            dificultad: 'Avanzado 🔴',
-
-            posiblesCausas: [
-                'Válvulas',
-                'Balancines',
-                'Distribución',
-                'Pistón',
-                'Bulón',
-                'Biela',
-                'Cigüeñal',
-                'Embrague',
-                'Engranajes'
-            ],
-
-            recomendacion:
-                'Localizar el ruido y realizar pruebas antes de desmontar o reemplazar componentes.'
+            nombre: 'Bujía Estándar (D8EA / CPR7EA o equivalente)',
+            funcion:
+                'Genera el arco eléctrico dentro de la cámara de combustión.'
         }
     ],
 
-    // =========================================================
-    // HERRAMIENTAS
-    // =========================================================
+    fallaNoHayChispa: [
+        'Verificar el estado del fusible principal de 10A/15A cerca de la batería.',
+        'Medir la resistencia de la bobina pulsora (debe estar entre 100 Ω y 180 Ω).',
+        'Probar continuidad del switch principal de encendido (RUN/OFF del manubrio y switch de llave).',
+        'Inspeccionar el capuchón de bujía (revisar si la resistencia interna está abierta).',
+        'Probar con un módulo CDI de repuesto compatible.'
+    ]
+};
 
-    herramientas: {
-        basicas: [
-            'Juego de llaves',
-            'Juego de dados',
-            'Destornilladores',
-            'Alicates',
-            'Pinzas',
-            'Llave para bujía',
-            'Llave dinamométrica',
-            'Galgas de espesores'
+
+// ============================================================
+// CICLO DE CUATRO TIEMPOS
+// ============================================================
+
+const cicloCuatroTiemposNKD = [
+
+    {
+        numero: 1,
+        nombre: 'Admisión',
+
+        descripcion:
+            'El pistón desciende del PMS al PMI. La válvula de admisión se abre y el carburador entrega la mezcla aire/gasolina pulverizada.',
+
+        movimientoPiston: 'Desciende',
+
+        valvulas: {
+            admision: 'Abierta',
+            escape: 'Cerrada'
+        },
+
+        objetivo:
+            'Ingresar la mayor mezcla atomizada al interior del cilindro.'
+    },
+
+    {
+        numero: 2,
+        nombre: 'Compresión',
+
+        descripcion:
+            'El pistón sube del PMI al PMS con ambas válvulas cerradas, comprimiendo la mezcla aire/combustible (relación ~9.2:1).',
+
+        movimientoPiston: 'Asciende',
+
+        valvulas: {
+            admision: 'Cerrada',
+            escape: 'Cerrada'
+        },
+
+        objetivo:
+            'Elevar la presión y temperatura de la mezcla antes del salto de chispa.'
+    },
+
+    {
+        numero: 3,
+        nombre: 'Combustión / Expansión',
+
+        descripcion:
+            'El CDI envía la señal, la bujía genera la chispa e inflama la mezcla. Los gases empujan con fuerza el pistón hacia abajo.',
+
+        movimientoPiston: 'Desciende',
+
+        valvulas: {
+            admision: 'Cerrada',
+            escape: 'Cerrada'
+        },
+
+        objetivo:
+            'Generar el movimiento mecánico que mueve la transmisión de 5 marchas.'
+    },
+
+    {
+        numero: 4,
+        nombre: 'Escape',
+
+        descripcion:
+            'El pistón asciende impulsando los gases quemados hacia el tubo de escape pasando por el silenciador.',
+
+        movimientoPiston: 'Asciende',
+
+        valvulas: {
+            admision: 'Cerrada',
+            escape: 'Abierta'
+        },
+
+        objetivo:
+            'Expulsar los residuos quemados para iniciar un nuevo ciclo.'
+    }
+];
+
+
+// ============================================================
+// HERRAMIENTAS
+// ============================================================
+
+const herramientasNKD = {
+
+    basicas: [
+        'Juego de llaves fijas o de boca milimétricas (8mm, 10mm, 12mm, 13mm, 14mm, 17mm, 19mm, 22mm)',
+        'Copa para bujía de 18mm / 16mm',
+        'Destornilladores de pala y estrella (N° 2 y N° 3)',
+        'Calibrador de galgas / láminas para válvulas (0.05mm - 0.08mm)',
+        'Alicate de presión y alicate universal',
+        'Recipiente para drenaje de aceite (1 litro) y embudo'
+    ],
+
+    diagnostico: [
+        'Multímetro digital automotriz para pruebas de resistencia y voltaje AC/DC',
+        'Probador de chispa / chispómetro',
+        'Compresímetro con acople de rosca para bujía (M12 / M14)',
+        'Cargador / Mantenedor de batería de 12V para motocicleta'
+    ],
+
+    profesional: [
+        'Torquímetro de 1/4 y 3/8 de pulgada (8 Nm a 50 Nm)',
+        'Sujetador/Extractor de volante magnético (Extractor de cuna AKT/Honda)',
+        'Herramienta de sujeción de embrague y copa castillo para tuerca de filtro centrífugo',
+        'Prensa manual de resortes de válvula'
+    ]
+};
+
+
+// ============================================================
+// DIAGNÓSTICO GENERAL
+// ============================================================
+
+const diagnosticoGeneralNKD = {
+
+    principio:
+        'Diagnóstico práctico de 3 pilares: Comprobar presencia de chispa, flujo de combustible en carburador y buena compresión mecánica.',
+
+    secuencia: [
+
+        '1. Preguntar al conductor las condiciones bajo las cuales comenzó la falla.',
+
+        '2. Verificar si la batería tiene carga (mínimo 12.4V) y si las luces/pito funcionan correctamente.',
+
+        '3. Probar chispa en la bujía retirándola y haciendo masa contra el cilindro mientras se da crank o patada.',
+
+        '4. Inspeccionar el flujo de gasolina desde el tanque soltando el manguito del carburador y abriendo la llave.',
+
+        '5. Comprobar compresión tapando con el pulgar la rosca de la bujía y accionando el pedal de arranque.',
+
+        '6. Desmontar y realizar mantenimiento al carburador si la chispa y compresión están en norma.',
+
+        '7. Verificar la calibración de válvulas si presenta dificultad de encendido en frío.',
+
+        '8. Reemplazar repuestos dañados utilizando piezas de calidad OEM AKT.',
+
+        '9. Ajustar ralentí y mezcla de aire/gasolina.',
+
+        '10. Realizar prueba de ruta en pendientes para verificar rendimiento.'
+    ]
+};
+
+
+// ============================================================
+// FALLAS COMUNES
+// ============================================================
+
+const fallasComunesNKD = [
+
+    {
+        titulo: 'La motocicleta se apaga en ralentí o dificulta encender en frío',
+
+        dificultad: 'Básico 🟢',
+
+        posiblesCausas: [
+            'Válvula de admisión pisada (sin holgura/luz de calibración)',
+            'Boquerel de baja / chicler de ralentí obstruido por sedimentos',
+            'Fuga de aire en el empaque o baquelita del múltiple de admisión',
+            'Bujía desgastada, mojada o con exceso de carbón'
         ],
 
         diagnostico: [
-            'Multímetro',
-            'Compresímetro',
-            'Probador de chispa',
-            'Lámpara de prueba',
-            'Tacómetro'
+            'Calibrar válvulas en frío (Admisión: 0.05mm / Escape: 0.08mm).',
+            'Desmontar la cuba del carburador y limpiar el boquerel de baja con limpiador de carburador.',
+            'Verificar la estanqueidad de la baquelita del cisne de admisión.',
+            'Limpiar o reemplazar la bujía D8EA.'
+        ]
+    },
+
+    {
+        titulo: 'El embrague/clutch patina o cuesta encontrar la marcha neutro',
+
+        dificultad: 'Intermedio 🟡',
+
+        posiblesCausas: [
+            'Guaya/cable de embrague demasiado tensionado o deshilachado',
+            'Discos de embrague/fricción desgastados por uso de aceite inadecuado (usar aceite JASO MA2)',
+            'Resortes de la prensa de embrague ceditos o fatigados'
         ],
 
-        medicionMotor: [
-            'Calibrador',
-            'Micrómetro',
-            'Comparador',
-            'Instrumentos de medición interna'
+        diagnostico: [
+            'Ajustar el juego libre de la manigueta de embrague (2mm a 3mm de tolerancia).',
+            'Drenar el aceite y verificar presencia de partículas de pasta de disco.',
+            'Desmontar la tapa derecha del cárter y medir el espesor de los discos de fricción.'
         ]
     },
 
-    // =========================================================
-    // MANTENIMIENTO
-    // =========================================================
+    {
+        titulo: 'Falta de carga en la batería / Pito débil y luz tenue al frenar',
 
-    mantenimiento: {
-        objetivo:
-            'Prevenir fallas y detectar desgaste antes de que provoque daños mayores.',
+        dificultad: 'Básico 🟢',
 
-        actividades: [
-            {
-                nombre: 'Aceite',
-                accion:
-                    'Comprobar nivel, estado y fugas según el manual específico.'
-            },
+        posiblesCausas: [
+            'Regulador/Rectificador de voltaje dañado o desconectado',
+            'Batería sulfurada o deshidratada (en baterías secas/de gel)',
+            'Bobina de carga del estator quemada',
+            'Fusible principal de 10A/15A sulfatado'
+        ],
 
-            {
-                nombre: 'Bujía',
-                accion:
-                    'Inspeccionar estado y comprobar funcionamiento.'
-            },
-
-            {
-                nombre: 'Filtro de aire',
-                accion:
-                    'Inspeccionar y limpiar/reemplazar según el tipo y condición.'
-            },
-
-            {
-                nombre: 'Carburador',
-                accion:
-                    'Mantener limpio y correctamente ajustado.'
-            },
-
-            {
-                nombre: 'Válvulas',
-                accion:
-                    'Comprobar y ajustar el juego según la especificación del motor.'
-            },
-
-            {
-                nombre: 'Cadena',
-                accion:
-                    'Comprobar tensión, lubricación y desgaste.'
-            },
-
-            {
-                nombre: 'Sistema eléctrico',
-                accion:
-                    'Inspeccionar conectores, cables, batería y fusibles.'
-            },
-
-            {
-                nombre: 'Motor',
-                accion:
-                    'Buscar fugas, ruidos, vibraciones o cambios de funcionamiento.'
-            }
+        diagnostico: [
+            'Medir el voltaje en bornes de la batería con la moto encendida a 4000 RPM (debe marcar entre 13.5V y 14.5V).',
+            'Comprobar el voltaje alterno de salida del plato de bobinas.',
+            'Reemplazar el regulador/rectificador si el voltaje sube por encima de 15V o no carga.'
         ]
     },
 
-    // =========================================================
-    // PROCESO PROFESIONAL DE REPARACIÓN
-    // =========================================================
+    {
+        titulo: 'Ruido de chasquido constante en la culata ("Traqueteo" de válvulas)',
 
-    procesoReparacion: {
-        titulo: 'Método profesional de reparación',
+        dificultad: 'Básico 🟢',
 
-        pasos: [
-            {
-                numero: 1,
-                nombre: 'Confirmación del problema',
-                descripcion:
-                    'Reproducir el síntoma y determinar exactamente qué está ocurriendo.'
-            },
+        posiblesCausas: [
+            'Holgura/luz de válvulas demasiado abierta',
+            'Desgaste en la punta de la manzana/balancín o árbol de levas',
+            'Falta de lubricación en la parte superior del motor'
+        ],
 
-            {
-                numero: 2,
-                nombre: 'Inspección',
-                descripcion:
-                    'Realizar una inspección visual y buscar fugas, cables desconectados, piezas dañadas o modificaciones.'
-            },
-
-            {
-                numero: 3,
-                nombre: 'Pruebas',
-                descripcion:
-                    'Utilizar herramientas de diagnóstico para confirmar o descartar causas.'
-            },
-
-            {
-                numero: 4,
-                nombre: 'Medición',
-                descripcion:
-                    'Medir los componentes que puedan estar fuera de especificación.'
-            },
-
-            {
-                numero: 5,
-                nombre: 'Diagnóstico',
-                descripcion:
-                    'Determinar la causa probable con base en las pruebas realizadas.'
-            },
-
-            {
-                numero: 6,
-                nombre: 'Desmontaje',
-                descripcion:
-                    'Desmontar únicamente lo necesario y organizar correctamente las piezas.'
-            },
-
-            {
-                numero: 7,
-                nombre: 'Inspección interna',
-                descripcion:
-                    'Revisar desgaste, daños, contaminación y condiciones de montaje.'
-            },
-
-            {
-                numero: 8,
-                nombre: 'Reparación',
-                descripcion:
-                    'Reemplazar, reparar o ajustar los componentes que estén fuera de especificación.'
-            },
-
-            {
-                numero: 9,
-                nombre: 'Montaje',
-                descripcion:
-                    'Montar utilizando procedimientos, pares de apriete y especificaciones correspondientes.'
-            },
-
-            {
-                numero: 10,
-                nombre: 'Prueba final',
-                descripcion:
-                    'Poner en funcionamiento el sistema y verificar que el problema haya sido solucionado.'
-            }
+        diagnostico: [
+            'Retirar las tapas de inspección de válvulas y verificar la luz con calibrador de galgas.',
+            'Verificar que llegue flujo de aceite a la culata aflojando levemente el perno superior del cilindro en marcha.',
+            'Inspeccionar desgaste en la superficie del balancín.'
         ]
     },
 
-    // =========================================================
-    // CLASES EDUCATIVAS
-    // =========================================================
+    {
+        titulo: 'Consumo excesivo de gasolina o humo negro al acelerar a fondo',
 
-    cursos: [
+        dificultad: 'Básico 🟢',
+
+        posiblesCausas: [
+            'Choke / ahogador manual parcialmente accionado',
+            'Filtro de aire de espuma lleno de barro, aceite o mugre',
+            'Nivel de gasolina en la cuba demasiado alto (flotador mal calibrado)',
+            'Boquerel de alta sobremedida'
+        ],
+
+        diagnostico: [
+            'Comprobar la posición de la palanca del ahogador.',
+            'Lavar y secar el filtro de aire de espuma e impregnar levemente con aceite para filtro.',
+            'Ajustar el nivel del flotador dentro de la cuba del carburador.'
+        ]
+    }
+];
+
+
+// ============================================================
+// MANTENIMIENTO
+// ============================================================
+
+const mantenimientoNKD = {
+
+    objetivo:
+        'Garantizar la confiabilidad en el transporte diario, alargar la vida del motor CGB/CXX y asegurar un frenado y tracción óptimos.',
+
+    actividades: [
+
         {
-            id: 1,
-            titulo: 'Conociendo el motor AKT 125',
-            nivel: 'Básico',
-            descripcion:
-                'Identificación de las partes principales y arquitectura del motor.',
-            temas: [
-                'Motor 4 tiempos',
-                'OHV',
-                '2 válvulas',
-                'Cilindro',
-                'Pistón',
-                'Biela',
-                'Cigüeñal'
-            ]
+            nombre: 'Aceite de motor (4T)',
+            accion:
+                'Reemplazar cada 2.000 km o 2.500 km utilizando 1.000 ml de aceite mineral o semi-sintético 20W-50 / 10W-40 con certificación JASO MA2 / API SL.'
         },
 
         {
-            id: 2,
-            titulo: 'Los cuatro tiempos',
-            nivel: 'Básico',
-            descripcion:
-                'Explicación completa de admisión, compresión, combustión y escape.',
-            temas: [
-                'Admisión',
-                'Compresión',
-                'Combustión',
-                'Escape',
-                'PMS',
-                'PMI'
-            ]
+            nombre: 'Filtro centrífugo y malla de cárter',
+            accion:
+                'Limpiar la malla tamiz y el filtro centrífugo de aceite ubicado en la tapa derecha cada 10.000 km.'
         },
 
         {
-            id: 3,
-            titulo: 'Pistón, cilindro y aros',
-            nivel: 'Intermedio',
-            descripcion:
-                'Funcionamiento, desgaste, síntomas y diagnóstico.',
-            temas: [
-                'Pistón',
-                'Aros',
-                'Cilindro',
-                'Bulón',
-                'Compresión',
-                'Consumo de aceite'
-            ]
+            nombre: 'Calibración de Válvulas (Luz/Holgura)',
+            accion:
+                'Calibrar cada 6.000 km en frío. Medidas estándar: Admisión 0.05mm / Escape 0.08mm.'
         },
 
         {
-            id: 4,
-            titulo: 'Culata y válvulas',
-            nivel: 'Intermedio',
-            descripcion:
-                'Funcionamiento de las válvulas y mecanismos de accionamiento.',
-            temas: [
-                'Admisión',
-                'Escape',
-                'Balancines',
-                'Resortes',
-                'Retenes',
-                'Ajuste de válvulas'
-            ]
+            nombre: 'Mantenimiento de Carburador y Filtro de Aire',
+            accion:
+                'Lavar el filtro de espuma y realizar limpieza interna del carburador cada 5.000 km.'
         },
 
         {
-            id: 5,
-            titulo: 'Distribución y sincronización',
-            nivel: 'Avanzado',
-            descripcion:
-                'Cómo sincronizar correctamente el motor y comprender el PMS.',
-            temas: [
-                'PMS',
-                'PMI',
-                'Distribución',
-                'Sincronización',
-                'Válvulas'
-            ]
+            nombre: 'Kit de Arrastre (Cadena, Piñón y Catalina)',
+            accion:
+                'Limpiar, tensionar y lubricar la cadena de transmisión (428) cada 50.000 km o cada 500 km. Reemplazar el kit de arrastre completo entre 12.000 km y 15.000 km.'
         },
 
         {
-            id: 6,
-            titulo: 'Carburador PZ26',
-            nivel: 'Intermedio',
-            descripcion:
-                'Funcionamiento y diagnóstico del sistema de alimentación.',
-            temas: [
-                'Flotador',
-                'Chiclé de baja',
-                'Chiclé principal',
-                'Aguja',
-                'Mezcla',
-                'Ralentí',
-                'Ahogo'
-            ]
+            nombre: 'Frenos (Disco delantero y Tambor trasero)',
+            accion:
+                'Inspeccionar grosor de pastillas delanteras y bandas/zapatas traseras cada 3.000 km; reemplazar fluido DOT 4 cada 12 meses.'
         },
 
         {
-            id: 7,
-            titulo: 'Sistema CDI',
-            nivel: 'Intermedio',
-            descripcion:
-                'Funcionamiento del encendido y diagnóstico de ausencia de chispa.',
-            temas: [
-                'CDI',
-                'Bobina',
-                'Bujía',
-                'Pulsor',
-                'Cableado',
-                'Chispa'
-            ]
-        },
-
-        {
-            id: 8,
-            titulo: 'Lubricación y refrigeración',
-            nivel: 'Intermedio',
-            descripcion:
-                'Cómo se lubrica y refrigera el motor.',
-            temas: [
-                'Aceite',
-                'Bomba',
-                'Conductos',
-                'Aletas',
-                'Temperatura',
-                'Desgaste'
-            ]
-        },
-
-        {
-            id: 9,
-            titulo: 'Embrague y caja de cambios',
-            nivel: 'Intermedio',
-            descripcion:
-                'Funcionamiento de la transmisión interna.',
-            temas: [
-                'Embrague',
-                'Discos',
-                'Ejes',
-                'Engranajes',
-                'Selector',
-                '5 velocidades'
-            ]
-        },
-
-        {
-            id: 10,
-            titulo: 'Diagnóstico de fallas',
-            nivel: 'Avanzado',
-            descripcion:
-                'Metodología para encontrar la causa de una falla.',
-            temas: [
-                'No arranca',
-                'Se apaga',
-                'Pierde potencia',
-                'Humo',
-                'Ruidos',
-                'Compresión',
-                'Encendido'
-            ]
-        },
-
-        {
-            id: 11,
-            titulo: 'Desmontaje del motor',
-            nivel: 'Avanzado',
-            descripcion:
-                'Introducción al desmontaje ordenado del motor.',
-            temas: [
-                'Preparación',
-                'Herramientas',
-                'Culata',
-                'Cilindro',
-                'Pistón',
-                'Cárter',
-                'Cigüeñal'
-            ]
-        },
-
-        {
-            id: 12,
-            titulo: 'Medición de componentes',
-            nivel: 'Avanzado',
-            descripcion:
-                'Aprender a determinar si una pieza puede reutilizarse.',
-            temas: [
-                'Calibrador',
-                'Micrómetro',
-                'Holguras',
-                'Desgaste',
-                'Medición del cilindro',
-                'Medición del pistón'
-            ]
-        },
-
-        {
-            id: 13,
-            titulo: 'Armado del motor',
-            nivel: 'Avanzado',
-            descripcion:
-                'Principios de montaje y comprobación antes de arrancar.',
-            temas: [
-                'Limpieza',
-                'Juntas',
-                'Lubricación',
-                'Torque',
-                'Sincronización',
-                'Comprobaciones'
-            ]
-        },
-
-        {
-            id: 14,
-            titulo: 'Primera puesta en marcha',
-            nivel: 'Avanzado',
-            descripcion:
-                'Comprobaciones después de una reparación.',
-            temas: [
-                'Aceite',
-                'Combustible',
-                'Chispa',
-                'Fugas',
-                'Ruidos',
-                'Temperatura',
-                'Prueba'
-            ]
+            nombre: 'Bujía de encendido',
+            accion:
+                'Limpiar y ajustar la holgura del electrodo (0.6mm - 0.7mm) cada 3.000 km; sustituir bujía cada 8.000 km.'
         }
-    ],
+    ]
+};
 
-    // =========================================================
-    // HERRAMIENTAS DE DIAGNÓSTICO POR FALLA
-    // =========================================================
 
-    diagnosticos: {
+// ============================================================
+// SEGURIDAD
+// ============================================================
 
-        noArranca: {
-            titulo: 'Motor no arranca',
+const seguridadNKD = [
 
-            checklist: [
-                '¿El motor gira?',
-                '¿Hay combustible?',
-                '¿El combustible llega al carburador?',
-                '¿Hay chispa?',
-                '¿La bujía está en buen estado?',
-                '¿Hay compresión?',
-                '¿Las válvulas funcionan correctamente?',
-                '¿La distribución está sincronizada?',
-                '¿El escape está libre?'
-            ]
-        },
+    'NUNCA manipule la cadena de transmisión ni efectúe limpiezas con el motor en marcha y una marcha engranada para evitar atrapamientos graves.',
 
-        pierdePotencia: {
-            titulo: 'Motor pierde potencia',
+    'Sostenga la motocicleta firmemente sobre el soporte central (gato central) en una superficie plana antes de retirar ruedas o aflojar ejes.',
 
-            checklist: [
-                'Filtro de aire',
-                'Carburador',
-                'Combustible',
-                'Bujía',
-                'Encendido',
-                'Compresión',
-                'Válvulas',
-                'Distribución',
-                'Escape',
-                'Embrague'
-            ]
-        },
+    'Utilice anteojos de protección al sopletear chicleres o componentes del carburador con limpiador presurizado.',
 
-        consumeAceite: {
-            titulo: 'Consumo de aceite',
+    'Desconecte el borne negativo de la batería de 12V antes de trabajar en la instalación eléctrica o sistema de encendido.',
 
-            checklist: [
-                'Comprobar nivel de aceite',
-                'Buscar fugas externas',
-                'Revisar humo',
-                'Comprobar compresión',
-                'Inspeccionar cilindro',
-                'Inspeccionar pistón',
-                'Inspeccionar aros',
-                'Inspeccionar retenes y guías de válvula'
-            ]
-        },
+    'Respete el torque recomendado en la tuerca del eje de las ruedas (55 Nm a 65 Nm) y en el tapón del cárter (20 Nm).'
+];
 
-        noHayChispa: {
-            titulo: 'No hay chispa',
 
-            checklist: [
-                'Bujía',
-                'Capuchón',
-                'Cable de alta',
-                'Bobina',
-                'Conectores',
-                'Cableado',
-                'Pulsor/captador',
-                'Sistema generador',
-                'CDI'
-            ]
-        }
+// ============================================================
+// CURSOS
+// ============================================================
+
+const cursosNKD = [
+
+    {
+        id: 1,
+
+        titulo: 'Mecánica Básica y Mantenimiento de la AKT NKD 125',
+
+        nivel: 'Básico',
+
+        descripcion:
+            'Aprende a realizar el cambio de aceite, tensión de cadena, limpieza de carburador y mantenimiento preventivo.',
+
+        temas: [
+            'Ubicación de componentes y herramientas básicas necesarias',
+            'Procedimiento de cambio de aceite y limpieza del tamiz',
+            'Tensión y alineación de la cadena de transmisión 428',
+            'Ajuste del cable de acelerador y freno'
+        ]
     },
 
-    // =========================================================
-    // REGLAS DE SEGURIDAD
-    // =========================================================
+    {
+        id: 2,
 
-    seguridad: [
-        'Trabajar en un lugar ventilado.',
-        'Mantener gasolina lejos de llamas y fuentes de ignición.',
-        'Utilizar protección ocular.',
-        'No tocar componentes eléctricos de alta tensión durante una prueba.',
-        'Asegurar correctamente la motocicleta antes de trabajar.',
-        'No poner en marcha el motor en un lugar cerrado.',
-        'Utilizar herramientas adecuadas.',
-        'No forzar tornillos o componentes.',
-        'Utilizar el torque especificado por el manual correspondiente.',
-        'No reutilizar piezas críticas si están fuera de especificación.',
-        'No realizar modificaciones eléctricas sin comprender el circuito.',
-        'Desconectar la batería cuando el procedimiento lo requiera.'
-    ],
+        titulo: 'Calibración de Válvulas y Sincronización del Motor CGB/CXX',
 
-    // =========================================================
-    // REGLA PRINCIPAL DE DIAGNÓSTICO
-    // =========================================================
+        nivel: 'Intermedio',
+
+        descripcion:
+            'Guía técnica paso a paso para la puesta a punto en PMS y calibración precisa de la holgura de válvulas con galgas.',
+
+        temas: [
+            'Búsqueda del Punto Muerto Superior (PMS) en la volante magnética',
+            'Uso correcto del calibrador de galgas en admisión y escape',
+            'Inspección visual del balancín y varillas/cadena',
+            'Resolución del ruido de válvulas'
+        ]
+    },
+
+    {
+        id: 3,
+
+        titulo: 'Carburación, Mezcla y Ajuste de Eficiencia',
+
+        nivel: 'Intermedio',
+
+        descripcion:
+            'Aprende a desarmar, limpiar y diagnosticar el carburador PZ26 / diafragma y ajustar el tornillo de mezcla aire/gasolina.',
+
+        temas: [
+            'Desarme completo del carburador y función de chicleres',
+            'Ajuste de la altura de la aguja y nivel del flotador',
+            'Regulación del tornillo de aire y ralentí',
+            'Diagnóstico del color de la bujía para ajuste de mezcla'
+        ]
+    },
+
+    {
+        id: 4,
+
+        titulo: 'Sistema Eléctrico, Encendido por CDI y Sistema de Carga',
+
+        nivel: 'Avanzado',
+
+        descripcion:
+            'Uso del multímetro para medir el estator, regulador de voltaje, módulo CDI, bobina de alta y diagramas de cableado.',
+
+        temas: [
+            'Lectura del diagrama eléctrico básico de AKT NKD',
+            'Prueba de continuidad y resistencia del plato de bobinas',
+            'Diagnóstico del sistema de carga y rectificación de voltaje',
+            'Diagnóstico de fallas en el circuito de encendido por CDI'
+        ]
+    }
+];
+
+
+// ============================================================
+// GLOSARIO
+// ============================================================
+
+const glosarioNKD = [
+
+    {
+        termino: 'NKD 125',
+        significado:
+            'Modelo emblemático de motocicleta de trabajo/calle de la marca colombiana AKT Motos, equipada con motor monocilíndrico de 125cc.'
+    },
+
+    {
+        termino: 'CDI',
+        significado:
+            'Capacitor Discharge Ignition (Encendido por Descarga de Condensador). Módulo electrónico que controla el instante del salto de chispa.'
+    },
+
+    {
+        termino: 'Chicler / Boquerel',
+        significado:
+            'Tornillo de bronce calibrado con un orificio preciso que regula el paso de gasolina dentro del carburador.'
+    },
+
+    {
+        termino: 'Holgura de Válvulas',
+        significado:
+            'Espacio/luz necesario entre el balancín y el vástago de la válvula para compensar la dilatación térmica del metal.'
+    },
+
+    {
+        termino: 'JASO MA2',
+        significado:
+            'Norma de certificación de aceite de motor de 4 tiempos formulada para evitar el deslizamiento de embragues húmedos.'
+    },
+
+    {
+        termino: 'PZ26',
+        significado:
+            'Referencia estándar de carburador de cortina de 26mm de garganta utilizado en motores monocilíndricos de 125cc.'
+    },
+
+    {
+        termino: 'Filtro Centrífugo',
+        significado:
+            'Dispositivo rotativo montado en el cigüeñal que atrapa partículas e impurezas pesadas por fuerza centrífuga.'
+    }
+];
+
+
+// ============================================================
+// FUNCIÓN PARA CREAR EL DIAGNÓSTICO DE CADA AÑO
+// ============================================================
+
+function crearDiagnosticoNKD(anio, configuracion) {
+
+    const sintomasMapeados = fallasComunesNKD.map(falla => ({
+
+        titulo: falla.titulo,
+
+        dificultad: falla.dificultad,
+
+        descripcion:
+            'Posibles causas: ' +
+            falla.posiblesCausas.join(', ') +
+            '.',
+
+        notaEspecial:
+            'Diagnóstico educativo correspondiente a la AKT NKD 125 ' +
+            anio +
+            '. Motorización: ' + configuracion.motorPrincipal + '.',
+
+        herramientas: [
+            ...herramientasNKD.basicas,
+            ...herramientasNKD.diagnostico
+        ],
+
+        pasos: falla.diagnostico
+    }));
+
+
+    return {
+
+        tecnologia:
+            configuracion.tecnologia,
+
+        motorPrincipal:
+            configuracion.motorPrincipal,
+
+        arbolProblemas: {
+
+            motor: {
+
+                titulo: 'Motor y Carburación AKT 125cc',
+
+                icono: '🔧',
+
+                subcategorias: [
+
+                    {
+                        nombre: 'Diagnóstico General de Motor',
+
+                        sintomas: sintomasMapeados
+                    }
+                ]
+            },
+
+            electrico: {
+
+                titulo: 'Sistema Eléctrico, CDI y Luces LED',
+
+                icono: '⚡',
+
+                subcategorias: [
+
+                    {
+                        nombre: 'Encendido CDI y Carga',
+
+                        sintomas: [
+
+                            {
+                                titulo: 'La moto no da chispa en la bujía o no enciende con el botón de arranque',
+
+                                dificultad: 'Básico 🟢',
+
+                                descripcion:
+                                    'Revisión del fusible principal de 10A/15A, batería de 12V, bobina pulsora y CDI.',
+
+                                herramientas: [
+                                    'Multímetro digital',
+                                    'Chispómetro / Bujía de prueba',
+                                    'Juego de llaves'
+                                ],
+
+                                pasos: [
+                                    '1. Verificar que el interruptor de apagado de emergencia (RUN) esté en posición encendido.',
+                                    '2. Medir el voltaje de la batería en reposo (debe estar por encima de 12.4V).',
+                                    '3. Verificar la resistencia de la bobina pulsora del plato de bobinas (~120 a 160 Ω).',
+                                    '4. Inspeccionar la continuidad del capuchón de bujía y el cable de alta.'
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            },
+
+            transmision: {
+
+                titulo: 'Caja de Cambios y Kit de Arrastre',
+
+                icono: '⚙️',
+
+                subcategorias: [
+
+                    {
+                        nombre: 'Embrague y Transmisión Secundaria',
+
+                        sintomas: [
+
+                            {
+                                titulo: 'Dificultad para engranar marchas o patinamiento de discos de embrague',
+
+                                dificultad: 'Intermedio 🟡',
+
+                                descripcion:
+                                    'Calibración de la guaya de embrague, verificación de discos y viscosidad de aceite.',
+
+                                herramientas: [
+                                    'Llaves fijas de 10mm y 12mm',
+                                    'Herramientas manuales',
+                                    'Recipiente para aceite'
+                                ],
+
+                                pasos: [
+                                    '1. Ajustar el juego libre en la leva de embrague del manubrio (2mm a 3mm).',
+                                    '2. Verificar que el aceite utilizado sea especificación JASO MA2 para embrague húmedo.',
+                                    '3. Inspeccionar el desgaste de los discos de fricción si el motor se revoluciona sin avanzar.'
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            }
+        }
+    };
+}
+
+
+// ============================================================
+// MODELOS INDIVIDUALES POR AÑO (AKT NKD 125 2012 - 2026)
+// ============================================================
+
+// --- PRIMERA GENERACIÓN NKD 125 (2012 - 2019) ---
+
+export const aktNKD125_2012 = {
+
+    marca: 'AKT',
+
+    modelo: 'NKD 125',
+
+    anio: 2012,
+
+    tipo: 'Motocicleta de Calle / Trabajo',
+
+    imagen:
+        'https://upload.wikimedia.org/wikipedia/commons/thumb/e/e8/AKT_NKD_125.jpg/1200px-AKT_NKD_125.jpg',
+
+    descripcion:
+        'Plataforma educativa para AKT NKD 125 2012 (Motor CGB 125cc 4T monocilíndrico refrigerado por aire, carburador PZ26 y frenos de tambor/disco según versión).',
+
+    informacionHistorica: {
+
+        titulo: 'AKT NKD 125 2012',
+
+        generacion: 'Primera generación NKD 125',
+
+        familiaMotor: '125cc CGB 4 Tiempos Monocilíndrico',
+
+        tipoMotor: 'Monocilíndrico 4 tiempos refrigerado por aire',
+
+        arquitectura: 'OHV / SOHC 2 Válvulas',
+
+        alimentacion: 'Carburador de Cortina PZ26',
+
+        encendido: 'Electrónico por CDI (Arranque eléctrico y de pedal)',
+
+        refrigeracion: 'Enfriado por aire de flujo natural',
+
+        distribucion: 'Varillas empujadoras / Cadena de distribución',
+
+        transmision: 'Manual de 5 velocidades con embrague húmedo multidisco'
+    },
+
+    conceptoMotor: {
+
+        titulo: '¿Cómo funciona el motor de la AKT NKD 125 2012?',
+
+        explicacion:
+            'Un motor monocilíndrico de 4 tiempos eficiente y sencillo de reparar que combina bajos costos de mantenimiento con un par adecuado para el tráfico urbano.',
+
+        formulaSimple:
+            'Aire + gasolina por carburador + compresión + chispa CDI = movimiento ágil de 5 velocidades',
+
+        flujoEnergia: [
+            'Tanque de combustible (2.6 galones)',
+            'Llave de reserva',
+            'Carburador PZ26',
+            'Cámara de combustión',
+            'Pistón',
+            'Biela',
+            'Cigüeñal',
+            'Embrague en baño de aceite',
+            'Caja de 5 marchas',
+            'Piñón de salida',
+            'Cadena 428',
+            'Rueda trasera'
+        ]
+    },
+
+    cicloCuatroTiempos: cicloCuatroTiemposNKD,
+
+    componentesMotor: sistemasMotorNKD,
+
+    sistemaCombustible: sistemaCombustibleNKD,
+
+    sistemaEncendido: sistemaEncendidoNKD,
+
+    refrigeracion: {
+
+        tipo: 'Refrigeración por aire convectivo',
+
+        elementos: [
+            'Aletas de refrigeración en bloque de cilindro',
+            'Aletas de disipación en culata',
+            'Flujo de aire por desplazamiento'
+        ],
+
+        funcionamiento:
+            'El aire ambiente circula por las aletas metálicas disipando el calor térmico generado por la combustión.'
+    },
+
+    lubricacion: {
+
+        tipo: 'Lubricación forzada por bomba trocoide e inmersión',
+
+        componentes: [
+            'Cárter de aluminio',
+            'Bomba de aceite trocoide',
+            'Tamiz / Malla de filtrado',
+            'Filtro centrífugo de aceite'
+        ],
+
+        funcionamiento:
+            'Impulsa aceite 20W-50 / 10W-40 JASO MA2 a través de los conductos lubricando balancines, pistón y discos de embrague.'
+    },
+
+    distribucion: {
+
+        titulo: 'Distribución por varillas empujadoras / cadena',
+
+        tipo: 'Mecanismo de tiempo sincronizado por piñones/cadena',
+
+        funcion:
+            'Controla la apertura de las válvulas de admisión y escape.',
+
+        advertencia:
+            'Asegure la correcta luz de válvulas (0.05mm Adm / 0.08mm Esc) para evitar pérdida de compresión.'
+    },
+
+    diagnosticoGeneral: diagnosticoGeneralNKD,
+
+    fallasComunes: fallasComunesNKD,
+
+    herramientas: herramientasNKD,
+
+    mantenimiento: mantenimientoNKD,
+
+    cursos: cursosNKD,
+
+    seguridad: seguridadNKD,
+
+    glosario: glosarioNKD,
 
     reglaPrincipal:
-        'DIAGNOSTICAR → MEDIR → CONFIRMAR → REPARAR → COMPROBAR',
+        'CHISPA → COMBUSTIBLE → COMPRESIÓN → VERIFICACIÓN',
 
-    // =========================================================
-    // GLOSARIO
-    // =========================================================
+    obtenerDiagnosticoPorAnio: function () {
 
-    glosario: [
-        {
-            termino: '4T',
-            significado: 'Motor de cuatro tiempos: admisión, compresión, combustión y escape.'
-        },
+        return crearDiagnosticoNKD(
+            2012,
+            {
+                tecnologia: '1ª Gen - Carburador PZ26 / Encendido CDI',
 
-        {
-            termino: 'OHV',
-            significado:
-                'Overhead Valve. Arquitectura en la que las válvulas se encuentran en la culata y son accionadas mediante un mecanismo de distribución.'
-        },
+                motorPrincipal: '125cc CGB Monocilíndrico 4T (10.3 HP)'
+            }
+        );
+    }
+};
 
-        {
-            termino: 'PMS',
-            significado: 'Punto Muerto Superior: posición más alta del pistón.'
-        },
 
-        {
-            termino: 'PMI',
-            significado: 'Punto Muerto Inferior: posición más baja del pistón.'
-        },
+export const aktNKD125_2013 = {
 
-        {
-            termino: 'CDI',
-            significado:
-                'Sistema electrónico utilizado para controlar el encendido del motor.'
-        },
+    ...aktNKD125_2012,
 
-        {
-            termino: 'RPM',
-            significado: 'Revoluciones por minuto.'
-        },
+    anio: 2013,
 
-        {
-            termino: 'Torque',
-            significado:
-                'Fuerza de giro disponible en el eje del motor.'
-        },
+    descripcion:
+        'Plataforma educativa para AKT NKD 125 2013. Mantenimiento de carburador, frenos y calibración de válvulas.',
 
-        {
-            termino: 'Compresión',
-            significado:
-                'Proceso mediante el cual el pistón reduce el volumen de la mezcla antes de la combustión.'
-        },
+    informacionHistorica: {
 
-        {
-            termino: 'Carburación',
-            significado:
-                'Proceso mediante el cual se prepara y dosifica la mezcla de aire y combustible.'
-        },
+        ...aktNKD125_2012.informacionHistorica,
 
-        {
-            termino: 'Ralentí',
-            significado:
-                'Régimen de funcionamiento del motor con el acelerador prácticamente cerrado y sin carga de transmisión.'
-        },
+        titulo: 'AKT NKD 125 2013',
 
-        {
-            termino: 'Holgura',
-            significado:
-                'Espacio o juego existente entre dos componentes que trabajan juntos.'
-        }
+        anio: 2013
+    },
+
+    obtenerDiagnosticoPorAnio: function () {
+
+        return crearDiagnosticoNKD(
+            2013,
+            {
+                tecnologia: '1ª Gen - Carburador PZ26 / Encendido CDI',
+
+                motorPrincipal: '125cc CGB Monocilíndrico 4T'
+            }
+        );
+    }
+};
+
+
+export const aktNKD125_2014 = {
+
+    ...aktNKD125_2013,
+
+    anio: 2014,
+
+    descripcion:
+        'Plataforma educativa para AKT NKD 125 2014. Guías de servicio técnico y mantenimiento de la instalación eléctrica.',
+
+    informacionHistorica: {
+
+        ...aktNKD125_2013.informacionHistorica,
+
+        titulo: 'AKT NKD 125 2014',
+
+        anio: 2014
+    },
+
+    obtenerDiagnosticoPorAnio: function () {
+
+        return crearDiagnosticoNKD(
+            2014,
+            {
+                tecnologia: '1ª Gen - Carburador PZ26 / CDI',
+
+                motorPrincipal: '125cc CGB Monocilíndrico 4T'
+            }
+        );
+    }
+};
+
+
+export const aktNKD125_2015 = {
+
+    ...aktNKD125_2014,
+
+    anio: 2015,
+
+    descripcion:
+        'Plataforma educativa para AKT NKD 125 2015. Diagnóstico de encendido por CDI, cargador de batería y embrague.',
+
+    informacionHistorica: {
+
+        ...aktNKD125_2014.informacionHistorica,
+
+        titulo: 'AKT NKD 125 2015',
+
+        anio: 2015
+    },
+
+    obtenerDiagnosticoPorAnio: function () {
+
+        return crearDiagnosticoNKD(
+            2015,
+            {
+                tecnologia: '1ª Gen - Carburador PZ26 / CDI',
+
+                motorPrincipal: '125cc CGB Monocilíndrico 4T'
+            }
+        );
+    }
+};
+
+
+export const aktNKD125_2016 = {
+
+    ...aktNKD125_2015,
+
+    anio: 2016,
+
+    descripcion:
+        'Plataforma educativa para AKT NKD 125 2016. Mantenimiento del kit de arrastre, discos de embrague y frenos.',
+
+    informacionHistorica: {
+
+        ...aktNKD125_2015.informacionHistorica,
+
+        titulo: 'AKT NKD 125 2016',
+
+        anio: 2016
+    },
+
+    obtenerDiagnosticoPorAnio: function () {
+
+        return crearDiagnosticoNKD(
+            2016,
+            {
+                tecnologia: '1ª Gen - Carburador PZ26 / CDI',
+
+                motorPrincipal: '125cc CGB Monocilíndrico 4T'
+            }
+        );
+    }
+};
+
+
+export const aktNKD125_2017 = {
+
+    ...aktNKD125_2016,
+
+    anio: 2017,
+
+    descripcion:
+        'Plataforma educativa para AKT NKD 125 2017. Guías de reparación de carburador y ajustes mecánicos.',
+
+    informacionHistorica: {
+
+        ...aktNKD125_2016.informacionHistorica,
+
+        titulo: 'AKT NKD 125 2017',
+
+        anio: 2017
+    },
+
+    obtenerDiagnosticoPorAnio: function () {
+
+        return crearDiagnosticoNKD(
+            2017,
+            {
+                tecnologia: '1ª Gen - Carburador PZ26 / CDI',
+
+                motorPrincipal: '125cc CGB Monocilíndrico 4T'
+            }
+        );
+    }
+};
+
+
+export const aktNKD125_2018 = {
+
+    ...aktNKD125_2017,
+
+    anio: 2018,
+
+    descripcion:
+        'Plataforma educativa para AKT NKD 125 2018. Mantenimiento general y calibración de motor.',
+
+    informacionHistorica: {
+
+        ...aktNKD125_2017.informacionHistorica,
+
+        titulo: 'AKT NKD 125 2018',
+
+        anio: 2018
+    },
+
+    obtenerDiagnosticoPorAnio: function () {
+
+        return crearDiagnosticoNKD(
+            2018,
+            {
+                tecnologia: '1ª Gen - Carburador PZ26 / CDI',
+
+                motorPrincipal: '125cc CGB Monocilíndrico 4T'
+            }
+        );
+    }
+};
+
+
+export const aktNKD125_2019 = {
+
+    ...aktNKD125_2018,
+
+    anio: 2019,
+
+    descripcion:
+        'Plataforma educativa para AKT NKD 125 2019. Cierre de la primera generación estándar.',
+
+    informacionHistorica: {
+
+        ...aktNKD125_2018.informacionHistorica,
+
+        titulo: 'AKT NKD 125 2019',
+
+        anio: 2019
+    },
+
+    obtenerDiagnosticoPorAnio: function () {
+
+        return crearDiagnosticoNKD(
+            2019,
+            {
+                tecnologia: '1ª Gen - Carburador PZ26 / CDI',
+
+                motorPrincipal: '125cc CGB Monocilíndrico 4T'
+            }
+        );
+    }
+};
+
+
+// --- SEGUNDA GENERACIÓN NKD 125 LED / METAL EDITION / EURO 3 (2020 - 2026) ---
+
+export const aktNKD125_2020 = {
+
+    ...aktNKD125_2019,
+
+    anio: 2020,
+
+    imagen:
+        'https://upload.wikimedia.org/wikipedia/commons/thumb/e/e8/AKT_NKD_125.jpg/1200px-AKT_NKD_125.jpg',
+
+    descripcion:
+        'Plataforma educativa para AKT NKD 125 2020 (Lanzamiento de la versión NKD LED / Faro principal multifocal LED, velocímetro digital, motor CXX 125cc mejorado y freno de disco delantero corte lobulado).',
+
+    informacionHistorica: {
+
+        titulo: 'AKT NKD 125 LED 2020',
+
+        generacion: 'Segunda generación NKD 125 LED',
+
+        familiaMotor: '125cc CXX 4 Tiempos Monocilíndrico',
+
+        tipoMotor: 'Monocilíndrico 4T refrigerado por aire de alta respuesta',
+
+        arquitectura: 'SOHC / OHV 2 Válvulas',
+
+        alimentacion: 'Carburador Optimizado / Diafragma Euro 3',
+
+        encendido: 'CDI Electrónico con iluminación LED directa',
+
+        refrigeracion: 'Aire por convección natural',
+
+        distribucion: 'Sincronización por piñones y varillas / cadena',
+
+        transmision: 'Manual de 5 velocidades con embrague multidisco en baño de aceite'
+    },
+
+    obtenerDiagnosticoPorAnio: function () {
+
+        return crearDiagnosticoNKD(
+            2020,
+            {
+                tecnologia: '2ª Gen NKD LED - Carburador Optimizado / Tablero Digital',
+
+                motorPrincipal: '125cc CXX Monocilíndrico 4T (10.3 HP)'
+            }
+        );
+    }
+};
+
+
+export const aktNKD125_2021 = {
+
+    ...aktNKD125_2020,
+
+    anio: 2021,
+
+    descripcion:
+        'Plataforma educativa para AKT NKD 125 2021. Mantenimiento del faro LED, sistema de carga y carburación.',
+
+    informacionHistorica: {
+
+        ...aktNKD125_2020.informacionHistorica,
+
+        titulo: 'AKT NKD 125 2021',
+
+        anio: 2021
+    },
+
+    obtenerDiagnosticoPorAnio: function () {
+
+        return crearDiagnosticoNKD(
+            2021,
+            {
+                tecnologia: '2ª Gen NKD LED - Carburador / Tablero Digital',
+
+                motorPrincipal: '125cc CXX Monocilíndrico 4T'
+            }
+        );
+    }
+};
+
+
+export const aktNKD125_2022 = {
+
+    ...aktNKD125_2021,
+
+    anio: 2022,
+
+    descripcion:
+        'Plataforma educativa para AKT NKD 125 2022 (Edición Metal Edition / Calcomanías personalizadas, protectores de faro y freno lobulado).',
+
+    informacionHistorica: {
+
+        ...aktNKD125_2021.informacionHistorica,
+
+        titulo: 'AKT NKD 125 Metal Edition 2022',
+
+        anio: 2022
+    },
+
+    obtenerDiagnosticoPorAnio: function () {
+
+        return crearDiagnosticoNKD(
+            2022,
+            {
+                tecnologia: '2ª Gen NKD Metal Edition - Carburador / Disco Lobulado',
+
+                motorPrincipal: '125cc CXX Monocilíndrico 4T'
+            }
+        );
+    }
+};
+
+
+export const aktNKD125_2023 = {
+
+    ...aktNKD125_2022,
+
+    anio: 2023,
+
+    descripcion:
+        'Plataforma educativa para AKT NKD 125 2023. Diagnóstico de frenos, sistema eléctrico y carburación.',
+
+    informacionHistorica: {
+
+        ...aktNKD125_2022.informacionHistorica,
+
+        titulo: 'AKT NKD 125 2023',
+
+        anio: 2023
+    },
+
+    obtenerDiagnosticoPorAnio: function () {
+
+        return crearDiagnosticoNKD(
+            2023,
+            {
+                tecnologia: '2ª Gen NKD LED - Carburador / Disco Lobulado',
+
+                motorPrincipal: '125cc CXX Monocilíndrico 4T'
+            }
+        );
+    }
+};
+
+
+export const aktNKD125_2024 = {
+
+    ...aktNKD125_2023,
+
+    anio: 2024,
+
+    imagen:
+        'https://upload.wikimedia.org/wikipedia/commons/thumb/e/e8/AKT_NKD_125.jpg/1200px-AKT_NKD_125.jpg',
+
+    descripcion:
+        'Plataforma educativa para AKT NKD 125 2024 (Versiones NKD Classic, NKD LED y Metal Edition).',
+
+    informacionHistorica: {
+
+        ...aktNKD125_2023.informacionHistorica,
+
+        titulo: 'AKT NKD 125 2024',
+
+        anio: 2024
+    },
+
+    obtenerDiagnosticoPorAnio: function () {
+
+        return crearDiagnosticoNKD(
+            2024,
+            {
+                tecnologia: '2ª Gen NKD LED - Carburador Optimizado / 10.3 HP',
+
+                motorPrincipal: '125cc CXX Monocilíndrico 4T (10.3 HP)'
+            }
+        );
+    }
+};
+
+
+export const aktNKD125_2025 = {
+
+    ...aktNKD125_2024,
+
+    anio: 2025,
+
+    descripcion:
+        'Plataforma educativa para AKT NKD 125 2025. Guías de mantenimiento preventivo, kit de arrastre y calibración de motor.',
+
+    informacionHistorica: {
+
+        ...aktNKD125_2024.informacionHistorica,
+
+        titulo: 'AKT NKD 125 2025',
+
+        anio: 2025
+    },
+
+    obtenerDiagnosticoPorAnio: function () {
+
+        return crearDiagnosticoNKD(
+            2025,
+            {
+                tecnologia: '2ª Gen NKD LED - Carburador / Disco Lobulado',
+
+                motorPrincipal: '125cc CXX Monocilíndrico 4T'
+            }
+        );
+    }
+};
+
+
+export const aktNKD125_2026 = {
+
+    ...aktNKD125_2025,
+
+    anio: 2026,
+
+    descripcion:
+        'Plataforma educativa para AKT NKD 125 2026. Diagnóstico completo de motor 125cc, sistema eléctrico LED, carburador y transmisión de 5 velocidades.',
+
+    informacionHistorica: {
+
+        ...aktNKD125_2025.informacionHistorica,
+
+        titulo: 'AKT NKD 125 2026',
+
+        anio: 2026
+    },
+
+    obtenerDiagnosticoPorAnio: function () {
+
+        return crearDiagnosticoNKD(
+            2026,
+            {
+                tecnologia: '2ª Gen NKD LED / Metal Edition - Carburador Optimizado',
+
+                motorPrincipal: '125cc CXX Monocilíndrico 4T (10.3 HP / 9.3 Nm)'
+            }
+        );
+    }
+};
+
+
+// ============================================================
+// OBJETO EXPORTABLE GENERAL DE AKT NKD 125
+// ============================================================
+
+export const aktNKD125 = {
+
+    marca: 'AKT',
+
+    modelo: 'NKD 125',
+
+    tipo: 'Motocicleta de Calle / Trabajo',
+
+    imagen:
+        'https://upload.wikimedia.org/wikipedia/commons/thumb/e/e8/AKT_NKD_125.jpg/1200px-AKT_NKD_125.jpg',
+
+    aniosDisponibles: [
+        2012,
+        2013,
+        2014,
+        2015,
+        2016,
+        2017,
+        2018,
+        2019,
+        2020,
+        2021,
+        2022,
+        2023,
+        2024,
+        2025,
+        2026
     ],
 
-    // =========================================================
-    // NOTA TÉCNICA
-    // =========================================================
+    vehiculosPorAnio: {
 
-    notaTecnica: `
-        Las especificaciones de esta ficha corresponden a la generación
-        histórica AK125 S de 2005 y no deben utilizarse automáticamente
-        para otras versiones AKT 125 o NKD de años posteriores.
+        2012: aktNKD125_2012,
 
-        Para reparaciones que involucren tolerancias, torques, dimensiones,
-        ajustes de válvulas, componentes internos o procedimientos de montaje,
-        se debe consultar el manual de servicio correspondiente al año,
-        referencia y número de motor de la motocicleta.
-    `
+        2013: aktNKD125_2013,
+
+        2014: aktNKD125_2014,
+
+        2015: aktNKD125_2015,
+
+        2016: aktNKD125_2016,
+
+        2017: aktNKD125_2017,
+
+        2018: aktNKD125_2018,
+
+        2019: aktNKD125_2019,
+
+        2020: aktNKD125_2020,
+
+        2021: aktNKD125_2021,
+
+        2022: aktNKD125_2022,
+
+        2023: aktNKD125_2023,
+
+        2024: aktNKD125_2024,
+
+        2025: aktNKD125_2025,
+
+        2026: aktNKD125_2026
+    },
+
+    obtenerPorAnio(anio) {
+
+        return this.vehiculosPorAnio[anio] || this.vehiculosPorAnio[2026];
+    },
+
+    obtenerDiagnosticoPorAnio(anio) {
+
+        const vehiculo = this.obtenerPorAnio(anio);
+
+        return vehiculo ? vehiculo.obtenerDiagnosticoPorAnio() : null;
+    }
 };

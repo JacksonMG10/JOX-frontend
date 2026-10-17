@@ -1,1130 +1,1453 @@
-export const bajajCt100 = {
-    marca: 'Bajaj',
-    modelo: 'CT 100',
-    tipo: 'Moto',
-    aniosDisponibles: [2001],
-
-    obtenerDiagnosticoPorAnio: function(anio) {
-        const sintomasMapeados = this.fallasComunes.map(falla => {
-            return {
-                titulo: falla.titulo,
-                dificultad: falla.dificultad,
-                descripcion: 'Posibles causas: ' + falla.posiblesCausas.join(', ') + '.',
-                notaEspecial: falla.recomendacion || 'Sigue la regla principal: ' + this.reglaPrincipal,
-                herramientas: this.herramientas.basicas,
-                pasos: falla.diagnostico ? falla.diagnostico : this.diagnosticoGeneral.secuencia
-            };
-        });
-
-        return {
-            tecnologia: 'Carburador ' + this.carburador.nombre,
-            arbolProblemas: {
-                fallas_generales: {
-                    titulo: 'Fallas Frecuentes',
-                    icono: '⚠️',
-                    subcategorias: [
-                        {
-                            nombre: 'Diagnóstico de Motor y Encendido',
-                            sintomas: sintomasMapeados
-                        }
-                    ]
-                }
-            }
-        };
-    },
-
-    imagen:
-        'https://www.bajajauto.com/-/media/assets/bajajauto/bikes/ct/ct-100/ct-100-red.jpg',
-
-    descripcion:
-        'Plataforma educativa sobre la familia Bajaj CT 100 y su evolución. Incluye información histórica, funcionamiento del motor de 100cc, mantenimiento, diagnóstico de fallas, reparación y aprendizaje mecánico.',
-
-    // =========================================================
-    // INFORMACIÓN HISTÓRICA Y TÉCNICA
-    // =========================================================
-
-    informacionHistorica: {
-        titulo: 'Bajaj CT 100 - Plataforma Trabajo / Urbana',
-
-        advertencia: `
-            Las especificaciones técnicas pueden variar ligeramente según la versión 
-            (CT 100 KS, ES, Spoke, Alloy) y el año de producción (motores Boxer / CT con tecnología ExhausTEC).
-            
-            Esta guía toma como base la arquitectura mecánica de la Bajaj CT 100 carburada tradicional.
-        `,
-
-        modeloHistorico: 'CT 100',
-        anio: 2001,
-
-        familiaMotor: 'Bajaj 100 4T',
-        tipoMotor: 'Motor de combustión interna de 4 tiempos',
-
-        arquitectura: 'Monocilíndrico SOHC de 2 válvulas (árbol de levas a la cabeza)',
-        refrigeracion: 'Refrigerado por aire',
-
-        cilindrada: '99,27 cc',
-        potencia: '8,2 HP a 7.500 rpm',
-        torque: '8,05 Nm a 4.500 rpm',
-
-        alimentacion: 'Carburador Keihin PB18 / PZ19 (según versión)',
-        encendido: 'CDI digital (AC/DC según generación)',
-        sistemaElectrico: '12V',
-
-        arranque: [
-            'Arranque de pedal',
-            'Arranque eléctrico (en versiones ES)'
-        ],
-
-        transmision: 'Caja mecánica de 4 velocidades',
-
-        filosofia:
-            'Motor enfocado en la máxima eficiencia de combustible, durabilidad extrema y mantenimiento sencillo para trabajo diario.'
-    },
-
-    // =========================================================
-    // CONCEPTO GENERAL DEL MOTOR
-    // =========================================================
-
-    conceptoMotor: {
-        titulo: '¿Cómo funciona el motor?',
-
-        explicacion: `
-            El motor convierte la energía química almacenada en la gasolina
-            en energía mecánica de rotación.
-
-            Para realizar este proceso utiliza cuatro etapas:
-            admisión, compresión, combustión/expansión y escape.
-
-            A diferencia de motores OHV con varillas impulsoras, la Bajaj CT 100
-            utiliza un sistema SOHC donde el árbol de levas está en la culata.
-        `,
-
-        flujoEnergia: [
-            'Combustible',
-            'Aire',
-            'Mezcla aire/combustible',
-            'Cámara de combustión',
-            'Chispa',
-            'Combustión',
-            'Movimiento del pistón',
-            'Movimiento de la biela',
-            'Rotación del cigüeñal',
-            'Embrague',
-            'Caja de cambios',
-            'Piñón de salida',
-            'Cadena',
-            'Rueda trasera'
-        ],
-
-        formulaSimple:
-            'Aire + combustible + chispa + compresión + sincronización = combustión controlada'
-    },
-
-    // =========================================================
-    // CICLO DE 4 TIEMPOS
-    // =========================================================
-
-    cicloCuatroTiempos: [
-        {
-            numero: 1,
-            nombre: 'Admisión',
-            descripcion: `
-                El pistón desciende desde el PMS hacia el PMI.
-                La válvula de admisión se abre para permitir el ingreso
-                de la mezcla aire/combustible desde el carburador.
-            `,
-            valvulas: {
-                admision: 'Abierta',
-                escape: 'Cerrada'
-            },
-            movimientoPiston: 'Desciende',
-            objetivo: 'Llenar la cámara de combustión con la mezcla.'
-        },
-
-        {
-            numero: 2,
-            nombre: 'Compresión',
-            descripcion: `
-                El pistón asciende hacia el PMS con ambas válvulas cerradas.
-                La mezcla se comprime elevando su presión y temperatura.
-            `,
-            valvulas: {
-                admision: 'Cerrada',
-                escape: 'Cerrada'
-            },
-            movimientoPiston: 'Asciende',
-            objetivo: 'Comprimir la mezcla para optimizar la combustión.'
-        },
-
-        {
-            numero: 3,
-            nombre: 'Combustión / Expansión',
-            descripcion: `
-                La bujía genera una chispa de alta tensión.
-                La mezcla se enciende, genera alta presión y empuja con fuerza el pistón hacia abajo.
-            `,
-            valvulas: {
-                admision: 'Cerrada',
-                escape: 'Cerrada'
-            },
-            movimientoPiston: 'Desciende',
-            objetivo: 'Producir la potencia útil del motor.'
-        },
-
-        {
-            numero: 4,
-            nombre: 'Escape',
-            descripcion: `
-                El pistón asciende nuevamente mientras la válvula de escape se abre.
-                Los gases quemados son expulsados hacia el múltiple de escape y silenciador.
-            `,
-            valvulas: {
-                admision: 'Cerrada',
-                escape: 'Abierta'
-            },
-            movimientoPiston: 'Asciende',
-            objetivo: 'Limpiar el cilindro de gases quemados.'
-        }
-    ],
-
-    // =========================================================
-    // PARTES PRINCIPALES DEL MOTOR
-    // =========================================================
-
-    componentesMotor: [
-        {
-            nombre: 'Culata SOHC',
-            funcion:
-                'Aloja la cámara de combustión, el árbol de levas superior, balancines y válvulas.',
-            fallas: [
-                'Fugas de compresión',
-                'Desgaste en levas o balancines',
-                'Desgaste de guías y retenes de válvula',
-                'Rosca de bujía aislada'
-            ]
-        },
-
-        {
-            nombre: 'Cilindro',
-            funcion:
-                'Proporciona la superficie rectificada sobre la que se desplaza el pistón.',
-            fallas: [
-                'Desgaste o rayaduras por falta de lubricación',
-                'Ovalamiento',
-                'Fuga en junta de base'
-            ]
-        },
-
-        {
-            nombre: 'Pistón y Aros',
-            funcion:
-                'Sellar la cámara de combustión y transmitir el impulso de la explosión a la biela.',
-            fallas: [
-                'Aros desgastados o pegados',
-                'Consumo de aceite y humo azul',
-                'Pérdida de compresión',
-                'Cabeza del pistón carbonizada'
-            ]
-        },
-
-        {
-            nombre: 'Cadenilla de distribución',
-            funcion:
-                'Transmitir el movimiento rotativo del cigüeñal hacia el árbol de levas.',
-            fallas: [
-                'Estiramiento por desgaste',
-                'Ruido metálico en culata',
-                'Salto de dientes (desincronización)'
-            ]
-        },
-
-        {
-            nombre: 'Tensor de cadenilla',
-            funcion:
-                'Mantener la tensión constante sobre la cadenilla de distribución.',
-            fallas: [
-                'Pérdida de tensión o trinquete desgastado',
-                'Ruido constante de cadenilla'
-            ]
-        },
-
-        {
-            nombre: 'Cigüeñal y Biela',
-            funcion:
-                'Transformar el movimiento lineal del pistón en fuerza de rotación.',
-            fallas: [
-                'Juego axial o radial en rodamiento de biela',
-                'Golpeteo metálico en la parte baja del motor'
-            ]
-        },
-
-        {
-            nombre: 'Válvula de admisión y escape',
-            funcion:
-                'Controlar el paso de mezcla limpia y la salida de gases quemados.',
-            fallas: [
-                'Asiento de válvula flameado o desgastado',
-                'Calibración incorrecta (holgura ajustada o floja)',
-                'Depósitos de carbón'
-            ]
-        },
-
-        {
-            nombre: 'Bujía',
-            funcion:
-                'Proporcionar la chispa eléctrica para encender la mezcla.',
-            fallas: [
-                'Calibración de electrodo fuera de rango',
-                'Engrasada o impregnada de carbón',
-                'Sin chispa o chispa débil'
-            ]
-        }
-    ],
-
-    // =========================================================
-    // PMS Y PMI
-    // =========================================================
-
-    posicionPiston: {
-        titulo: 'PMS y PMI',
-
-        PMS: {
-            nombre: 'Punto Muerto Superior',
-            descripcion:
-                'Posición máxima superior alcanzada por el pistón.',
-            usos: [
-                'Ajuste de luz de válvulas',
-                'Sincronización del tiempo de distribución (marcas "T" en volante y piñón)',
-                'Prueba de compresión y estanqueidad'
-            ]
-        },
-
-        PMI: {
-            nombre: 'Punto Muerto Inferior',
-            descripcion:
-                'Posición máxima inferior alcanzada por el pistón.',
-            usos: [
-                'Comprensión del recorrido y carrera del pistón',
-                'Inspección de paredes del cilindro'
-            ]
-        }
-    },
-
-    // =========================================================
-    // SISTEMA DE COMBUSTIBLE
-    // =========================================================
-
-    sistemaCombustible: {
-        titulo: 'Sistema de alimentación',
-
-        componentes: [
-            'Tanque de gasolina',
-            'Grifo/llave de combustible con filtro interno',
-            'Manguera de gasolina',
-            'Filtro de combustible de línea',
-            'Carburador',
-            'Múltiple de admisión con o-ring/junta',
-            'Cámara de combustión'
-        ],
-
-        flujo: [
-            'Tanque',
-            'Llave de paso',
-            'Manguera',
-            'Carburador',
-            'Múltiple de admisión',
-            'Cilindro'
-        ],
-
-        principio:
-            'Aprovechar la depresión (vacío) del motor para pulverizar la gasolina en la corriente de aire en la proporción idónea.'
-    },
-
-    // =========================================================
-    // CARBURADOR
-    // =========================================================
-
-    carburador: {
-        nombre: 'Keihin PB18 / PZ19 (según versión)',
-
+const sistemasMotorCT100 = [
+    {
+        nombre: 'Bloque del motor y Cilindro (Serie 100cc 4T Monocilíndrico)',
         funcion:
-            'Mezclar aire y gasolina en la proporción estequiométrica óptima para el motor 100cc.',
-
-        componentes: [
-            {
-                nombre: 'Cuba de combustible',
-                funcion: 'Depósito inferior que mantiene un nivel constante de gasolina.'
-            },
-            {
-                nombre: 'Flotador y punzual',
-                funcion: 'Regulan el ingreso de combustible desde el tanque hacia la cuba.'
-            },
-            {
-                nombre: 'Chicler de baja (piloto)',
-                funcion: 'Alimenta el motor en ralentí y bajas revoluciones.'
-            },
-            {
-                nombre: 'Chicler de alta (principal)',
-                funcion: 'Suministra el flujo mayor de gasolina de media a máxima aceleración.'
-            },
-            {
-                nombre: 'Aguja y cortina (émbolo)',
-                funcion: 'Regulan el paso de aire y combustible en aceleraciones intermedias.'
-            },
-            {
-                nombre: 'Tornillo de mezcla (aire/combustible)',
-                funcion: 'Ajusta la riqueza de la mezcla en ralentí.'
-            },
-            {
-                nombre: 'Choke / Choque (ahogador)',
-                funcion: 'Enriquece la mezcla para facilitar el arranque en frío.'
-            }
-        ],
-
-        fallasComunes: [
-            {
-                falla: 'Motor ahogado o rebose de gasolina',
-                posiblesCausas: [
-                    'Punzual desgastado o con suciedad',
-                    'Flotador perforado o mal graduado',
-                    'Empaque de cuba deteriorado'
-                ]
-            },
-
-            {
-                falla: 'Inestabilidad en ralentí / se apaga al soltar acelerador',
-                posiblesCausas: [
-                    'Chicler de baja obstruido',
-                    'Entrada de aire en junta de múltiple de admisión',
-                    'Tornillo de mezcla mal regulado'
-                ]
-            },
-
-            {
-                falla: 'Ahogo o falta de potencia al acelerar a fondo',
-                posiblesCausas: [
-                    'Chicler principal obstruido',
-                    'Filtro de aire sucio o saturado',
-                    'Nivel de agua en la cuba'
-                ]
-            }
-        ],
-
-        reglaDiagnostico:
-            'Verificar la limpieza del tanque, filtro de aire y ausencia de entradas de aire falso antes de desarmar o reemplazar el carburador.'
-    },
-
-    // =========================================================
-    // SISTEMA DE ENCENDIDO
-    // =========================================================
-
-    sistemaEncendido: {
-        titulo: 'Sistema de encendido por CDI',
-
-        flujo: [
-            'Plato de bobinas / Generador',
-            'Bobina captadora (Pulsora)',
-            'Módulo CDI',
-            'Bobina de alta tensión',
-            'Capuchón de bujía',
-            'Bujía',
-            'Chispa en cámara'
-        ],
-
-        componentes: [
-            {
-                nombre: 'CDI',
-                funcion:
-                    'Almacena carga y envía la descarga a la bobina de alta en el momento exacto.'
-            },
-            {
-                nombre: 'Bobina de alta',
-                funcion:
-                    'Transforma el voltaje del CDI en alto voltaje (miles de voltios) para vencer la luz de la bujía.'
-            },
-            {
-                nombre: 'Bobina pulsora',
-                funcion:
-                    'Envía una señal eléctrica de tiempo al CDI según la posición del cigüeñal.'
-            },
-            {
-                nombre: 'Bujía',
-                funcion:
-                    'Genera el arco eléctrico dentro de la cámara de combustión.'
-            }
-        ],
-
-        fallaNoHayChispa: [
-            'Inspeccionar bujía y probar con una nueva calibrada.',
-            'Verificar resistencia del capuchón y cable de alta.',
-            'Revisar switch de encendido (run/ignition key) y cables a masa/tierra.',
-            'Medir resistencia de la bobina pulsora.',
-            'Medir bobina de encendido/alimentación del plato.',
-            'Comprobar bobina de alta tensión.',
-            'Probar módulo CDI con probador especializado o repuesto de prueba.'
-        ],
-
-        reglaDiagnostico:
-            'Asegurar siempre buen contacto a masa (tierra) en el chasis y motor antes de diagnosticar componentes electrónicos.'
-    },
-
-    // =========================================================
-    // SISTEMA DE LUBRICACIÓN
-    // =========================================================
-
-    lubricacion: {
-        titulo: 'Sistema de lubricación forzada y salpique',
-
-        funcion: [
-            'Lubricar rodamientos, pistón, levas y engranajes',
-            'Disipar calor de componentes internos',
-            'Proteger contra la corrosión',
-            'Mantener limpios los mecanismos de embrague y caja'
-        ],
-
-        recorridoConceptual: [
-            'Cárter (depósito de aceite)',
-            'Malla / Filtro centrífugo o pasador',
-            'Bomba de aceite accionada por piñón',
-            'Conductos hacia cigüeñal y culata',
-            'Árbol de levas y balancines',
-            'Retorno por gravedad al cárter'
-        ],
-
+            'Estructura de aleación de aluminio con camisa de hierro fundido refrigerada por aire convectivo que aloja el pistón, cigüeñal y mecanismo de distribución.',
         fallas: [
-            {
-                nombre: 'Bajo nivel de aceite',
-                consecuencias: [
-                    'Sobrecalentamiento extremo',
-                    'Fundición de balancines y árbol de levas',
-                    'Agarrotamiento (agarrado) del pistón'
-                ]
-            },
-
-            {
-                nombre: 'Filtro centrífugo / malla obstruida',
-                posiblesCausas: [
-                    'Residuos de embrague o lodos',
-                    'Falta de cambio periódico de aceite'
-                ]
-            }
-        ],
-
-        mantenimiento:
-            'Usar aceite multigrado de especificación recomendada (ej. 20W-50 JASO MA2) y revisar el nivel mediante el ojo de buey o varilla medidora.'
-    },
-
-    // =========================================================
-    // SISTEMA DE REFRIGERACIÓN
-    // =========================================================
-
-    refrigeracion: {
-        tipo: 'Refrigeración por aire directo',
-
-        funcionamiento:
-            'El aire incidente al marchar absorbe el calor disipado por las aletas metálicas del cilindro y la culata.',
-
-        elementos: [
-            'Aletas disipadoras en cilindro',
-            'Aletas disipadoras en culata',
-            'Flujo de aire por velocidad del vehículo',
-            'Circulación interna de aceite'
-        ],
-
-        problemas: [
-            'Acumulación de barro o grasa sobre las aletas disipadoras',
-            'Sobrecalentamiento por uso prolongado en ralentí o marchas muy bajas',
-            'Mezcla de combustible demasiado pobre'
+            'Fugas de aceite por empaque de la base del cilindro o tapa de culata',
+            'Desgaste en la camisa por trabajar con nivel bajo de aceite (requiere 1000ml 20W-50 JASO MA2)',
+            'Sobrecalentamiento por saturación de aletas de refrigeración con barro',
+            'Humo azul por el escape por desgaste de anillos o sellos de válvula'
         ]
     },
 
-    // =========================================================
-    // DISTRIBUCIÓN
-    // =========================================================
-
-    distribucion: {
-        titulo: 'Sistema de distribución SOHC por cadenilla',
-
+    {
+        nombre: 'Culata SOHC 2V de Alta Eficiencia',
         funcion:
-            'Sincronizar la rotación del cigüeñal con la apertura y cierre de las válvulas a través del árbol de levas.',
-
-        elementos: [
-            'Piñón de cigüeñal',
-            'Cadenilla de distribución',
-            'Guías de cadenilla (fija y móvil)',
-            'Tensor automático / mecánico',
-            'Piñón de árbol de levas',
-            'Árbol de levas SOHC'
-        ],
-
-        importancia:
-            'Un desfase en el tiempo de distribución provoca pérdida total de potencia o colisión entre el pistón y las válvulas.',
-
-        sintomasDistribucionIncorrecta: [
-            'Dificultad o imposibilidad para encender',
-            'Falta total de compresión por válvulas dobladas',
-            'Explosiones a través del carburador o escape',
-            'Ruido de golpeteo metálico en la culata'
+            'Aloja las 2 válvulas impulsadas por balancines, bujía de encendido y árbol de levas superior.',
+        fallas: [
+            'Ruido de cascabeleo o traqueteo por holgura excesiva en balancines',
+            'Dificultad de encendido en frío por válvulas pisadas o apretadas (sin luz de tolerancia)',
+            'Fuga de compresión por empaque de culata quemado o fisurado',
+            'Desgaste en sellos de válvula que causa humo blanco/azul al arrancar'
         ]
     },
 
-    // =========================================================
-    // EMBRAGUE
-    // =========================================================
-
-    embrague: {
+    {
+        nombre: 'Cigüeñal y Biela con Rodamientos de Ultra Baja Fricción',
         funcion:
-            'Transmitir o desacoplar la potencia del motor a la caja de cambios mediante discos de fricción húmedos.',
-
-        flujo: [
-            'Cigüeñal',
-            'Corona de embrague',
-            'Discos de fricción y separadores',
-            'Centro de embrague',
-            'Eje primario de caja de cambios'
-        ],
-
-        sintomas: [
-            {
-                nombre: 'Embrague patina (desliza)',
-                descripcion:
-                    'El motor acelera en revoluciones pero la moto no avanza proporcionalmente.',
-                posiblesCausas: [
-                    'Discos de fricción desgastados',
-                    'Guaya/cable de embrague sin juego libre',
-                    'Resortes de embrague cedidos',
-                    'Uso de aceite no adecuado para embrague húmedo'
-                ]
-            },
-
-            {
-                nombre: 'Cambios duros o la moto arrastra con la manigueta presionada',
-                posiblesCausas: [
-                    'Guaya desajustada o con mucha holgura',
-                    'Canastilla o buje de manzana desgastado',
-                    'Discos alabeados o pegados'
-                ]
-            }
+            'Convierte el movimiento alternativo del pistón en rotación hacia la caja de cambios de 4 velocidades mediante embrague multidisco húmedo.',
+        fallas: [
+            'Golpeteo grave en el cárter (ruido de biela) por falta severa de lubricación',
+            'Fuga de aceite por el retén del eje del piñón de salida o del eje de cambios',
+            'Desgaste de rodajes de cigüeñal por usar aceite degradado'
         ]
     },
 
-    // =========================================================
-    // CAJA DE CAMBIOS
-    // =========================================================
-
-    cajaCambios: {
-        velocidades: 4,
-
-        relacionesDocumentadas: {
-            primera: 'Relación corta para arranque en carga',
-            segunda: 'Relación intermedia para progresión urbana',
-            tercera: 'Relación de velocidad media',
-            cuarta: 'Relación directa/crucero para economía'
-        },
-
+    {
+        nombre: 'Pistón y Anillos de Baja Fricción',
         funcion:
-            'Adaptar el torque y revoluciones del motor a las exigencias de velocidad y carga de la motocicleta.',
-
-        componentesPrincipales: [
-        'Eje primario',
-        'Eje secundario',
-        'Juegos de engranajes de 1a a 4a',
-        'Tambor selector (slector de cambios)',
-        'Horquillas selectoras',
-        'Mecanismo de trinquete y pedal'
+            'Comprimen la mezcla aire/gasolina y transmiten la fuerza de la combustión a la biela.',
+        fallas: [
+            'Anillos rascadores de aceite pegados por acumulación de carbonilla',
+            'Pérdida de compresión (dificultad para encender con el pedal de arranque)',
+            'Rayado de la falda del pistón por falta de mantenimiento en el filtro de aire'
         ]
     },
 
-    // =========================================================
-    // DIAGNÓSTICO GENERAL
-    // =========================================================
-
-    diagnosticoGeneral: {
-        principio:
-            'Método lógico y ordenado: Diagnosticar antes de desarmar y reemplazar.',
-
-        secuencia: [
-            '1. Validar el síntoma expuesto por el usuario.',
-            '2. Inspección visual externa (fugas, cables sueltos, conectores).',
-            '3. Comprobar presencia de gasolina de calidad en el carburador.',
-            '4. Verificar chispa en la bujía (intensidad y color azulado).',
-            '5. Medir compresión en el cilindro con compresímetro.',
-            '6. Verificar tiempo de distribución y holgura de válvulas.',
-            '7. Inspeccionar filtro de aire y conducto de admisión.',
-            '8. Evaluar embrague y transmisión si la falla es de tracción.',
-            '9. Efectuar reparación o reemplazo de componentes dañados.',
-            '10. Realizar prueba de ruta y ajuste final.'
+    {
+        nombre: 'Cadena de Distribución y Tensor Automático',
+        funcion:
+            'Mantiene la sincronización exacta entre el cigüeñal y el árbol de levas SOHC.',
+        fallas: [
+            'Sonajero metálico en la tapa izquierda del motor en frío o en ralentí',
+            'Falla o atascamiento del tensor automático de cadena de distribución',
+            'Desgaste de los patines guía de goma internos'
         ]
     },
 
-    // =========================================================
-    // FALLAS COMUNES
-    // =========================================================
+    {
+        nombre: 'Sistema de Refrigeración por Aire Convectivo',
+        funcion:
+            'Disipa el calor generado mediante el flujo de aire directo a través de las aletas del bloque y la culata.',
+        fallas: [
+            'Pérdida temporal de potencia por sobrecalentamiento en trancones prolongados',
+            'Aletas de radiación cubiertas de aceite o barro grueso'
+        ]
+    },
 
-    fallasComunes: [
+    {
+        nombre: 'Sistema de Lubricación por Bomba Trocoide y Filtro de Tamiz/Papel',
+        funcion:
+            'Garantiza el flujo constante de aceite hacia la culata, caja de cambios y embrague sumergido.',
+        fallas: [
+            'Malla de succión del cárter tapada con residuos de empaque o sellador',
+            'Falta de lubricación en la culata (desgasta prematuramente balancines y árbol de levas)',
+            'Uso de aceite no certificado JASO MA2 (causa deslizamiento de discos de embrague)'
+        ]
+    }
+];
+
+
+// ============================================================
+// SISTEMA DE COMBUSTIBLE
+// ============================================================
+
+const sistemaCombustibleCT100 = {
+
+    titulo: 'Sistema de Alimentación por Carburador Keihin / e-Carb Electrónico',
+
+    funcionamiento:
+        'El combustible baja por gravedad desde el tanque de 10.5L hacia la cuba del carburador. El efecto Venturi aspira la gasolina pulverizándola a través de los boquereles de baja y alta.',
+
+    componentes: [
+        'Tanque de combustible de 10.5 Litros con grifo/llave de reserva',
+        'Filtro de gasolina de papel/malla externa en línea',
+        'Carburador de cortina Keihin PB18 / Carburador electrónico e-Carb',
+        'Boquerel (chicler) de baja / ralentí y boquerel principal de alta',
+        'Múltiple/Cisne de admisión con empaque térmico aislante',
+        'Filtro de aire de espuma lavable impregnado en aceite',
+        'Choke / Ahogador de accionamiento manual en el carburador o manubrio'
+    ],
+
+    flujo: [
+        '1. La gasolina fluye por gravedad desde la llave de paso del tanque hacia el carburador.',
+        '2. El punzón de flotador regula el nivel constante de combustible en la cuba.',
+        '3. La apertura del acelerador levanta la cortina y aguja permitiendo el paso de aire.',
+        '4. El flujo de aire pulveriza la gasolina formando la mezcla óptima de combustión.',
+        '5. La mezcla entra a la cámara por la válvula de admisión de la culata.'
+    ],
+
+    diagnostico: [
+        'Inspeccionar drenaje de la cuba para evacuar agua o agua condensada acumulada.',
+        'Verificar que el boquerel de baja no esté tapado si la moto se apaga al soltar el acelerador.',
+        'Ajustar el tornillo de mezcla (1.5 a 2 vueltas desde el fondo como base de reglaje).',
+        'Limpiar y lubricar el filtro de aire de espuma con aceite especial para filtros.'
+    ]
+};
+
+
+// ============================================================
+// SISTEMA DE ENCENDIDO
+// ============================================================
+
+const sistemaEncendidoCT100 = {
+
+    titulo: 'Sistema de Encendido por Descarga de Condensador (CDI Digital con Champion/Bosch)',
+
+    funcionamiento:
+        'La bobina pulsora envía la señal de posición del cigüeñal al módulo CDI, el cual libera la descarga acumulada hacia la bobina de alta tensión para generar el arco eléctrico en la bujía.',
+
+    componentes: [
         {
-            titulo: 'La moto no arranca',
-            dificultad: 'Intermedio 🟡',
-
-            posiblesCausas: [
-                'Falta de combustible o pasador cerrado',
-                'Carburador obstruido o inundado',
-                'Sin chispa en la bujía (CDI, bobina, capuchón)',
-                'Bujía cruzada o engrasada',
-                'Válvula pisada (sin luz de tolerancia)',
-                'Compresión baja por aros desgastados',
-                'Cadenilla de distribución corrida'
-            ],
-
-            diagnostico: [
-                'Verificar si cae gasolina del grifo abriendo el despiche del carburador.',
-                'Probar chispa acercando el cable de alta a 5mm del motor.',
-                'Medir la luz de válvulas (admisión y escape).',
-                'Verificar la compresión del cilindro.'
-            ]
+            nombre: 'Plato de Bobinas (Stator) y Bobina Pulsora',
+            funcion:
+                'Genera la corriente alterna de carga y envía la señal de tiempo de encendido.'
         },
 
         {
-            titulo: 'Inestabilidad o apague en ralentí',
-            dificultad: 'Básico 🟢',
-
-            posiblesCausas: [
-                'Chicler de baja sucio',
-                'Ajuste inadecuado del tornillo de aire/mezcla',
-                'Entrada de aire en la insuladora/múltiple',
-                'Filtro de aire excesivamente sucio',
-                'Bujía con distancia de electrodo desgastada'
-            ]
+            nombre: 'Módulo de Encendido CDI Digital',
+            funcion:
+                'Procesa la curva de avance de la chispa de acuerdo con las revoluciones del motor.'
         },
 
         {
-            titulo: 'Pérdida de fuerza / Aceleración deficiente',
-            dificultad: 'Intermedio 🟡',
-
-            posiblesCausas: [
-                'Filtro de aire obstruido',
-                'Chicler principal sucio',
-                'Embrague patinando',
-                'Falta de compresión',
-                'Escape/silenciador tapado de carbón',
-                'Frenos pegados o cadena demasiado tensa'
-            ]
+            nombre: 'Bobina de Alta Tensión y Capuchón Resistivo',
+            funcion:
+                'Eleva el voltaje del CDI a más de 15.000V para vencer la presión en la bujía.'
         },
 
         {
-            titulo: 'Humo azul por el escape',
-            dificultad: 'Avanzado 🔴',
-
-            posiblesCausas: [
-                'Aros de pistón desgastados o alineados',
-                'Cilindro rayado o acanalado',
-                'Retenes de guía de válvula cristalizados o rotos',
-                'Nivel de aceite excesivo en el cárter'
-            ]
-        },
-
-        {
-            titulo: 'Humo negro por el escape',
-            dificultad: 'Intermedio 🟡',
-
-            posiblesCausas: [
-                'Mezcla excesivamente rica (mucha gasolina)',
-                'Choke (ahogador) accionado o pegado',
-                'Filtro de aire completamente tapado',
-                'Nivel de flotador de carburador muy alto'
-            ]
-        },
-
-        {
-            titulo: 'Ruido metálico en la culata',
-            dificultad: 'Intermedio 🟡',
-
-            posiblesCausas: [
-                'Luz de válvulas excesiva (holgura holgada)',
-                'Cadenilla de distribución estirada',
-                'Tensor de cadenilla dañado',
-                'Desgaste en árbol de levas o balancines'
-            ],
-
-            recomendacion:
-                'Calibrar válvulas y verificar tensión de cadenilla antes de desarmar la culata.'
+            nombre: 'Bujía de Encendido (Champion PRZ9HC / NGK CR7HSA)',
+            funcion:
+                'Produce la chispa dentro de la cámara para inflamar la mezcla aire/gasolina.'
         }
     ],
 
-    // =========================================================
-    // HERRAMIENTAS
-    // =========================================================
+    fallaNoHayChispa: [
+        'Verificar el estado del fusible principal de 10A/15A en la caja de batería.',
+        'Medir la resistencia de la bobina pulsora (rango normal: 120 Ω a 180 Ω).',
+        'Comprobar el interruptor de apagado de emergencia (Run/Off) y switch de llave.',
+        'Revisar si el capuchón de bujía tiene la resistencia interna abierta o sulfatada.',
+        'Probar continuidad a masa en la bobina de alta tensión y módulo CDI.'
+    ]
+};
 
-    herramientas: {
-        basicas: [
-            'Juego de llaves mixtas (8mm, 10mm, 12mm, 14mm, 17mm)',
-            'Juego de copas/dados y rachet',
-            'Destornilladores de estrella (Philips) y de pala',
-            'Alicate y pinzas de seguridad',
-            'Llave de bujía de 16mm / 18mm',
-            'Galga / calibrador de hojas (feeler)'
+
+// ============================================================
+// CICLO DE CUATRO TIEMPOS
+// ============================================================
+
+const cicloCuatroTiemposCT100 = [
+
+    {
+        numero: 1,
+        nombre: 'Admisión',
+
+        descripcion:
+            'El pistón desciende del PMS al PMI. La válvula de admisión se abre y el carburador entrega la mezcla atomizada de aire y gasolina.',
+
+        movimientoPiston: 'Desciende',
+
+        valvulas: {
+            admision: 'Abierta',
+            escape: 'Cerrada'
+        },
+
+        objetivo:
+            'Llenar el cilindro con la mayor cantidad de mezcla combustible.'
+    },
+
+    {
+        numero: 2,
+        nombre: 'Compresión',
+
+        descripcion:
+            'El pistón asciende del PMI al PMS con ambas válvulas cerradas, comprimiendo la carga (relación de compresión 9.8:1).',
+
+        movimientoPiston: 'Asciende',
+
+        valvulas: {
+            admision: 'Cerrada',
+            escape: 'Cerrada'
+        },
+
+        objetivo:
+            'Elevar la presión y temperatura antes de la chispa de encendido.'
+    },
+
+    {
+        numero: 3,
+        nombre: 'Combustión / Expansión',
+
+        descripcion:
+            'El CDI activa la chispa en la bujía. La mezcla se inflama y la expansión de gases empuja el pistón hacia abajo con fuerza.',
+
+        movimientoPiston: 'Desciende',
+
+        valvulas: {
+            admision: 'Cerrada',
+            escape: 'Cerrada'
+        },
+
+        objetivo:
+            'Generar el par motor que mueve la caja de 4 marchas y permite su ultra bajo consumo.'
+    },
+
+    {
+        numero: 4,
+        nombre: 'Escape',
+
+        descripcion:
+            'El pistón sube impulsando los gases quemados hacia la válvula de escape abierta rumbo al tubo con catalizador.',
+
+        movimientoPiston: 'Asciende',
+
+        valvulas: {
+            admision: 'Cerrada',
+            escape: 'Abierta'
+        },
+
+        objetivo:
+            'Expulsar los gases quemados para iniciar un nuevo ciclo.'
+    }
+];
+
+
+// ============================================================
+// HERRAMIENTAS
+// ============================================================
+
+const herramientasCT100 = {
+
+    basicas: [
+        'Juego de llaves y copas milimétricas (8mm, 10mm, 12mm, 13mm, 14mm, 17mm, 19mm, 22mm)',
+        'Llave o copa delgada para bujía de 16mm (5/8")',
+        'Destornilladores de pala y estrella (N° 2 y N° 3)',
+        'Calibrador de galgas / láminas para calibración de válvulas (0.05mm - 0.10mm)',
+        'Alicate universal y alicate de punta fina',
+        'Bandeja de recolección de aceite (1 litro) y embudo graduado'
+    ],
+
+    diagnostico: [
+        'Multímetro digital para pruebas de resistencia, voltaje continuo y alterno',
+        'Probador de chispa / chispómetro',
+        'Compresímetro con acople de rosca M10 / M12',
+        'Cargador de batería de 12V para motocicleta'
+    ],
+
+    profesional: [
+        'Torquímetro de precisión graduado en Nm (8 Nm a 55 Nm)',
+        'Extractor de volante magnético específico para Bajaj / Honda 100cc',
+        'Herramienta sujetadora de embrague y copa castillo para tuerca de filtro centrífugo',
+        'Extractor de rodamientos de cigüeñal y prensa de válvulas'
+    ]
+};
+
+
+// ============================================================
+// DIAGNÓSTICO GENERAL
+// ============================================================
+
+const diagnosticoGeneralCT100 = {
+
+    principio:
+        'Diagnóstico metódico de 3 pilares: Verificar presencia de chispa de encendido, flujo de gasolina en carburador y compresión mecánica en el cilindro.',
+
+    secuencia: [
+
+        '1. Entrevistar al usuario sobre los síntomas detectados y el historial de mantenimientos.',
+
+        '2. Medir el voltaje de la batería en reposo (mínimo 12.4V en versiones ES con arranque eléctrico).',
+
+        '3. Probar salto de chispa en la bujía haciéndola tocar la culata mientras se opera el pedal de arranque o botón.',
+
+        '4. Inspeccionar el flujo de gasolina soltando la manguera del carburador y abriendo la llave del tanque.',
+
+        '5. Evaluar la compresión mecánica colocando el pulgar sobre el orificio de la bujía y dando pedalazo.',
+
+        '6. Desmontar la cuba del carburador si la chispa y la compresión se encuentran dentro del rango.',
+
+        '7. Verificar la luz de calibración de válvulas si presenta dificultad para encender en frío.',
+
+        '8. Reemplazar o reparar componentes utilizando repuestos originales Bajaj Genuine Parts.',
+
+        '9. Regular el ralentí a 1.400 RPM (+/- 100 RPM) y ajustar la aguja de aire/gasolina.',
+
+        '10. Efectuar prueba de ruta en plano y pendientes para confirmar la reparación.'
+    ]
+};
+
+
+// ============================================================
+// FALLAS COMUNES
+// ============================================================
+
+const fallasComunesCT100 = [
+
+    {
+        titulo: 'La motocicleta se apaga en ralentí o dificulta encender en frío',
+
+        dificultad: 'Básico 🟢',
+
+        posiblesCausas: [
+            'Válvula de admisión pisada (sin luz/holgura de calibración)',
+            'Boquerel de baja / chicler de ralentí atascado con sedimentos',
+            'Fuga de aire por el o-ring o empaque del múltiple de admisión',
+            'Bujía de encendido descalibrada, con carbón o en cortocircuito'
         ],
 
         diagnostico: [
-            'Multímetro digital',
-            'Compresímetro para motor a gasolina',
-            'Probador de chispa / chispómetro',
-            'Pistola estroboscópica para tiempo de encendido'
+            'Calibrar válvulas en frío (Admisión: 0.05mm / Escape: 0.10mm).',
+            'Desmontar la cuba del carburador y destapar el boquerel de baja con limpiador presurizado.',
+            'Inspeccionar la estanqueidad de la junta del colector de admisión.',
+            'Limpiar y ajustar la luz del electrodo de la bujía a 0.7mm.'
+        ]
+    },
+
+    {
+        titulo: 'El embrague patina al acelerar en pendientes o los cambios entran duros',
+
+        dificultad: 'Intermedio 🟡',
+
+        posiblesCausas: [
+            'Guaya de embrague demasiado tensionada o con falta de lubricación',
+            'Discos de embrague cristalizados o gastados por usar aceite no apto (usar JASO MA2)',
+            'Resortes de la prensa de embrague fatigados o fuera de limite'
         ],
 
-        medicionMotor: [
-            'Calibrador pie de rey (pie de rey)',
-            'Micrómetro de exteriores',
-            'Alezómetro / comparador de interiores para cilindro'
+        diagnostico: [
+            'Ajustar el juego libre de la manigueta de embrague (2mm a 3mm de tolerancia).',
+            'Drenar el aceite y revisar presencia de sedimentos de discos.',
+            'Desmontar la tapa derecha del cárter y medir el grosor de los discos de fricción.'
         ]
     },
 
-    // =========================================================
-    // MANTENIMIENTO PREVENTIVO
-    // =========================================================
+    {
+        titulo: 'Paso continuo de gasolina que rebosa el carburador (Goteo por la manguera de desahogo)',
 
-    mantenimiento: {
-        objetivo:
-            'Garantizar el menor consumo de combustible y prolongar la vida útil del motor Bajaj 100.',
+        dificultad: 'Básico 🟢',
 
-        actividades: [
-            {
-                nombre: 'Aceite de motor',
-                accion:
-                    'Verificar nivel constantemente y cambiar cada 2.000 - 3.000 km.'
-            },
+        posiblesCausas: [
+            'Punzón/aguja del flotador gastada o con suciedad incrustada en el asiento',
+            'Flotador perforado o mal graduado dentro de la cuba',
+            'Óxido o sedimentos provenientes del tanque de combustible'
+        ],
 
-            {
-                nombre: 'Limpieza de malla de aceite / filtro centrífugo',
-                accion:
-                    'Limpiar en cada mantenimiento mayor o destape de tapa embrague.'
-            },
-
-            {
-                nombre: 'Bujía',
-                accion:
-                    'Calibrar apertura de electrodo y limpiar o reemplazar según estado.'
-            },
-
-            {
-                nombre: 'Filtro de aire',
-                accion:
-                    'Lavar/sopletear o reemplazar el elemento filtrante de espuma o papel.'
-            },
-
-            {
-                nombre: 'Calibración de válvulas',
-                accion:
-                    'Verificar y ajustar la luz de admisión y escape según manual.'
-            },
-
-            {
-                nombre: 'Cadena de transmisión',
-                accion:
-                    'Ajustar holgura, limpiar y lubricar cada 500 km.'
-            },
-
-            {
-                nombre: 'Carburador',
-                accion:
-                    'Limpieza general de chicleres y drenaje de agua de la cuba.'
-            }
+        diagnostico: [
+            'Retirar la cuba del carburador y limpiar la cuna del punzón con aire a presión.',
+            'Verificar el sellado del punzón de caucho.',
+            'Instalar un filtro de gasolina en línea entre la llave del tanque y el carburador.'
         ]
     },
 
-    // =========================================================
-    // PROCESO PROFESIONAL DE REPARACIÓN
-    // =========================================================
+    {
+        titulo: 'Sonajero constante en el motor tipo "chascarrillo" al acelerar',
 
-    procesoReparacion: {
-        titulo: 'Procedimiento técnico de reparación',
+        dificultad: 'Básico 🟢',
 
-        pasos: [
-            {
-                numero: 1,
-                nombre: 'Recepción y prueba inicial',
-                descripcion:
-                    'Escuchar la queja del cliente y verificar los síntomas en taller.'
-            },
+        posiblesCausas: [
+            'Cadena de distribución destensionada o estirada',
+            'Tensor automático de cadena pegado o dañado',
+            'Holgura excesiva de las válvulas en la culata'
+        ],
 
-            {
-                numero: 2,
-                nombre: 'Diagnóstico sin desarmar',
-                descripcion:
-                    'Pruebas de chispa, compresión, combustible y fugas de aire.'
-            },
-
-            {
-                numero: 3,
-                nombre: 'Desmonte técnico',
-                descripcion:
-                    'Drenar fluidos y desmontar piezas organizando la tornillería.'
-            },
-
-            {
-                numero: 4,
-                nombre: 'Metrología e inspección',
-                descripcion:
-                    'Medir desgaste de cilindro, pistón, holguras de aros y estado de levas.'
-            },
-
-            {
-                numero: 5,
-                nombre: 'Reemplazo y rectificación',
-                descripcion:
-                    'Cambio de repuestos fuera de tolerancia por componentes originales o equivalentes.'
-            },
-
-            {
-                numero: 6,
-                nombre: 'Ensamble y torqué',
-                descripcion:
-                    'Montaje aplicando apriete especificado y lubricación inicial en partes móviles.'
-            },
-
-            {
-                numero: 7,
-                nombre: 'Sincronización y ajuste',
-                descripcion:
-                    'Poner a tiempo la distribución y calibrar la holgura de válvulas.'
-            },
-
-            {
-                numero: 8,
-                nombre: 'Prueba final',
-                descripcion:
-                    'Encendido, carburación en caliente y verificación de ausencia de fugas y ruidos.'
-            }
+        diagnostico: [
+            'Inspeccionar la presión y funcionamiento del tensor automático de cadena.',
+            'Verificar el desgaste de los patines guía de caucho.',
+            'Verificar y reajustar las luces de válvulas en la culata.'
         ]
     },
 
-    // =========================================================
-    // CLASES Y MÓDULOS EDUCATIVOS
-    // =========================================================
+    {
+        titulo: 'Consumo excesivo de combustible o humo negro al acelerar a fondo',
 
-    cursos: [
+        dificultad: 'Básico 🟢',
+
+        posiblesCausas: [
+            'Choke / ahogador pegado o parcialmente accionado',
+            'Filtro de aire de espuma lleno de tierra, aceite saturado o mugre',
+            'Boquerel de alta sobremedida o aguja de cortina muy alta'
+        ],
+
+        diagnostico: [
+            'Verificar que el cable del ahogador regrese completamente a su posición de reposo.',
+            'Lavar el filtro de espuma con desengrasante, secar e impregnar levemente con aceite.',
+            'Ajustar el clip de la aguja de la cortina en la posición central.'
+        ]
+    }
+];
+
+
+// ============================================================
+// MANTENIMIENTO
+// ============================================================
+
+const mantenimientoCT100 = {
+
+    objetivo:
+        'Conservar el extraordinario rendimiento de combustible (hasta 250+ km/galón), asegurar la fiabilidad diaria del motor de 100cc y alargar la vida útil del kit de arrastre y frenos.',
+
+    actividades: [
+
         {
-            id: 1,
-            titulo: 'Arquitectura del motor Bajaj 100cc',
-            nivel: 'Básico',
-            descripcion:
-                'Introducción a los motores monocilíndricos SOHC de alta eficiencia.',
-            temas: [
-                'Estructura general',
-                'Sistema SOHC vs OHV',
-                'Cilindro y culata',
-                'Bloque y cárter'
-            ]
+            nombre: 'Aceite de motor (4T)',
+            accion:
+                'Reemplazar cada 2.000 km o 2.500 km utilizando 1000 ml de aceite mineral o semisintético 20W-50 con certificación JASO MA2 / API SL.'
         },
 
         {
-            id: 2,
-            titulo: 'El ciclo de 4 tiempos en motores pequeños',
-            nivel: 'Básico',
-            descripcion:
-                'Análisis paso a paso del ciclo térmico en un motor de trabajo.',
-            temas: [
-                'Admisión',
-                'Compresión',
-                'Combustión',
-                'Escape'
-            ]
+            nombre: 'Filtro centrífugo y Malla del cárter',
+            accion:
+                'Limpiar la malla tamiz y retirar la carbonilla acumulada en la copa del filtro centrífugo cada 10.000 km.'
         },
 
         {
-            id: 3,
-            titulo: 'Carburación y ajuste del carburador Keihin PB/PZ',
-            nivel: 'Intermedio',
-            descripcion:
-                'Mantenimiento, limpieza y regulación de mezcla para óptimo consumo.',
-            temas: [
-                'Chicleres',
-                'Flotador',
-                'Tornillo de mezcla',
-                'Paso de gasolina',
-                'Ajuste de ralentí'
-            ]
+            nombre: 'Calibración de Válvulas SOHC',
+            accion:
+                'Inspeccionar y calibrar en frío cada 5.000 km. Holgura recomendada: Admisión 0.05mm / Escape 0.10mm.'
         },
 
         {
-            id: 4,
-            titulo: 'Culata, válvulas y distribución SOHC',
-            nivel: 'Intermedio',
-            descripcion:
-                'Ajuste de luz de válvulas, asentamiento y cambio de cadenilla.',
-            temas: [
-                'Calibración de balancines',
-                'Tensor de cadenilla',
-                'Puntos de sincronización',
-                'Retenes de válvula'
-            ]
+            nombre: 'Limpieza de Carburador y Filtro de Aire',
+            accion:
+                'Lavar el filtro de espuma de aire y realizar limpieza completa del carburador cada 4.000 km.'
         },
 
         {
-            id: 5,
-            titulo: 'Sistema de encendido por CDI',
-            nivel: 'Intermedio',
-            descripcion:
-                'Diagnóstico del circuito eléctrico de encendido y solución de fallas de chispa.',
-            temas: [
-                'Bobina pulsora',
-                'CDI',
-                'Bobina de alta',
-                'Pruebas con multímetro'
-            ]
+            nombre: 'Kit de Arrastre y Guarda Cadena',
+            accion:
+                'Lubricar y tensionar la cadena de transmisión dentro de la cubierta guarda-cadena cada 1.000 km. Sustituir el kit de arrastre entre 15.000 km y 20.000 km.'
         },
 
         {
-            id: 6,
-            titulo: 'Transmisión y Embrague húmedo',
-            nivel: 'Avanzado',
-            descripcion:
-                'Mantenimiento y reemplazo del conjunto de embrague y caja de 4 marchas.',
-            temas: [
-                'Discos de fricción',
-                'Corona y manzana',
-                'Ejes y horquillas de cambio'
-            ]
+            nombre: 'Frenos de Tambor (Delantero y Trasero)',
+            accion:
+                'Inspeccionar el indicador de desgaste de las bandas/zapatas de freno cada 3.000 km; limpiar el polvo acumulado dentro de las campanas.'
+        },
+
+        {
+            nombre: 'Bujía de Encendido',
+            accion:
+                'Limpiar el carbón y calibrar la luz del electrodo (0.6mm - 0.7mm) cada 3.000 km; reemplazar cada 10.000 km.'
         }
-    ],
+    ]
+};
 
-    // =========================================================
-    // HERRAMIENTAS DE DIAGNÓSTICO POR FALLA
-    // =========================================================
 
-    diagnosticos: {
+// ============================================================
+// SEGURIDAD
+// ============================================================
 
-        noArranca: {
-            titulo: 'Motor no arranca',
+const seguridadCT100 = [
 
-            checklist: [
-                '¿Tiene gasolina en el tanque y la llave está abierta?',
-                '¿Llega gasolina a la cuba del carburador?',
-                '¿Hay chispa clara y constante en la bujía?',
-                '¿La bujía está seca o mojada en gasolina?',
-                '¿Tiene compresión al accionar el pedal/kick?',
-                '¿La holgura de válvulas es adecuada?',
-                '¿Está a tiempo la cadenilla de distribución?'
-            ]
-        },
+    'Mantenga siempre instalada la cubierta/guarda-cadena metálica para evitar que prendas de vestir se atrapen en la transmisión secundaria.',
 
-        pierdePotencia: {
-            titulo: 'Pérdida de potencia',
+    'Apoye la motocicleta sobre el soporte central (gato central) en terreno plano y firme antes de desmontar las ruedas o realizar mantenimiento.',
 
-            checklist: [
-                'Filtro de aire sucio o humedecido',
-                'Nivel de combustible / paso restringido',
-                'Bujía con hollín o desgaste',
-                'Desgaste en discos de embrague',
-                'Escape parcialmente obstruido',
-                'Baja compresión en el cilindro'
-            ]
-        },
+    'No realice trabajos de limpieza de carburador cerca de fuentes de calor, chispas o llamas abiertas.',
 
-        consumeAceite: {
-            titulo: 'Diagnóstico de consumo de aceite',
+    'Desconecte el borne negativo de la batería antes de manipular relés de arranque, fusileras o el sistema eléctrico en versiones ES.',
 
-            checklist: [
-                'Inspeccionar presencia de humo azul al acelerar',
-                'Verificar fugas externas en retenes de cigüeñal o juntas',
-                'Medir desgaste de cilindro y holgura entre puntas de aros',
-                'Revisar estado de los retenes de guía de válvula'
-            ]
-        },
+    'Respete el torque en las tuercas de los ejes de las ruedas (45 Nm a 55 Nm) y en el tapón de drenaje de aceite (18 Nm) para no trasroscar las roscas.'
+];
 
-        noHayChispa: {
-            titulo: 'Diagnóstico del sistema eléctrico de encendido',
 
-            checklist: [
-                'Comprobar estado de la bujía',
-                'Probar capuchón y cable de alta',
-                'Medir continuidad de masa / tierra al chasis y motor',
-                'Verificar resistencia de la bobina pulsora',
-                'Verificar bobina de alta tensión',
-                'Comprobar alimentación del CDI'
-            ]
-        }
+// ============================================================
+// CURSOS
+// ============================================================
+
+const cursosCT100 = [
+
+    {
+        id: 1,
+
+        titulo: 'Introducción a la Bajaj CT 100 y Mantenimiento Básico',
+
+        nivel: 'Básico',
+
+        descripcion:
+            'Aprende la arquitectura básica del motor de 100cc, inspección de niveles, tensión de cadena y puntos de engrase.',
+
+        temas: [
+            'Evolución de modelos Bajaj CT 100 (KS, ES, Spoke, Alloy, CT 100X)',
+            'Procedimiento correcto de cambio de aceite y limpieza del tamiz',
+            'Mantenimiento de la cadena dentro del guarda-cadena completo',
+            'Ajuste de cables de acelerador, embrague y frenos'
+        ]
     },
 
-    // =========================================================
-    // SEGURIDAD EN EL TALLER
-    // =========================================================
+    {
+        id: 2,
 
-    seguridad: [
-        'Trabajar en áreas adecuadamente ventiladas para evitar inhalación de monóxido de carbono.',
-        'Mantener recipientes con combustible cerrados y alejados de chispas o soldadura.',
-        'Utilizar gafas protectoras al trabajar con aire comprimido o solventes de limpieza.',
-        'Sostener la motocicleta firmemente sobre su caballete central antes de cualquier intervención.',
-        'Respetar las especificaciones de torqué recomendadas para no aislar roscas en el bloque de aluminio.',
-        'Esperar a que el motor se enfríe antes de intervenir el sistema de escape o culata.',
-        'Desconectar la batería o el cable principal antes de manipular el sistema eléctrico.'
-    ],
+        titulo: 'Sincronización del Motor y Calibración de Válvulas',
 
-    // =========================================================
-    // REGLA PRINCIPAL
-    // =========================================================
+        nivel: 'Intermedio',
+
+        descripcion:
+            'Aprende a buscar el Punto Muerto Superior (PMS) en la volante y calibrar con precisión las válvulas de admisión y escape.',
+
+        temas: [
+            'Ubicación de marcas T en la volante magnética y piñón de levas',
+            'Uso del calibrador de galgas en la culata SOHC',
+            'Solución de problemas de compresión y ruidos de motor',
+            'Inspección del tensor automático de distribución'
+        ]
+    },
+
+    {
+        id: 3,
+
+        titulo: 'Mantenimiento del Carburador Keihin PB18 / e-Carb',
+
+        nivel: 'Intermedio',
+
+        descripcion:
+            'Aprende el desmonte, despiece, lavado por ultrasonido/spray y calibración del sistema de alimentación.',
+
+        temas: [
+            'Desarme del carburador y función de boquereles de alta y baja',
+            'Ajuste del nivel del flotador y punzón de sellado',
+            'Regulación de la aguja de la cortina y tornillo de mezcla',
+            'Diagnóstico de fallas en carburadores electrónicos e-Carb'
+        ]
+    },
+
+    {
+        id: 4,
+
+        titulo: 'Sistema Eléctrico, Encendido por CDI y Mantenimiento SNS',
+
+        nivel: 'Avanzado',
+
+        descripcion:
+            'Uso del multímetro para diagnóstico del plato de bobinas, módulo CDI, regulador de voltaje y amortiguadores SNS.',
+
+        temas: [
+            'Medición de ohmios en bobina pulsora y bobina de encendido',
+            'Comprobación del sistema de carga de batería de 12V y luces',
+            'Mantenimiento de la suspensión trasera SNS (Spring in Spring)',
+            'Resolución de fallas de encendido y cortocircuitos'
+        ]
+    }
+];
+
+
+// ============================================================
+// GLOSARIO
+// ============================================================
+
+const glosarioCT100 = [
+
+    {
+        termino: 'CT 100',
+        significado:
+            'Modelo insignia de motocicleta de trabajo urbana y rural de la marca Bajaj, reconocida por su alta resistencia y bajo consumo de gasolina.'
+    },
+
+    {
+        termino: 'SNS',
+        significado:
+            'Spring-in-Spring (Resorte dentro de Resorte). Tecnología de suspensión trasera patentada por Bajaj con dos resortes coaxiales de diferente paso.'
+    },
+
+    {
+        termino: 'CDI Digital',
+        significado:
+            'Capacitor Discharge Ignition Digital. Módulo de encendido electrónico comandado por microprocesador que optimiza el tiempo de chispa.'
+    },
+
+    {
+        termino: 'e-Carb',
+        significado:
+            'Carburador con control electrónico de aire y sensores utilizado en versiones Euro 3 / Euro 4 para reducir emisiones.'
+    },
+
+    {
+        termino: 'JASO MA2',
+        significado:
+            'Norma japonesa para aceites de motor de 4 tiempos con embrague húmedo que garantiza la fricción requerida sin deslizamiento.'
+    },
+
+    {
+        termino: 'Filtro Centrífugo',
+        significado:
+            'Trampa cilíndrica acoplada al cigüeñal que retiene por fuerza giratoria las partículas pesadas presentes en el aceite.'
+    },
+
+    {
+        termino: 'KS / ES',
+        significado:
+            'KS (Kick Start / Arranque por pedal) / ES (Electric Start / Arranque eléctrico por botón).'
+    }
+];
+
+
+// ============================================================
+// FUNCIÓN PARA CREAR EL DIAGNÓSTICO DE CADA AÑO
+// ============================================================
+
+function crearDiagnosticoCT100(anio, configuracion) {
+
+    const sintomasMapeados = fallasComunesCT100.map(falla => ({
+
+        titulo: falla.titulo,
+
+        dificultad: falla.dificultad,
+
+        descripcion:
+            'Posibles causas: ' +
+            falla.posiblesCausas.join(', ') +
+            '.',
+
+        notaEspecial:
+            'Diagnóstico educativo correspondiente a la Bajaj CT 100 ' +
+            anio +
+            '. Motorización: ' + configuracion.motorPrincipal + '.',
+
+        herramientas: [
+            ...herramientasCT100.basicas,
+            ...herramientasCT100.diagnostico
+        ],
+
+        pasos: falla.diagnostico
+    }));
+
+
+    return {
+
+        tecnologia:
+            configuracion.tecnologia,
+
+        motorPrincipal:
+            configuracion.motorPrincipal,
+
+        arbolProblemas: {
+
+            motor: {
+
+                titulo: 'Motor Bajaj 100cc 4T y Carburación',
+
+                icono: '🔧',
+
+                subcategorias: [
+
+                    {
+                        nombre: 'Diagnóstico General de Motor',
+
+                        sintomas: sintomasMapeados
+                    }
+                ]
+            },
+
+            electrico: {
+
+                titulo: 'Sistema Eléctrico, CDI y Sistema de Carga',
+
+                icono: '⚡',
+
+                subcategorias: [
+
+                    {
+                        nombre: 'Encendido CDI y Batería',
+
+                        sintomas: [
+
+                            {
+                                titulo: 'La moto no genera chispa o no enciende con el botón/pedal',
+
+                                dificultad: 'Básico 🟢',
+
+                                descripcion:
+                                    'Revisión del fusible principal de 10A, batería de 12V, bobina pulsora y CDI.',
+
+                                herramientas: [
+                                    'Multímetro digital',
+                                    'Chispómetro / Bujía de prueba',
+                                    'Juego de llaves'
+                                ],
+
+                                pasos: [
+                                    '1. Comprobar que el switch de encendido y el Run del manubrio estén en ON.',
+                                    '2. Medir el voltaje de la batería en reposo (mínimo 12.4V en versiones ES).',
+                                    '3. Probar la resistencia de la bobina pulsora con el multímetro (~140 Ω).',
+                                    '4. Verificar el cable de alta tensión y el capuchón resistivo de la bujía.'
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            },
+
+            transmision: {
+
+                titulo: 'Caja de 4 Marchas y Transmisión Secundaria',
+
+                icono: '⚙️',
+
+                subcategorias: [
+
+                    {
+                        nombre: 'Embrague y Guarda Cadena',
+
+                        sintomas: [
+
+                            {
+                                titulo: 'Dificultad para engranar marchas o deslizamiento del embrague',
+
+                                dificultad: 'Intermedio 🟡',
+
+                                descripcion:
+                                    'Regulación del cable de embrague, revisión de discos y lubricante JASO MA2.',
+
+                                herramientas: [
+                                    'Llaves fijas de 10mm y 12mm',
+                                    'Herramientas manuales',
+                                    'Bandeja de drenaje de aceite'
+                                ],
+
+                                pasos: [
+                                    '1. Ajustar el juego libre en la palanca de embrague (2mm a 3mm).',
+                                    '2. Confirmar el uso de aceite 20W-50 con especificación JASO MA2.',
+                                    '3. Verificar el estado de desgaste de los discos de embrague si el motor se acelera sin avanzar.'
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            }
+        }
+    };
+}
+
+
+// ============================================================
+// MODELOS INDIVIDUALES POR AÑO (BAJAJ CT 100 2012 - 2026)
+// ============================================================
+
+// --- PRIMERA GENERACIÓN CT 100 CLÁSICA (2012 - 2019) ---
+
+export const bajajCT100_2012 = {
+
+    marca: 'Bajaj',
+
+    modelo: 'CT 100',
+
+    anio: 2012,
+
+    tipo: 'Motocicleta de Trabajo / Urbana',
+
+    imagen:
+        'https://upload.wikimedia.org/wikipedia/commons/thumb/3/30/Bajaj_CT_100.jpg/1200px-Bajaj_CT_100.jpg',
+
+    descripcion:
+        'Plataforma educativa para Bajaj CT 100 2012 (Motor 99.27cc 4T monocilíndrico refrigerado por aire, carburador Keihin PB18, caja de 4 velocidades y frenos de tambor).',
+
+    informacionHistorica: {
+
+        titulo: 'Bajaj CT 100 2012',
+
+        generacion: 'Primera generación CT 100 Clásica',
+
+        familiaMotor: '99.27cc 4 Tiempos Monocilíndrico',
+
+        tipoMotor: 'Monocilíndrico 4T refrigerado por aire',
+
+        arquitectura: 'SOHC 2 Válvulas',
+
+        alimentacion: 'Carburador Keihin PB18',
+
+        encendido: 'CDI Digital (Arranque por pedal KS)',
+
+        refrigeracion: 'Enfriado por aire de flujo natural',
+
+        distribucion: 'Cadena de distribución de baja fricción',
+
+        transmision: 'Manual de 4 velocidades con embrague húmedo multidisco'
+    },
+
+    conceptoMotor: {
+
+        titulo: '¿Cómo funciona el motor de la Bajaj CT 100 2012?',
+
+        explicacion:
+            'Un motor monocilíndrico ultra eficiente diseñado con tolerancias reducidas para ofrecer una economía de combustible sobresaliente con costos de mantenimiento mínimos.',
+
+        formulaSimple:
+            'Aire + gasolina por carburador + compresión + chispa CDI = movimiento eficiente de 4 marchas',
+
+        flujoEnergia: [
+            'Tanque de combustible (10.5 Litros)',
+            'Llave de reserva',
+            'Carburador Keihin PB18',
+            'Cámara de combustión',
+            'Pistón',
+            'Biela',
+            'Cigüeñal',
+            'Embrague en baño de aceite',
+            'Caja de 4 velocidades',
+            'Piñón de salida',
+            'Cadena dentro de guarda-cadena',
+            'Rueda trasera'
+        ]
+    },
+
+    cicloCuatroTiempos: cicloCuatroTiemposCT100,
+
+    componentesMotor: sistemasMotorCT100,
+
+    sistemaCombustible: sistemaCombustibleCT100,
+
+    sistemaEncendido: sistemaEncendidoCT100,
+
+    refrigeracion: {
+
+        tipo: 'Refrigeración por aire convectivo',
+
+        elementos: [
+            'Aletas de disipación en cilindro de aluminio',
+            'Aletas en culata SOHC',
+            'Flujo de aire por marcha'
+        ],
+
+        funcionamiento:
+            'El aire del ambiente disipa la temperatura que se genera en el cilindro a través de las aletas de radiación.'
+    },
+
+    lubricacion: {
+
+        tipo: 'Lubricación forzada por bomba trocoide en baño de aceite',
+
+        componentes: [
+            'Cárter de aleación de aluminio',
+            'Bomba de aceite trocoide',
+            'Malla de succión de aceite',
+            'Filtro centrífugo en el cigüeñal'
+        ],
+
+        funcionamiento:
+            'Impulsa aceite 20W-50 JASO MA2 hacia los componentes de la culata, caja de cambios y embrague.'
+    },
+
+    distribucion: {
+
+        titulo: 'Distribución por cadena y árbol SOHC',
+
+        tipo: 'Cadena silenciosa con tensor automático',
+
+        funcion:
+            'Mantiene la sincronización de las válvulas de admisión y escape respecto al cigüeñal.',
+
+        advertencia:
+            'Verifique que las luces de calibración de válvulas sean de 0.05mm (Adm) y 0.10mm (Esc).'
+    },
+
+    diagnosticoGeneral: diagnosticoGeneralCT100,
+
+    fallasComunes: fallasComunesCT100,
+
+    herramientas: herramientasCT100,
+
+    mantenimiento: mantenimientoCT100,
+
+    cursos: cursosCT100,
+
+    seguridad: seguridadCT100,
+
+    glosario: glosarioCT100,
 
     reglaPrincipal:
-        'DIAGNOSTICAR → MEDIR → CONFIRMAR → REPARAR → COMPROBAR',
+        'CHISPA → COMBUSTIBLE → COMPRESIÓN → VERIFICACIÓN',
 
-    // =========================================================
-    // GLOSARIO
-    // =========================================================
+    obtenerDiagnosticoPorAnio: function () {
 
-    glosario: [
-        {
-            termino: 'SOHC',
-            significado:
-                'Single Overhead Camshaft. Configuración donde un único árbol de levas se ubica en la culata para operar las válvulas.'
-        },
+        return crearDiagnosticoCT100(
+            2012,
+            {
+                tecnologia: '1ª Gen - Carburador Keihin PB18 / CDI / KS',
 
-        {
-            termino: 'CDI',
-            significado:
-                'Capacitor Discharge Ignition. Sistema de encendido por descarga de condensador.'
-        },
+                motorPrincipal: '99.27cc 4T Monocilíndrico (8.2 HP / 8.05 Nm)'
+            }
+        );
+    }
+};
 
-        {
-            termino: 'PMS',
-            significado:
-                'Punto Muerto Superior: Máxima altura del pistón en su carrera.'
-        },
 
-        {
-            termino: 'PMI',
-            significado:
-                'Punto Muerto Inferior: Punto más bajo que alcanza el pistón.'
-        },
+export const bajajCT100_2013 = {
 
-        {
-            termino: 'Chicler / Gigleur',
-            significado:
-                'Surtidor o glicleur con un orificio calibrado para dosificar el paso de gasolina en el carburador.'
-        },
+    ...bajajCT100_2012,
 
-        {
-            termino: 'Insuladora',
-            significado:
-                'Aislador térmico o acople plástico/goma ubicado entre la culata y el carburador.'
-        },
+    anio: 2013,
 
-        {
-            termino: 'ExhausTEC',
-            significado:
-                'Tecnología de cámara de resonancia en el escape desarrollada por Bajaj para mejorar el torque a bajas revoluciones.'
-        }
+    descripcion:
+        'Plataforma educativa para Bajaj CT 100 2013. Mantenimiento preventivo, carburación y regulación de frenos de tambor.',
+
+    informacionHistorica: {
+
+        ...bajajCT100_2012.informacionHistorica,
+
+        titulo: 'Bajaj CT 100 2013',
+
+        anio: 2013
+    },
+
+    obtenerDiagnosticoPorAnio: function () {
+
+        return crearDiagnosticoCT100(
+            2013,
+            {
+                tecnologia: '1ª Gen - Carburador Keihin PB18 / CDI',
+
+                motorPrincipal: '99.27cc 4T Monocilíndrico'
+            }
+        );
+    }
+};
+
+
+export const bajajCT100_2014 = {
+
+    ...bajajCT100_2013,
+
+    anio: 2014,
+
+    descripcion:
+        'Plataforma educativa para Bajaj CT 100 2014. Mantenimiento del kit de arrastre y calibración de motor.',
+
+    informacionHistorica: {
+
+        ...bajajCT100_2013.informacionHistorica,
+
+        titulo: 'Bajaj CT 100 2014',
+
+        anio: 2014
+    },
+
+    obtenerDiagnosticoPorAnio: function () {
+
+        return crearDiagnosticoCT100(
+            2014,
+            {
+                tecnologia: '1ª Gen - Carburador Keihin PB18 / CDI',
+
+                motorPrincipal: '99.27cc 4T Monocilíndrico'
+            }
+        );
+    }
+};
+
+
+export const bajajCT100_2015 = {
+
+    ...bajajCT100_2014,
+
+    anio: 2015,
+
+    descripcion:
+        'Plataforma educativa para Bajaj CT 100 2015. Guías de diagnóstico eléctrico y mantenimiento de embrague.',
+
+    informacionHistorica: {
+
+        ...bajajCT100_2014.informacionHistorica,
+
+        titulo: 'Bajaj CT 100 2015',
+
+        anio: 2015
+    },
+
+    obtenerDiagnosticoPorAnio: function () {
+
+        return crearDiagnosticoCT100(
+            2015,
+            {
+                tecnologia: '1ª Gen - Carburador Keihin / CDI',
+
+                motorPrincipal: '99.27cc 4T Monocilíndrico'
+            }
+        );
+    }
+};
+
+
+export const bajajCT100_2016 = {
+
+    ...bajajCT100_2015,
+
+    anio: 2016,
+
+    descripcion:
+        'Plataforma educativa para Bajaj CT 100 2016. Mantenimiento general e inspección de la suspensión SNS.',
+
+    informacionHistorica: {
+
+        ...bajajCT100_2015.informacionHistorica,
+
+        titulo: 'Bajaj CT 100 2016',
+
+        anio: 2016
+    },
+
+    obtenerDiagnosticoPorAnio: function () {
+
+        return crearDiagnosticoCT100(
+            2016,
+            {
+                tecnologia: '1ª Gen - Carburador / CDI / Suspensión SNS',
+
+                motorPrincipal: '99.27cc 4T Monocilíndrico'
+            }
+        );
+    }
+};
+
+
+export const bajajCT100_2017 = {
+
+    ...bajajCT100_2016,
+
+    anio: 2017,
+
+    descripcion:
+        'Plataforma educativa para Bajaj CT 100 2017. Guías de servicio técnico y ajuste de luces.',
+
+    informacionHistorica: {
+
+        ...bajajCT100_2016.informacionHistorica,
+
+        titulo: 'Bajaj CT 100 2017',
+
+        anio: 2017
+    },
+
+    obtenerDiagnosticoPorAnio: function () {
+
+        return crearDiagnosticoCT100(
+            2017,
+            {
+                tecnologia: '1ª Gen - Carburador / CDI / SNS',
+
+                motorPrincipal: '99.27cc 4T Monocilíndrico'
+            }
+        );
+    }
+};
+
+
+export const bajajCT100_2018 = {
+
+    ...bajajCT100_2017,
+
+    anio: 2018,
+
+    descripcion:
+        'Plataforma educativa para Bajaj CT 100 2018. Mantenimiento del carburador e inyectores de aire según versión.',
+
+    informacionHistorica: {
+
+        ...bajajCT100_2017.informacionHistorica,
+
+        titulo: 'Bajaj CT 100 2018',
+
+        anio: 2018
+    },
+
+    obtenerDiagnosticoPorAnio: function () {
+
+        return crearDiagnosticoCT100(
+            2018,
+            {
+                tecnologia: '1ª Gen - Carburador / CDI',
+
+                motorPrincipal: '99.27cc 4T Monocilíndrico'
+            }
+        );
+    }
+};
+
+
+export const bajajCT100_2019 = {
+
+    ...bajajCT100_2018,
+
+    anio: 2019,
+
+    descripcion:
+        'Plataforma educativa para Bajaj CT 100 2019. Cierre de la versión clásica e introducción de mejoras en rines de aleación.',
+
+    informacionHistorica: {
+
+        ...bajajCT100_2018.informacionHistorica,
+
+        titulo: 'Bajaj CT 100 2019',
+
+        anio: 2019
+    },
+
+    obtenerDiagnosticoPorAnio: function () {
+
+        return crearDiagnosticoCT100(
+            2019,
+            {
+                tecnologia: '1ª Gen - Carburador / CDI / Alloy Wheels',
+
+                motorPrincipal: '99.27cc 4T Monocilíndrico'
+            }
+        );
+    }
+};
+
+
+// --- SEGUNDA GENERACIÓN CT 100 ES / CT 100X / EURO 3 - EURO 4 (2020 - 2026) ---
+
+export const bajajCT100_2020 = {
+
+    ...bajajCT100_2019,
+
+    anio: 2020,
+
+    imagen:
+        'https://upload.wikimedia.org/wikipedia/commons/thumb/3/30/Bajaj_CT_100.jpg/1200px-Bajaj_CT_100.jpg',
+
+    descripcion:
+        'Plataforma educativa para Bajaj CT 100 ES / KS 2020 (Lanzamiento con arranque eléctrico ES, motor optimizado de 102cc, suspensión SNS doble resorte y carburador electrónico e-Carb).',
+
+    informacionHistorica: {
+
+        titulo: 'Bajaj CT 100 ES 2020',
+
+        generacion: 'Segunda generación CT 100 ES / Alloy',
+
+        familiaMotor: '102cc 4 Tiempos Monocilíndrico',
+
+        tipoMotor: 'Monocilíndrico 4T SOHC de alta eficiencia',
+
+        arquitectura: 'SOHC 2 Válvulas',
+
+        alimentacion: 'Carburador Electrónico e-Carb',
+
+        encendido: 'CDI Digital con arranque eléctrico ES y pedal KS',
+
+        refrigeracion: 'Aire por convección natural',
+
+        distribucion: 'Cadena de distribución silenciosa',
+
+        transmision: 'Manual de 4 velocidades con embrague multidisco'
+    },
+
+    obtenerDiagnosticoPorAnio: function () {
+
+        return crearDiagnosticoCT100(
+            2020,
+            {
+                tecnologia: '2ª Gen - e-Carb / Electric Start ES / Suspensión SNS',
+
+                motorPrincipal: '102cc Monocilíndrico 4T (7.9 HP / 8.34 Nm)'
+            }
+        );
+    }
+};
+
+
+export const bajajCT100_2021 = {
+
+    ...bajajCT100_2020,
+
+    anio: 2021,
+
+    descripcion:
+        'Plataforma educativa para Bajaj CT 100 2021. Diagnóstico del sistema de arranque eléctrico y carburador electrónico.',
+
+    informacionHistorica: {
+
+        ...bajajCT100_2020.informacionHistorica,
+
+        titulo: 'Bajaj CT 100 2021',
+
+        anio: 2021
+    },
+
+    obtenerDiagnosticoPorAnio: function () {
+
+        return crearDiagnosticoCT100(
+            2021,
+            {
+                tecnologia: '2ª Gen - e-Carb / Electric Start / SNS',
+
+                motorPrincipal: '102cc Monocilíndrico 4T'
+            }
+        );
+    }
+};
+
+
+export const bajajCT100_2022 = {
+
+    ...bajajCT100_2021,
+
+    anio: 2022,
+
+    descripcion:
+        'Plataforma educativa para Bajaj CT 100X 2022 (Lanzamiento de la versión crossover CT 100X con fuelle de horquilla, protector de faro y parrilla de carga pesada).',
+
+    informacionHistorica: {
+
+        ...bajajCT100_2021.informacionHistorica,
+
+        titulo: 'Bajaj CT 100X 2022',
+
+        anio: 2022
+    },
+
+    obtenerDiagnosticoPorAnio: function () {
+
+        return crearDiagnosticoCT100(
+            2022,
+            {
+                tecnologia: '2ª Gen CT 100X - Crossover Heavy Duty / e-Carb',
+
+                motorPrincipal: '102cc Monocilíndrico 4T'
+            }
+        );
+    }
+};
+
+
+export const bajajCT100_2023 = {
+
+    ...bajajCT100_2022,
+
+    anio: 2023,
+
+    descripcion:
+        'Plataforma educativa para Bajaj CT 100 2023. Mantenimiento preventivo, carburación y suspensiones SNS.',
+
+    informacionHistorica: {
+
+        ...bajajCT100_2022.informacionHistorica,
+
+        titulo: 'Bajaj CT 100 2023',
+
+        anio: 2023
+    },
+
+    obtenerDiagnosticoPorAnio: function () {
+
+        return crearDiagnosticoCT100(
+            2023,
+            {
+                tecnologia: '2ª Gen - e-Carb / Electric Start / SNS',
+
+                motorPrincipal: '102cc Monocilíndrico 4T'
+            }
+        );
+    }
+};
+
+
+export const bajajCT100_2024 = {
+
+    ...bajajCT100_2023,
+
+    anio: 2024,
+
+    imagen:
+        'https://upload.wikimedia.org/wikipedia/commons/thumb/3/30/Bajaj_CT_100.jpg/1200px-Bajaj_CT_100.jpg',
+
+    descripcion:
+        'Plataforma educativa para Bajaj CT 100 2024 (Ediciones CT 100 KS, CT 100 ES y CT 100X Crossover).',
+
+    informacionHistorica: {
+
+        ...bajajCT100_2023.informacionHistorica,
+
+        titulo: 'Bajaj CT 100 2024',
+
+        anio: 2024
+    },
+
+    obtenerDiagnosticoPorAnio: function () {
+
+        return crearDiagnosticoCT100(
+            2024,
+            {
+                tecnologia: '2ª Gen - e-Carb / 7.9 HP / Suspensión SNS',
+
+                motorPrincipal: '102cc Monocilíndrico 4T (7.9 HP)'
+            }
+        );
+    }
+};
+
+
+export const bajajCT100_2025 = {
+
+    ...bajajCT100_2024,
+
+    anio: 2025,
+
+    descripcion:
+        'Plataforma educativa para Bajaj CT 100 2025. Diagnóstico de motor de 100cc, sistema de encendido y frenos.',
+
+    informacionHistorica: {
+
+        ...bajajCT100_2024.informacionHistorica,
+
+        titulo: 'Bajaj CT 100 2025',
+
+        anio: 2025
+    },
+
+    obtenerDiagnosticoPorAnio: function () {
+
+        return crearDiagnosticoCT100(
+            2025,
+            {
+                tecnologia: '2ª Gen - e-Carb / Electric Start / SNS',
+
+                motorPrincipal: '102cc Monocilíndrico 4T'
+            }
+        );
+    }
+};
+
+
+export const bajajCT100_2026 = {
+
+    ...bajajCT100_2025,
+
+    anio: 2026,
+
+    descripcion:
+        'Plataforma educativa para Bajaj CT 100 2026. Diagnóstico integral de motor SOHC de 100cc, carburación electrónica e-Carb, suspensión SNS y caja de 4 velocidades.',
+
+    informacionHistorica: {
+
+        ...bajajCT100_2025.informacionHistorica,
+
+        titulo: 'Bajaj CT 100 2026',
+
+        anio: 2026
+    },
+
+    obtenerDiagnosticoPorAnio: function () {
+
+        return crearDiagnosticoCT100(
+            2026,
+            {
+                tecnologia: '2ª Gen - e-Carb / Suspensión SNS / Electric Start',
+
+                motorPrincipal: '102cc Monocilíndrico 4T (7.9 HP / 8.34 Nm)'
+            }
+        );
+    }
+};
+
+
+// ============================================================
+// OBJETO EXPORTABLE GENERAL DE BAJAJ CT 100
+// ============================================================
+
+export const bajajCT100 = {
+
+    marca: 'Bajaj',
+
+    modelo: 'CT 100',
+
+    tipo: 'Motocicleta de Trabajo / Urbana',
+
+    imagen:
+        'https://upload.wikimedia.org/wikipedia/commons/thumb/3/30/Bajaj_CT_100.jpg/1200px-Bajaj_CT_100.jpg',
+
+    aniosDisponibles: [
+        2012,
+        2013,
+        2014,
+        2015,
+        2016,
+        2017,
+        2018,
+        2019,
+        2020,
+        2021,
+        2022,
+        2023,
+        2024,
+        2025,
+        2026
     ],
 
-    // =========================================================
-    // NOTA TÉCNICA
-    // =========================================================
+    vehiculosPorAnio: {
 
-    notaTecnica: `
-        Esta ficha de datos está estructurada para la familia Bajaj CT 100 
-        con sistema de carburador. 
+        2012: bajajCT100_2012,
 
-        Para procedimientos de reparación que exijan tolerancias exactas de metrología, 
-        pares de apriete (torques), o diagramas eléctricos de modelos específicos (KS, ES o versiones BS4/BS6), 
-        se recomienda consultar siempre el manual de taller de Bajaj correspondiente a la versión y año exacto del vehículo.
-    `
+        2013: bajajCT100_2013,
+
+        2014: bajajCT100_2014,
+
+        2015: bajajCT100_2015,
+
+        2016: bajajCT100_2016,
+
+        2017: bajajCT100_2017,
+
+        2018: bajajCT100_2018,
+
+        2019: bajajCT100_2019,
+
+        2020: bajajCT100_2020,
+
+        2021: bajajCT100_2021,
+
+        2022: bajajCT100_2022,
+
+        2023: bajajCT100_2023,
+
+        2024: bajajCT100_2024,
+
+        2025: bajajCT100_2025,
+
+        2026: bajajCT100_2026
+    },
+
+    obtenerPorAnio(anio) {
+
+        return this.vehiculosPorAnio[anio] || this.vehiculosPorAnio[2026];
+    },
+
+    obtenerDiagnosticoPorAnio(anio) {
+
+        const vehiculo = this.obtenerPorAnio(anio);
+
+        return vehiculo ? vehiculo.obtenerDiagnosticoPorAnio() : null;
+    }
 };
