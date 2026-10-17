@@ -215,7 +215,7 @@ small.text-muted {
 .upload-preview {
   position: relative;
   width: 100%;
-  max-height: 250px;
+  max-height: 200px;
   border-radius: 12px;
   overflow: hidden;
   background: #111;
@@ -267,9 +267,9 @@ small.text-muted {
 .modal-content {
   width: 100%;
   max-width: 550px;
-  max-height: 90vh;
+  max-height: 85vh;
   overflow-y: auto;
-  padding: 32px;
+  padding: 24px;
 }
 
 /* Floating Action Button (FAB) */
