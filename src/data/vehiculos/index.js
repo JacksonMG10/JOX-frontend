@@ -1,7 +1,3 @@
-// =========================================================
-// 1. IMPORTACIÓN DE VEHÍCULOS INDIVIDUALES
-// =========================================================
-
 // CARROS
 import { renaultDuster } from './renaultDuster';
 import { chevroletOnix } from './chevroletOnix';
@@ -15,7 +11,7 @@ import { renaultStepway } from './renaultStepway';
 import { nissanFrontier } from './nissanFrontier';
 
 // MOTOS
-import { aktNkd125 } from './aktNkd125';
+import aktNkd125 from './aktNkd125';
 import { yamahaNmax155 } from './yamahaNmax155';
 import { bajajCt100 } from './bajajCt100';
 import { suzukiGn125 } from './suzukiGn125';
