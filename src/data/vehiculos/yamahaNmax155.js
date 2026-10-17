@@ -1304,7 +1304,7 @@ export const yamahaNMAX = {
     tipo: 'Scooter Maxi-Urban',
 
     imagen:
-        'https://upload.wikimedia.org/wikipedia/commons/thumb/1/13/2018_Yamaha_NMAX_155.jpg/1200px-2018_Yamaha_NMAX_155.jpg',
+        'https://http2.mlstatic.com/D_805544-MCO110431987063_042026-O.jpg',
 
     aniosDisponibles: [
         2015,

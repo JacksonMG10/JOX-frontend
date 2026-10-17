@@ -1411,7 +1411,7 @@ export const bajajPulsarNs200 = {
     tipo: 'Motocicleta Street / Naked Sport',
 
     imagen:
-        'https://upload.wikimedia.org/wikipedia/commons/thumb/e/e0/Pulsar_NS_200.jpg/1200px-Pulsar_NS_200.jpg',
+        'https://bajajmatriz.com/wp-content/uploads/2024/04/NS200UG-ROJA.jpg',
 
     aniosDisponibles: [
         2012,

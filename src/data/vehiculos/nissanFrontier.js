@@ -1417,7 +1417,7 @@ export const nissanFrontier = {
     tipo: 'Pickup / Camioneta 4x4 / 4x2',
 
     imagen:
-        'https://upload.wikimedia.org/wikipedia/commons/thumb/6/60/2021_Nissan_Frontier_PRO-4X_front.jpg/1200px-2021_Nissan_Frontier_PRO-4X_front.jpg',
+        'https://www.nissan-cdn.net/content/dam/Nissan/co/prensa/2023/nissan-frotnier-2024-una-camioneta-pick-up-con-mucho-estilo/nissan-frotnier-2024-una-camioneta-pick-up-con-mucho-estilo-desktop.webp.ximg.l_12_m.smart.webp',
 
     aniosDisponibles: [
         2012,

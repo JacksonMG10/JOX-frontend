@@ -1391,7 +1391,7 @@ export const suzukiGN125 = {
     tipo: 'Motocicleta Custom / Trabajo Urbana',
 
     imagen:
-        'https://upload.wikimedia.org/wikipedia/commons/thumb/6/69/Suzuki_GN125_2008_1.jpg/1200px-Suzuki_GN125_2008_1.jpg',
+        'https://motoblog.com/wp-content/uploads/2022/10/WhatsApp-Image-2022-10-27-at-1.47.36-PM-15-1024x682.jpeg',
 
     aniosDisponibles: [
         2012,

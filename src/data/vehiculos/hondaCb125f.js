@@ -1390,7 +1390,7 @@ export const hondaCb125f = {
     tipo: 'Motocicleta Urbana / Naked',
 
     imagen:
-        'https://upload.wikimedia.org/wikipedia/commons/thumb/e/e1/Honda_CB125F_2015.jpg/1200px-Honda_CB125F_2015.jpg',
+        'https://www.motoplanete.com/honda/galerie/Honda-CBF-125-2026/8.webp',
 
     aniosDisponibles: [
         2012,

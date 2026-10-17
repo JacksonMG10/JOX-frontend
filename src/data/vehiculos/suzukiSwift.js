@@ -1430,7 +1430,7 @@ export const suzukiSwift = {
     tipo: 'Hatchback',
 
     imagen:
-        'https://upload.wikimedia.org/wikipedia/commons/thumb/c/c9/2024_Suzuki_Swift_Front.jpg/1200px-2024_Suzuki_Swift_Front.jpg',
+        'https://acnews.blob.core.windows.net/imgnews/large/NAZ_c9912243e7b44043a063235a8eb5d04d.jpg',
 
     aniosDisponibles: [
         2012,

@@ -1442,7 +1442,7 @@ export const mazda2 = {
     tipo: 'Hatchback / Sedán',
 
     imagen:
-        'https://upload.wikimedia.org/wikipedia/commons/thumb/1/1a/Mazda2_Skyactiv-D_105_Exclusive-Line_%28DJ%29_%E2%80%93_Frontansicht%2C_12._Juli_2015%2C_M%C3%BCnster.jpg/1200px-Mazda2_Skyactiv-D_105_Exclusive-Line_%28DJ%29_%E2%80%93_Frontansicht%2C_12._Juli_2015%2C_M%C3%BCnster.jpg',
+        'https://alciautosmazda.com/wp-content/uploads/2020/12/mazda-2-sport-2021-gris.jpg',
 
     aniosDisponibles: [
         2011,

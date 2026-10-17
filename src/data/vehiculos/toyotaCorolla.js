@@ -1410,7 +1410,7 @@ export const toyotaCorolla = {
     tipo: 'Sedán',
 
     imagen:
-        'https://upload.wikimedia.org/wikipedia/commons/thumb/c/c7/2020_Toyota_Corolla_Ascent_Sport_sedan_%28ZRE212R%29%2C_front_11.10.20.jpg/1200px-2020_Toyota_Corolla_Ascent_Sport_sedan_%28ZRE212R%29%2C_front_11.10.20.jpg',
+        'https://yokomotor.com.co/toyota/wp-content/uploads/sites/2/2024/03/yokomotor-toyota-corolla-hev-seg-Super-White.webp',
 
     aniosDisponibles: [
         2012,

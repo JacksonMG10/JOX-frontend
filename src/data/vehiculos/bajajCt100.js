@@ -1386,7 +1386,7 @@ export const bajajCT100 = {
     tipo: 'Motocicleta de Trabajo / Urbana',
 
     imagen:
-        'https://upload.wikimedia.org/wikipedia/commons/thumb/3/30/Bajaj_CT_100.jpg/1200px-Bajaj_CT_100.jpg',
+        'https://fotos.perfil.com/2026/02/02/bajaj-lanza-en-argentina-la-nueva-boxer-ct100-eficiencia-y-autonomia-record-2179443.jpg',
 
     aniosDisponibles: [
         2012,

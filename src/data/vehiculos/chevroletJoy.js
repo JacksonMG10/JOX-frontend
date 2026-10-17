@@ -1205,7 +1205,7 @@ export const chevroletJoy = {
     tipo: 'Hatchback / Sedan',
 
     imagen:
-        'https://upload.wikimedia.org/wikipedia/commons/thumb/c/ca/Chevrolet_Onix_Joy_1.0_2019.jpg/1200px-Chevrolet_Onix_Joy_1.0_2019.jpg',
+        'https://leasyauto.com/static/uploads/323dd3b3-4ab3-4560-8cfe-d5a9657e9cea.jpeg',
 
     aniosDisponibles: [
         2018,

@@ -1193,7 +1193,7 @@ export const yamahaXtz150 = {
     tipo: 'Motocicleta On/Off-Road / Dual Purpose',
 
     imagen:
-        'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a2/Yamaha_XTZ_150.jpg/1200px-Yamaha_XTZ_150.jpg',
+        'https://www.galgo.com/wp-content/uploads/2023/01/YAMAHA-XTZ-150_-La-multiproposito-mas-buscada.webp',
 
     aniosDisponibles: [
         2018,

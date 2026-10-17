@@ -1388,7 +1388,7 @@ export const aktNKD125 = {
     tipo: 'Motocicleta de Calle / Trabajo',
 
     imagen:
-        'https://upload.wikimedia.org/wikipedia/commons/thumb/e/e8/AKT_NKD_125.jpg/1200px-AKT_NKD_125.jpg',
+        'https://acnews.blob.core.windows.net/imgnews/large/NAZ_edc56762d192479abca29ee51b2087dd.jpg',
 
     aniosDisponibles: [
         2012,

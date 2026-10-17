@@ -1442,7 +1442,7 @@ export const kiaPicanto = {
     tipo: 'Hatchback',
 
     imagen:
-        'https://upload.wikimedia.org/wikipedia/commons/thumb/1/18/Kia_Picanto_JA_FL2_GT-Line_1.2_1.jpg/1200px-Kia_Picanto_JA_FL2_GT-Line_1.2_1.jpg',
+        'https://www.c3carecarcenter.com/wp-content/uploads/2025/05/Descubre-las-caracteristicas-destacadas-del-Kia-Picanto-2016.webp',
 
     aniosDisponibles: [
         2011,

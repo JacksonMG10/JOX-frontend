@@ -1429,7 +1429,7 @@ export const renaultStepway = {
     tipo: 'Hatchback Crossover',
 
     imagen:
-        'https://upload.wikimedia.org/wikipedia/commons/thumb/1/18/Renault_Sandero_Stepway_Intens_1.6_CVT_2020.jpg/1200px-Renault_Sandero_Stepway_Intens_1.6_CVT_2020.jpg',
+        'https://cdn.group.renault.com/ren/co/vehicles/stepway/home/stepway-paisaje2.jpg.ximg.xsmall.jpg/cf3457a613.jpg',
 
     aniosDisponibles: [
         2012,

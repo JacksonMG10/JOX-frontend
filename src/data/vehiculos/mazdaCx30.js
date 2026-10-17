@@ -1106,7 +1106,7 @@ export const mazdaCx30 = {
     tipo: 'SUV / Crossover',
 
     imagen:
-        'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d5/2020_Mazda_CX-30_2.0_Front.jpg/1200px-2020_Mazda_CX-30_2.0_Front.jpg',
+        'https://es.mazda-press.com/globalassets/generic-cms-images/02-heroes/2025/2025-mazda-cx-30/hero-2025-mazda-cx-30-02-mob.jpg/highdefinitionhalfsize?token=vULvPL3Kp38VAOmPrbF_sLBH7xnV2Mk9mHK3AC6_t_M1',
 
     aniosDisponibles: [
         2020,
