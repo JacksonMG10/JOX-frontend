@@ -87,69 +87,69 @@ export const topMotos = [
 ];
 
 // =========================================================
-// 3. BASE DE DATOS UNIFICADA
+// 3. BASE DE DATOS UNIFICADA (Con Getters para evitar ciclos circular)
 // =========================================================
 
 export const baseDatosVehiculos = {
     // --- CARROS ---
-    'c1': renaultDuster,
-    'renault-duster': renaultDuster,
+    get 'c1'() { return renaultDuster; },
+    get 'renault-duster'() { return renaultDuster; },
 
-    'c2': chevroletOnix,
-    'chevrolet-onix': chevroletOnix,
+    get 'c2'() { return chevroletOnix; },
+    get 'chevrolet-onix'() { return chevroletOnix; },
 
-    'c3': mazdaCx30,
-    'mazda-cx-30': mazdaCx30,
+    get 'c3'() { return mazdaCx30; },
+    get 'mazda-cx-30'() { return mazdaCx30; },
 
-    'c4': suzukiSwift,
-    'suzuki-swift': suzukiSwift,
+    get 'c4'() { return suzukiSwift; },
+    get 'suzuki-swift'() { return suzukiSwift; },
 
-    'c5': kiaPicanto,
-    'kia-picanto': kiaPicanto,
+    get 'c5'() { return kiaPicanto; },
+    get 'kia-picanto'() { return kiaPicanto; },
 
-    'c6': toyotaCorolla,
-    'toyota-corolla': toyotaCorolla,
+    get 'c6'() { return toyotaCorolla; },
+    get 'toyota-corolla'() { return toyotaCorolla; },
 
-    'c7': mazda2,
-    'mazda-2': mazda2,
+    get 'c7'() { return mazda2; },
+    get 'mazda-2'() { return mazda2; },
 
-    'c8': chevroletJoy,
-    'chevrolet-joy': chevroletJoy,
+    get 'c8'() { return chevroletJoy; },
+    get 'chevrolet-joy'() { return chevroletJoy; },
 
-    'c9': renaultStepway,
-    'renault-stepway': renaultStepway,
+    get 'c9'() { return renaultStepway; },
+    get 'renault-stepway'() { return renaultStepway; },
 
-    'c10': nissanFrontier,
-    'nissan-frontier': nissanFrontier,
+    get 'c10'() { return nissanFrontier; },
+    get 'nissan-frontier'() { return nissanFrontier; },
 
     // --- MOTOS ---
-    'm1': aktNkd125,
-    'akt-nkd-125': aktNkd125,
+    get 'm1'() { return aktNkd125; },
+    get 'akt-nkd-125'() { return aktNkd125; },
 
-    'm2': yamahaNmax155,
-    'yamaha-nmax-155': yamahaNmax155,
+    get 'm2'() { return yamahaNmax155; },
+    get 'yamaha-nmax-155'() { return yamahaNmax155; },
 
-    'm3': bajajCt100,
-    'bajaj-ct-100': bajajCt100,
+    get 'm3'() { return bajajCt100; },
+    get 'bajaj-ct-100'() { return bajajCt100; },
 
-    'm4': suzukiGn125,
-    'suzuki-gn-125': suzukiGn125,
+    get 'm4'() { return suzukiGn125; },
+    get 'suzuki-gn-125'() { return suzukiGn125; },
 
-    'm5': hondaCb125f,
-    'honda-cb-125f': hondaCb125f,
+    get 'm5'() { return hondaCb125f; },
+    get 'honda-cb-125f'() { return hondaCb125f; },
 
-    'm6': yamahaFzs,
-    'yamaha-fz-s': yamahaFzs,
+    get 'm6'() { return yamahaFzs; },
+    get 'yamaha-fz-s'() { return yamahaFzs; },
 
-    'm7': bajajPulsarNs200,
-    'bajaj-pulsar-ns-200': bajajPulsarNs200,
+    get 'm7'() { return bajajPulsarNs200; },
+    get 'bajaj-pulsar-ns-200'() { return bajajPulsarNs200; },
 
-    'm8': tvsRaider125,
-    'tvs-raider-125': tvsRaider125,
+    get 'm8'() { return tvsRaider125; },
+    get 'tvs-raider-125'() { return tvsRaider125; },
 
-    'm9': yamahaXtz150,
-    'yamaha-xtz-150': yamahaXtz150,
+    get 'm9'() { return yamahaXtz150; },
+    get 'yamaha-xtz-150'() { return yamahaXtz150; },
 
-    'm10': hondaXr150l,
-    'honda-xr-150l': hondaXr150l,
+    get 'm10'() { return hondaXr150l; },
+    get 'honda-xr-150l'() { return hondaXr150l; }
 };
