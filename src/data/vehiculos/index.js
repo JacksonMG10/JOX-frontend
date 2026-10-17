@@ -1,57 +1,60 @@
-// =========================================================
-// 1. IMPORTACIÓN NOMBRADA DE VEHÍCULOS INDIVIDUALES
-// =========================================================
-
 // CARROS
-import { renaultDuster } from './renaultDuster';
-import { chevroletOnix } from './chevroletOnix';
-import { mazdaCx30 } from './mazdaCx30';
-import { suzukiSwift } from './suzukiSwift';
-import { kiaPicanto } from './kiaPicanto';
-import { toyotaCorolla } from './toyotaCorolla';
-import { mazda2 } from './mazda2';
-import { chevroletJoy } from './chevroletJoy';
-import { renaultStepway } from './renaultStepway';
-import { nissanFrontier } from './nissanFrontier';
+import * as ModuloRenaultDuster from './renaultDuster';
+import * as ModuloChevroletOnix from './chevroletOnix';
+import * as ModuloMazdaCx30 from './mazdaCx30';
+import * as ModuloSuzukiSwift from './suzukiSwift';
+import * as ModuloKiaPicanto from './kiaPicanto';
+import * as ModuloToyotaCorolla from './toyotaCorolla';
+import * as ModuloMazda2 from './mazda2';
+import * as ModuloChevroletJoy from './chevroletJoy';
+import * as ModuloRenaultStepway from './renaultStepway';
+import * as ModuloNissanFrontier from './nissanFrontier';
 
 // MOTOS
-import { aktNKD125 } from './aktNkd125';
-import { yamahaNmax155 } from './yamahaNmax155';
-import { bajajCt100 } from './bajajCt100';
-import { suzukiGn125 } from './suzukiGn125';
-import { hondaCb125f } from './hondaCb125f';
-import { yamahaFzs } from './yamahaFzs';
-import { bajajPulsarNs200 } from './bajajPulsarNs200';
-import { tvsRaider125 } from './tvsRaider125';
-import { yamahaXtz150 } from './yamahaXtz150';
-import { hondaXr150l } from './hondaXr150l';
+import * as ModuloAktNkd125 from './aktNkd125';
+import * as ModuloYamahaNmax155 from './yamahaNmax155';
+import * as ModuloBajajCt100 from './bajajCt100';
+import * as ModuloSuzukiGn125 from './suzukiGn125';
+import * as ModuloHondaCb125f from './hondaCb125f';
+import * as ModuloYamahaFzs from './yamahaFzs';
+import * as ModuloBajajPulsarNs200 from './bajajPulsarNs200';
+import * as ModuloTvsRaider125 from './tvsRaider125';
+import * as ModuloYamahaXtz150 from './yamahaXtz150';
+import * as ModuloHondaXr150l from './hondaXr150l';
 
-// Alias para evitar errores si en otros componentes se usa 'aktNkd125'
-export const aktNkd125 = aktNKD125;
+// Función para obtener la exportación principal sin importar su nombre exacto
+function extraerObjetoVehiculo(mod) {
+    if (!mod) return {};
+    if (mod.default) return mod.default;
+    const llaves = Object.keys(mod);
+    // Retorna la primera exportación que sea un objeto con la propiedad 'marca' o la primera disponible
+    const exportValida = llaves.find(key => mod[key] && typeof mod[key] === 'object' && mod[key].marca);
+    return exportValida ? mod[exportValida] : (mod[llaves[0]] || {});
+}
 
-// Re-exportación individual
-export {
-    renaultDuster,
-    chevroletOnix,
-    mazdaCx30,
-    suzukiSwift,
-    kiaPicanto,
-    toyotaCorolla,
-    mazda2,
-    chevroletJoy,
-    renaultStepway,
-    nissanFrontier,
-    aktNKD125,
-    yamahaNmax155,
-    bajajCt100,
-    suzukiGn125,
-    hondaCb125f,
-    yamahaFzs,
-    bajajPulsarNs200,
-    tvsRaider125,
-    yamahaXtz150,
-    hondaXr150l
-};
+// Extraemos los objetos de forma segura
+export const renaultDuster = extraerObjetoVehiculo(ModuloRenaultDuster);
+export const chevroletOnix = extraerObjetoVehiculo(ModuloChevroletOnix);
+export const mazdaCx30 = extraerObjetoVehiculo(ModuloMazdaCx30);
+export const suzukiSwift = extraerObjetoVehiculo(ModuloSuzukiSwift);
+export const kiaPicanto = extraerObjetoVehiculo(ModuloKiaPicanto);
+export const toyotaCorolla = extraerObjetoVehiculo(ModuloToyotaCorolla);
+export const mazda2 = extraerObjetoVehiculo(ModuloMazda2);
+export const chevroletJoy = extraerObjetoVehiculo(ModuloChevroletJoy);
+export const renaultStepway = extraerObjetoVehiculo(ModuloRenaultStepway);
+export const nissanFrontier = extraerObjetoVehiculo(ModuloNissanFrontier);
+
+export const aktNkd125 = extraerObjetoVehiculo(ModuloAktNkd125);
+export const aktNKD125 = aktNkd125; // Compatibilidad con ambas escrituras
+export const yamahaNmax155 = extraerObjetoVehiculo(ModuloYamahaNmax155);
+export const bajajCt100 = extraerObjetoVehiculo(ModuloBajajCt100);
+export const suzukiGn125 = extraerObjetoVehiculo(ModuloSuzukiGn125);
+export const hondaCb125f = extraerObjetoVehiculo(ModuloHondaCb125f);
+export const yamahaFzs = extraerObjetoVehiculo(ModuloYamahaFzs);
+export const bajajPulsarNs200 = extraerObjetoVehiculo(ModuloBajajPulsarNs200);
+export const tvsRaider125 = extraerObjetoVehiculo(ModuloTvsRaider125);
+export const yamahaXtz150 = extraerObjetoVehiculo(ModuloYamahaXtz150);
+export const hondaXr150l = extraerObjetoVehiculo(ModuloHondaXr150l);
 
 // =========================================================
 // 2. LISTAS DESTACADAS (TOP 10)
@@ -120,8 +123,8 @@ export const baseDatosVehiculos = {
     'nissan-frontier': nissanFrontier,
 
     // --- MOTOS ---
-    'm1': aktNKD125,
-    'akt-nkd-125': aktNKD125,
+    'm1': aktNkd125,
+    'akt-nkd-125': aktNkd125,
 
     'm2': yamahaNmax155,
     'yamaha-nmax-155': yamahaNmax155,
