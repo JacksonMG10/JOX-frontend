@@ -1,7 +1,5 @@
 // =========================================================
-// 1. IMPORTACIÓN ROBUSTA DE VEHÍCULOS INDIVIDUALES
-// Importamos como módulos (*) para evitar fallos si el archivo
-// usa 'export const' o 'export default'.
+// 1. IMPORTACIÓN DE MÓDULOS DE VEHÍCULOS
 // =========================================================
 
 // CARROS
@@ -28,34 +26,34 @@ import * as ModuloTvsRaider125 from './tvsRaider125';
 import * as ModuloYamahaXtz150 from './yamahaXtz150';
 import * as ModuloHondaXr150l from './hondaXr150l';
 
-// Función auxiliar para extraer el objeto principal del módulo de forma segura
-const obtenerObjetoVehiculo = (mod) => {
+// Función auxiliar para extraer el objeto del módulo de forma segura
+function resolverModulo(mod) {
     if (!mod) return {};
     return mod.default || mod[Object.keys(mod)[0]] || {};
-};
+}
 
-// Asignación de vehículos garantizada sin errores de importación
-const renaultDuster = obtenerObjetoVehiculo(ModuloRenaultDuster);
-const chevroletOnix = obtenerObjetoVehiculo(ModuloChevroletOnix);
-const mazdaCx30 = obtenerObjetoVehiculo(ModuloMazdaCx30);
-const suzukiSwift = obtenerObjetoVehiculo(ModuloSuzukiSwift);
-const kiaPicanto = obtenerObjetoVehiculo(ModuloKiaPicanto);
-const toyotaCorolla = obtenerObjetoVehiculo(ModuloToyotaCorolla);
-const mazda2 = obtenerObjetoVehiculo(ModuloMazda2);
-const chevroletJoy = obtenerObjetoVehiculo(ModuloChevroletJoy);
-const renaultStepway = obtenerObjetoVehiculo(ModuloRenaultStepway);
-const nissanFrontier = obtenerObjetoVehiculo(ModuloNissanFrontier);
+// Extracción individual
+export const renaultDuster = resolverModulo(ModuloRenaultDuster);
+export const chevroletOnix = resolverModulo(ModuloChevroletOnix);
+export const mazdaCx30 = resolverModulo(ModuloMazdaCx30);
+export const suzukiSwift = resolverModulo(ModuloSuzukiSwift);
+export const kiaPicanto = resolverModulo(ModuloKiaPicanto);
+export const toyotaCorolla = resolverModulo(ModuloToyotaCorolla);
+export const mazda2 = resolverModulo(ModuloMazda2);
+export const chevroletJoy = resolverModulo(ModuloChevroletJoy);
+export const renaultStepway = resolverModulo(ModuloRenaultStepway);
+export const nissanFrontier = resolverModulo(ModuloNissanFrontier);
 
-const aktNkd125 = obtenerObjetoVehiculo(ModuloAktNkd125);
-const yamahaNmax155 = obtenerObjetoVehiculo(ModuloYamahaNmax155);
-const bajajCt100 = obtenerObjetoVehiculo(ModuloBajajCt100);
-const suzukiGn125 = obtenerObjetoVehiculo(ModuloSuzukiGn125);
-const hondaCb125f = obtenerObjetoVehiculo(ModuloHondaCb125f);
-const yamahaFzs = obtenerObjetoVehiculo(ModuloYamahaFzs);
-const bajajPulsarNs200 = obtenerObjetoVehiculo(ModuloBajajPulsarNs200);
-const tvsRaider125 = obtenerObjetoVehiculo(ModuloTvsRaider125);
-const yamahaXtz150 = obtenerObjetoVehiculo(ModuloYamahaXtz150);
-const hondaXr150l = obtenerObjetoVehiculo(ModuloHondaXr150l);
+export const aktNkd125 = resolverModulo(ModuloAktNkd125);
+export const yamahaNmax155 = resolverModulo(ModuloYamahaNmax155);
+export const bajajCt100 = resolverModulo(ModuloBajajCt100);
+export const suzukiGn125 = resolverModulo(ModuloSuzukiGn125);
+export const hondaCb125f = resolverModulo(ModuloHondaCb125f);
+export const yamahaFzs = resolverModulo(ModuloYamahaFzs);
+export const bajajPulsarNs200 = resolverModulo(ModuloBajajPulsarNs200);
+export const tvsRaider125 = resolverModulo(ModuloTvsRaider125);
+export const yamahaXtz150 = resolverModulo(ModuloYamahaXtz150);
+export const hondaXr150l = resolverModulo(ModuloHondaXr150l);
 
 // =========================================================
 // 2. LISTAS PARA CATÁLOGOS Y DESTACADOS (TOP 10)
@@ -89,7 +87,6 @@ export const topMotos = [
 
 // =========================================================
 // 3. BASE DE DATOS UNIFICADA
-// Permite buscar por ID corto (ej: 'c1', 'm1') o por Slug (ej: 'akt-nkd-125')
 // =========================================================
 
 export const baseDatosVehiculos = {
