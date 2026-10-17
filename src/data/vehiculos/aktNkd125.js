@@ -1453,3 +1453,5 @@ export const aktNKD125 = {
         return vehiculo ? vehiculo.obtenerDiagnosticoPorAnio() : null;
     }
 };
+
+export default aktNKD125;
