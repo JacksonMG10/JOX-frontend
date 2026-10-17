@@ -18,7 +18,12 @@ const Dashboard = () => {
     const [listaTecno, setListaTecno] = useState([]);
     const [indiceTecno, setIndiceTecno] = useState(0);
     
+    // Estados para la Calculadora de Mantenimiento Personalizada
     const [kilometrajeUsuario, setKilometrajeUsuario] = useState('');
+    const [tipoVehiculo, setTipoVehiculo] = useState('carro_gasolina'); // carro_gasolina, moto_gasolina, carro_electrico, moto_electrica
+    const [marcaVehiculo, setMarcaVehiculo] = useState('');
+    const [tipoAceite, setTipoAceite] = useState('sintetico'); // mineral, semisintetico, sintetico
+    const [marcaAceite, setMarcaAceite] = useState('Mobil');
 
     const [metricas, setMetricas] = useState({
         vehiculosRegistrados: 0,
@@ -38,7 +43,7 @@ const Dashboard = () => {
     ]);
     const [inputChat, setInputChat] = useState('');
     const [escribiendoAI, setEscribiendoAI] = useState(false);
-    const chatEndRef = useRef(null);
+    chatEndRef = useRef(null);
 
     useEffect(() => {
         chatEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -238,31 +243,76 @@ const Dashboard = () => {
         navigate('/login');
     };
 
-    const calcularProximosMantenimientos = (km) => {
+    // FUNCIÓN DE CÁLCULO DE MANTENIMIENTO SEGÚN SELECCIÓN DE VEHÍCULO Y ACEITE
+    const calcularProximosMantenimientos = (km, tipoVeh, marcaVeh, tAceite, mAceite) => {
         const kmNum = parseInt(km, 10);
         if (isNaN(kmNum) || kmNum <= 0) return null;
 
-        const proxAceite = Math.ceil((kmNum + 1) / 5000) * 5000;
+        const esElectrico = tipoVeh === 'carro_electrico' || tipoVeh === 'moto_electrica';
+        const esMoto = tipoVeh === 'moto_gasolina' || tipoVeh === 'moto_electrica';
+
+        // LÓGICA PARA VEHÍCULOS ELÉCTRICOS (CARRO Y MOTO)
+        if (esElectrico) {
+            const proxRefrigerante = Math.ceil((kmNum + 1) / 40000) * 40000;
+            const proxFrenosReg = Math.ceil((kmNum + 1) / 15000) * 15000;
+            const proxBateriaSalud = Math.ceil((kmNum + 1) / 20000) * 20000;
+            const proxLlantasE = Math.ceil((kmNum + 1) / 10000) * 10000;
+            const proxMotorElectrico = Math.ceil((kmNum + 1) / 50000) * 50000;
+
+            const listaEV = [
+                { id: 1, servicio: 'Inspección de Batería de Alto Voltaje (SOH)', proximoKm: proxBateriaSalud, faltan: proxBateriaSalud - kmNum, intervalo: 'cada 20,000 km' },
+                { id: 2, servicio: 'Cambio de Refrigerante Dieléctrico del Sistema Eléctrico', proximoKm: proxRefrigerante, faltan: proxRefrigerante - kmNum, intervalo: 'cada 40,000 km' },
+                { id: 3, servicio: 'Revisión Sistema Regenerativo y Pastillas de Frenos', proximoKm: proxFrenosReg, faltan: proxFrenosReg - kmNum, intervalo: 'cada 15,000 km' },
+                { id: 4, servicio: 'Alineación, Balanceo y Rotación de Neumáticos EV', proximoKm: proxLlantasE, faltan: proxLlantasE - kmNum, intervalo: 'cada 10,000 km' },
+                { id: 5, servicio: 'Diagnóstico por Escáner de Motor y Transmisión Eléctrica', proximoKm: proxMotorElectrico, faltan: proxMotorElectrico - kmNum, intervalo: 'cada 50,000 km' }
+            ];
+
+            if (esMoto) {
+                // Ajustes específicos para moto eléctrica (correa/cadena de transmisión directa)
+                const proxTransmisionMoto = Math.ceil((kmNum + 1) / 5000) * 5000;
+                listaEV.push({ id: 6, servicio: 'Revisión y Ajuste de Transmisión Directa / Correa Moto EV', proximoKm: proxTransmisionMoto, faltan: proxTransmisionMoto - kmNum, intervalo: 'cada 5,000 km' });
+            }
+
+            return listaEV;
+        }
+
+        // LÓGICA PARA VEHÍCULOS A COMBUSTIÓN (GASOLINA / DIÉSEL)
+        let intervaloAceite = 5000; // Por defecto mineral
+        if (tAceite === 'semisintetico') {
+            intervaloAceite = esMoto ? 5000 : 7500;
+        } else if (tAceite === 'sintetico') {
+            intervaloAceite = esMoto ? 8000 : 10000;
+        } else if (tAceite === 'mineral') {
+            intervaloAceite = esMoto ? 3000 : 5000;
+        }
+
+        const proxAceite = Math.ceil((kmNum + 1) / intervaloAceite) * intervaloAceite;
         const faltanAceite = proxAceite - kmNum;
 
-        const proxFrenos = Math.ceil((kmNum + 1) / 10000) * 10000;
-        const faltanFrenos = proxFrenos - kmNum;
+        const intervalFrenos = esMoto ? 5000 : 10000;
+        const proxFrenos = Math.ceil((kmNum + 1) / intervalFrenos) * intervalFrenos;
 
-        const proxCorrea = Math.ceil((kmNum + 1) / 50000) * 50000;
-        const faltanCorrea = proxCorrea - kmNum;
+        const intervalCorrea = esMoto ? 15000 : 50000;
+        const proxCorrea = Math.ceil((kmNum + 1) / intervalCorrea) * intervalCorrea;
 
-        const proxBujias = Math.ceil((kmNum + 1) / 20000) * 20000;
-        const faltanBujias = proxBujias - kmNum;
+        const intervalBujias = esMoto ? 10000 : 20000;
+        const proxBujias = Math.ceil((kmNum + 1) / intervalBujias) * intervalBujias;
 
-        const proxLlantas = Math.ceil((kmNum + 1) / 10000) * 10000;
-        const faltanLlantas = proxLlantas - kmNum;
+        const intervalLlantas = esMoto ? 6000 : 10000;
+        const proxLlantas = Math.ceil((kmNum + 1) / intervalLlantas) * intervalLlantas;
 
         return [
-            { id: 1, servicio: 'Cambio de Aceite y Filtro', proximoKm: proxAceite, faltan: faltanAceite, intervalo: 'cada 5,000 - 10,000 km' },
-            { id: 2, servicio: 'Revisión / Líquido de Frenos', proximoKm: proxFrenos, faltan: faltanFrenos, intervalo: 'cada 10,000 km' },
-            { id: 3, servicio: 'Rotación y Alineación de Llantas', proximoKm: proxLlantas, faltan: faltanLlantas, intervalo: 'cada 10,000 km' },
-            { id: 4, servicio: 'Cambio de Bujías y Filtro de Aire', proximoKm: proxBujias, faltan: faltanBujias, intervalo: 'cada 20,000 km' },
-            { id: 5, servicio: 'Correa de Distribución / Transmisión', proximoKm: proxCorrea, faltan: faltanCorrea, intervalo: 'cada 50,000 - 60,000 km' },
+            { 
+                id: 1, 
+                servicio: `Cambio de Aceite (${tAceite.toUpperCase()} - Marca: ${mAceite || 'Genérica'}) y Filtro`, 
+                proximoKm: proxAceite, 
+                faltan: faltanAceite, 
+                intervalo: `cada ${intervaloAceite.toLocaleString()} km (según aceite ${tAceite})` 
+            },
+            { id: 2, servicio: 'Revisión / Líquido de Frenos y Bandas', proximoKm: proxFrenos, faltan: proxFrenos - kmNum, intervalo: `cada ${intervalFrenos.toLocaleString()} km` },
+            { id: 3, servicio: esMoto ? 'Ajuste / Calibración de Cadena y Llantas' : 'Rotación y Alineación de Llantas', proximoKm: proxLlantas, faltan: proxLlantas - kmNum, intervalo: `cada ${intervalLlantas.toLocaleString()} km` },
+            { id: 4, servicio: 'Cambio de Bujías y Filtro de Aire', proximoKm: proxBujias, faltan: proxBujias - kmNum, intervalo: `cada ${intervalBujias.toLocaleString()} km` },
+            { id: 5, servicio: esMoto ? 'Revisión de Kit de Arrastre / Variador' : 'Correa / Cadena de Distribución y Kit Transmisión', proximoKm: proxCorrea, faltan: proxCorrea - kmNum, intervalo: `cada ${intervalCorrea.toLocaleString()} km` },
         ];
     };
 
@@ -307,7 +357,13 @@ const Dashboard = () => {
         infoVehiculoTecno = vehiculoActual.alias ? `${vehiculoActual.alias} (${vehiculoActual.placa})` : `Placa: ${vehiculoActual.placa}`;
     }
 
-    const recomendacionesKm = calcularProximosMantenimientos(kilometrajeUsuario);
+    const recomendacionesKm = calcularProximosMantenimientos(
+        kilometrajeUsuario, 
+        tipoVehiculo, 
+        marcaVehiculo, 
+        tipoAceite, 
+        marcaAceite
+    );
 
     return (
         <div className="dash-layout fade-in">
@@ -511,19 +567,79 @@ const Dashboard = () => {
                             </div>
                         )}
 
-                        {/* NUEVO APARTADO: CONTROL Y CALCULADORA DE KILOMETRAJE */}
+                        {/* NUEVO APARTADO: CONTROL Y CALCULADORA DE KILOMETRAJE PERSONALIZADA */}
                         <div className="dash-card mb-4">
                             <div className="d-flex align-items-center gap-2 mb-3">
                                 <span className="fs-3">🚘</span>
                                 <div>
-                                    <h3 className="text-gold fw-bold mb-0">Control de Mantenimiento por Kilometraje</h3>
-                                    <p className="text-light-gray mb-0">Ingresa el kilometraje actual de tu vehículo para calcular tus próximos mantenimientos.</p>
+                                    <h3 className="text-gold fw-bold mb-0">Calculadora Personalizada de Mantenimiento por Kilometraje</h3>
+                                    <p className="text-light-gray mb-0">Selecciona el tipo de vehículo, aceite utilizado y kilometraje actual para obtener alertas precisas.</p>
                                 </div>
                             </div>
 
-                            <div className="row align-items-center g-3 mb-4">
-                                <div className="col-md-6 col-lg-4">
-                                    <label className="form-label text-light fw-bold">Kilometraje Actual (KM):</label>
+                            {/* FILTROS Y PARÁMETROS DEL VEHÍCULO */}
+                            <div className="row g-3 mb-4">
+                                <div className="col-md-6 col-lg-3">
+                                    <label className="form-label text-light fw-bold">1. Tipo de Vehículo:</label>
+                                    <select 
+                                        className="form-select bg-dark text-white border-warning"
+                                        value={tipoVehiculo}
+                                        onChange={(e) => setTipoVehiculo(e.target.value)}
+                                    >
+                                        <option value="carro_gasolina">🚗 Carro (Gasolina / Diésel)</option>
+                                        <option value="moto_gasolina">🏍️ Moto (Gasolina)</option>
+                                        <option value="carro_electrico">⚡ Carro Eléctrico (EV)</option>
+                                        <option value="moto_electrica">⚡ Moto Eléctrica (EV)</option>
+                                    </select>
+                                </div>
+
+                                <div className="col-md-6 col-lg-3">
+                                    <label className="form-label text-light fw-bold">2. Marca del Vehículo:</label>
+                                    <input 
+                                        type="text" 
+                                        className="form-control bg-dark text-white border-warning" 
+                                        placeholder="Ej: Chevrolet, Yamaha, BYD..."
+                                        value={marcaVehiculo}
+                                        onChange={(e) => setMarcaVehiculo(e.target.value)}
+                                    />
+                                </div>
+
+                                {!(tipoVehiculo === 'carro_electrico' || tipoVehiculo === 'moto_electrica') ? (
+                                    <>
+                                        <div className="col-md-6 col-lg-2">
+                                            <label className="form-label text-light fw-bold">3. Tipo de Aceite:</label>
+                                            <select 
+                                                className="form-select bg-dark text-white border-warning"
+                                                value={tipoAceite}
+                                                onChange={(e) => setTipoAceite(e.target.value)}
+                                            >
+                                                <option value="mineral">Mineral</option>
+                                                <option value="semisintetico">Semicintético</option>
+                                                <option value="sintetico">Sintético</option>
+                                            </select>
+                                        </div>
+
+                                        <div className="col-md-6 col-lg-2">
+                                            <label className="form-label text-light fw-bold">4. Marca de Aceite:</label>
+                                            <input 
+                                                type="text" 
+                                                className="form-control bg-dark text-white border-warning" 
+                                                placeholder="Ej: Mobil, Motul, Castrol"
+                                                value={marcaAceite}
+                                                onChange={(e) => setMarcaAceite(e.target.value)}
+                                            />
+                                        </div>
+                                    </>
+                                ) : (
+                                    <div className="col-md-12 col-lg-4 d-flex align-items-center">
+                                        <div className="alert alert-info py-2 px-3 mb-0 border-0 text-white w-100 style-sm">
+                                            ⚡ <strong>Vehículo Eléctrico:</strong> No requiere cambios de aceite de motor térmico. Se enfoca en batería, frenos regenerativos y sistemas dieléctricos.
+                                        </div>
+                                    </div>
+                                )}
+
+                                <div className="col-md-6 col-lg-2">
+                                    <label className="form-label text-light fw-bold">5. Kilometraje Actual:</label>
                                     <div className="input-group">
                                         <input 
                                             type="number" 
@@ -537,28 +653,36 @@ const Dashboard = () => {
                                 </div>
                             </div>
 
+                            {/* RESULTADOS Y ALERTAS DE MANTENIMIENTO */}
                             {recomendacionesKm ? (
-                                <div className="row g-3">
-                                    {recomendacionesKm.map((item) => (
-                                        <div key={item.id} className="col-md-6 col-lg-4">
-                                            <div className="p-3 rounded bg-dark border border-secondary h-100">
-                                                <div className="d-flex justify-content-between align-items-center mb-2">
-                                                    <h6 className="text-gold fw-bold mb-0">{item.servicio}</h6>
-                                                    <span className={`badge ${item.faltan <= 1000 ? 'bg-danger' : 'bg-success'}`}>
-                                                        {item.faltan <= 0 ? '¡Revisar ahora!' : `Faltan ${item.faltan.toLocaleString()} km`}
-                                                    </span>
+                                <div>
+                                    <h5 className="text-gold fw-bold mb-3">
+                                        📋 Plan de Mantenimiento Recomendado {marcaVehiculo ? `para ${marcaVehiculo}` : ''}:
+                                    </h5>
+                                    <div className="row g-3">
+                                        {recomendacionesKm.map((item) => (
+                                            <div key={item.id} className="col-md-6 col-lg-4">
+                                                <div className="p-3 rounded bg-dark border border-secondary h-100 d-flex flex-column justify-content-between">
+                                                    <div>
+                                                        <div className="d-flex justify-content-between align-items-start mb-2">
+                                                            <h6 className="text-gold fw-bold mb-0 me-2">{item.servicio}</h6>
+                                                            <span className={`badge ${item.faltan <= 1000 ? 'bg-danger' : 'bg-success'}`}>
+                                                                {item.faltan <= 0 ? '¡Revisar ahora!' : `Faltan ${item.faltan.toLocaleString()} km`}
+                                                            </span>
+                                                        </div>
+                                                        <p className="text-light mb-1 style-sm">
+                                                            Próxima revisión/servicio: <strong>{item.proximoKm.toLocaleString()} KM</strong>
+                                                        </p>
+                                                    </div>
+                                                    <small className="text-muted d-block mt-2">Intervalo: {item.intervalo}</small>
                                                 </div>
-                                                <p className="text-light mb-1 style-sm">
-                                                    Próximo cambio/revisión: <strong>{item.proximoKm.toLocaleString()} KM</strong>
-                                                </p>
-                                                <small className="text-muted d-block">Recomendado: {item.intervalo}</small>
                                             </div>
-                                        </div>
-                                    ))}
+                                        ))}
+                                    </div>
                                 </div>
                             ) : (
                                 kilometrajeUsuario !== '' && (
-                                    <p className="text-warning mb-0">Ingresa un número de kilometraje válido para generar el cálculo.</p>
+                                    <p className="text-warning mb-0">Por favor ingresa un número de kilometraje válido para calcular las revisiones.</p>
                                 )
                             )}
                         </div>
