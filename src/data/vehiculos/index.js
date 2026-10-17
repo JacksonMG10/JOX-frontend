@@ -1,65 +1,59 @@
 // =========================================================
-// 1. IMPORTACIÓN DE MÓDULOS DE VEHÍCULOS
+// 1. IMPORTACIÓN DIRECTA DE MÓDULOS
 // =========================================================
 
 // CARROS
-import * as ModuloRenaultDuster from './renaultDuster';
-import * as ModuloChevroletOnix from './chevroletOnix';
-import * as ModuloMazdaCx30 from './mazdaCx30';
-import * as ModuloSuzukiSwift from './suzukiSwift';
-import * as ModuloKiaPicanto from './kiaPicanto';
-import * as ModuloToyotaCorolla from './toyotaCorolla';
-import * as ModuloMazda2 from './mazda2';
-import * as ModuloChevroletJoy from './chevroletJoy';
-import * as ModuloRenaultStepway from './renaultStepway';
-import * as ModuloNissanFrontier from './nissanFrontier';
+import renaultDusterObj from './renaultDuster';
+import chevroletOnixObj from './chevroletOnix';
+import mazdaCx30Obj from './mazdaCx30';
+import suzukiSwiftObj from './suzukiSwift';
+import kiaPicantoObj from './kiaPicanto';
+import toyotaCorollaObj from './toyotaCorolla';
+import mazda2Obj from './mazda2';
+import chevroletJoyObj from './chevroletJoy';
+import renaultStepwayObj from './renaultStepway';
+import nissanFrontierObj from './nissanFrontier';
 
 // MOTOS
-import * as ModuloAktNkd125 from './aktNkd125';
-import * as ModuloYamahaNmax155 from './yamahaNmax155';
-import * as ModuloBajajCt100 from './bajajCt100';
-import * as ModuloSuzukiGn125 from './suzukiGn125';
-import * as ModuloHondaCb125f from './hondaCb125f';
-import * as ModuloYamahaFzs from './yamahaFzs';
-import * as ModuloBajajPulsarNs200 from './bajajPulsarNs200';
-import * as ModuloTvsRaider125 from './tvsRaider125';
-import * as ModuloYamahaXtz150 from './yamahaXtz150';
-import * as ModuloHondaXr150l from './hondaXr150l';
-
-// Función auxiliar
-function resolverModulo(mod) {
-    if (!mod) return {};
-    return mod.default || mod[Object.keys(mod)[0]] || {};
-}
+import aktNkd125Obj from './aktNkd125';
+import yamahaNmax155Obj from './yamahaNmax155';
+import bajajCt100Obj from './bajajCt100';
+import suzukiGn125Obj from './suzukiGn125';
+import hondaCb125fObj from './hondaCb125f';
+import yamahaFzsObj from './yamahaFzs';
+import bajajPulsarNs200Obj from './bajajPulsarNs200';
+import tvsRaider125Obj from './tvsRaider125';
+import yamahaXtz150Obj from './yamahaXtz150';
+import hondaXr150lObj from './hondaXr150l';
 
 // =========================================================
-// 2. EXPORTACIÓN DE VEHÍCULOS INDIVIDUALES
+// 2. EXPORTACIÓN INDIVIDUAL SEGURA
 // =========================================================
 
-export const renaultDuster = resolverModulo(ModuloRenaultDuster);
-export const chevroletOnix = resolverModulo(ModuloChevroletOnix);
-export const mazdaCx30 = resolverModulo(ModuloMazdaCx30);
-export const suzukiSwift = resolverModulo(ModuloSuzukiSwift);
-export const kiaPicanto = resolverModulo(ModuloKiaPicanto);
-export const toyotaCorolla = resolverModulo(ModuloToyotaCorolla);
-export const mazda2 = resolverModulo(ModuloMazda2);
-export const chevroletJoy = resolverModulo(ModuloChevroletJoy);
-export const renaultStepway = resolverModulo(ModuloRenaultStepway);
-export const nissanFrontier = resolverModulo(ModuloNissanFrontier);
+export const renaultDuster = renaultDusterObj;
+export const chevroletOnix = chevroletOnixObj;
+export const mazdaCx30 = mazdaCx30Obj;
+export const suzukiSwift = suzukiSwiftObj;
+export const kiaPicanto = kiaPicantoObj;
+export const toyotaCorolla = toyotaCorollaObj;
+export const mazda2 = mazda2Obj;
+export const chevroletJoy = chevroletJoyObj;
+export const renaultStepway = renaultStepwayObj;
+export const nissanFrontier = nissanFrontierObj;
 
-export const aktNkd125 = resolverModulo(ModuloAktNkd125);
-export const yamahaNmax155 = resolverModulo(ModuloYamahaNmax155);
-export const bajajCt100 = resolverModulo(ModuloBajajCt100);
-export const suzukiGn125 = resolverModulo(ModuloSuzukiGn125);
-export const hondaCb125f = resolverModulo(ModuloHondaCb125f);
-export const yamahaFzs = resolverModulo(ModuloYamahaFzs);
-export const bajajPulsarNs200 = resolverModulo(ModuloBajajPulsarNs200);
-export const tvsRaider125 = resolverModulo(ModuloTvsRaider125);
-export const yamahaXtz150 = resolverModulo(ModuloYamahaXtz150);
-export const hondaXr150l = resolverModulo(ModuloHondaXr150l);
+export const aktNkd125 = aktNkd125Obj;
+export const yamahaNmax155 = yamahaNmax155Obj;
+export const bajajCt100 = bajajCt100Obj;
+export const suzukiGn125 = suzukiGn125Obj;
+export const hondaCb125f = hondaCb125fObj;
+export const yamahaFzs = yamahaFzsObj;
+export const bajajPulsarNs200 = bajajPulsarNs200Obj;
+export const tvsRaider125 = tvsRaider125Obj;
+export const yamahaXtz150 = yamahaXtz150Obj;
+export const hondaXr150l = hondaXr150lObj;
 
 // =========================================================
-// 3. LISTAS PARA CATÁLOGOS Y DESTACADOS (TOP 10)
+// 3. LISTAS TOP 10
 // =========================================================
 
 export const topCarros = [
@@ -94,64 +88,64 @@ export const topMotos = [
 
 export const baseDatosVehiculos = {
     // --- CARROS ---
-    'c1': resolverModulo(ModuloRenaultDuster),
-    'renault-duster': resolverModulo(ModuloRenaultDuster),
+    'c1': renaultDusterObj,
+    'renault-duster': renaultDusterObj,
 
-    'c2': resolverModulo(ModuloChevroletOnix),
-    'chevrolet-onix': resolverModulo(ModuloChevroletOnix),
+    'c2': chevroletOnixObj,
+    'chevrolet-onix': chevroletOnixObj,
 
-    'c3': resolverModulo(ModuloMazdaCx30),
-    'mazda-cx-30': resolverModulo(ModuloMazdaCx30),
+    'c3': mazdaCx30Obj,
+    'mazda-cx-30': mazdaCx30Obj,
 
-    'c4': resolverModulo(ModuloSuzukiSwift),
-    'suzuki-swift': resolverModulo(ModuloSuzukiSwift),
+    'c4': suzukiSwiftObj,
+    'suzuki-swift': suzukiSwiftObj,
 
-    'c5': resolverModulo(ModuloKiaPicanto),
-    'kia-picanto': resolverModulo(ModuloKiaPicanto),
+    'c5': kiaPicantoObj,
+    'kia-picanto': kiaPicantoObj,
 
-    'c6': resolverModulo(ModuloToyotaCorolla),
-    'toyota-corolla': resolverModulo(ModuloToyotaCorolla),
+    'c6': toyotaCorollaObj,
+    'toyota-corolla': toyotaCorollaObj,
 
-    'c7': resolverModulo(ModuloMazda2),
-    'mazda-2': resolverModulo(ModuloMazda2),
+    'c7': mazda2Obj,
+    'mazda-2': mazda2Obj,
 
-    'c8': resolverModulo(ModuloChevroletJoy),
-    'chevrolet-joy': resolverModulo(ModuloChevroletJoy),
+    'c8': chevroletJoyObj,
+    'chevrolet-joy': chevroletJoyObj,
 
-    'c9': resolverModulo(ModuloRenaultStepway),
-    'renault-stepway': resolverModulo(ModuloRenaultStepway),
+    'c9': renaultStepwayObj,
+    'renault-stepway': renaultStepwayObj,
 
-    'c10': resolverModulo(ModuloNissanFrontier),
-    'nissan-frontier': resolverModulo(ModuloNissanFrontier),
+    'c10': nissanFrontierObj,
+    'nissan-frontier': nissanFrontierObj,
 
     // --- MOTOS ---
-    'm1': resolverModulo(ModuloAktNkd125),
-    'akt-nkd-125': resolverModulo(ModuloAktNkd125),
+    'm1': aktNkd125Obj,
+    'akt-nkd-125': aktNkd125Obj,
 
-    'm2': resolverModulo(ModuloYamahaNmax155),
-    'yamaha-nmax-155': resolverModulo(ModuloYamahaNmax155),
+    'm2': yamahaNmax155Obj,
+    'yamaha-nmax-155': yamahaNmax155Obj,
 
-    'm3': resolverModulo(ModuloBajajCt100),
-    'bajaj-ct-100': resolverModulo(ModuloBajajCt100),
+    'm3': bajajCt100Obj,
+    'bajaj-ct-100': bajajCt100Obj,
 
-    'm4': resolverModulo(ModuloSuzukiGn125),
-    'suzuki-gn-125': resolverModulo(ModuloSuzukiGn125),
+    'm4': suzukiGn125Obj,
+    'suzuki-gn-125': suzukiGn125Obj,
 
-    'm5': resolverModulo(ModuloHondaCb125f),
-    'honda-cb-125f': resolverModulo(ModuloHondaCb125f),
+    'm5': hondaCb125fObj,
+    'honda-cb-125f': hondaCb125fObj,
 
-    'm6': resolverModulo(ModuloYamahaFzs),
-    'yamaha-fz-s': resolverModulo(ModuloYamahaFzs),
+    'm6': yamahaFzsObj,
+    'yamaha-fz-s': yamahaFzsObj,
 
-    'm7': resolverModulo(ModuloBajajPulsarNs200),
-    'bajaj-pulsar-ns-200': resolverModulo(ModuloBajajPulsarNs200),
+    'm7': bajajPulsarNs200Obj,
+    'bajaj-pulsar-ns-200': bajajPulsarNs200Obj,
 
-    'm8': resolverModulo(ModuloTvsRaider125),
-    'tvs-raider-125': resolverModulo(ModuloTvsRaider125),
+    'm8': tvsRaider125Obj,
+    'tvs-raider-125': tvsRaider125Obj,
 
-    'm9': resolverModulo(ModuloYamahaXtz150),
-    'yamaha-xtz-150': resolverModulo(ModuloYamahaXtz150),
+    'm9': yamahaXtz150Obj,
+    'yamaha-xtz-150': yamahaXtz150Obj,
 
-    'm10': resolverModulo(ModuloHondaXr150l),
-    'honda-xr-150l': resolverModulo(ModuloHondaXr150l),
+    'm10': hondaXr150lObj,
+    'honda-xr-150l': hondaXr150lObj,
 };
