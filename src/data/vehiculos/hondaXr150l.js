@@ -1290,7 +1290,7 @@ export const hondaXr150l = {
     tipo: 'Motocicleta On/Off-Road / Dual-Sport',
 
     imagen:
-        'https://publimotosmagazine.nyc3.digitaloceanspaces.com/%E2%81%A0publimotos_tienda_production/uploads/2024/03/Honda-XR-150L-2025-01.webp',
+        'https://publimotosmagazine.nyc3.digitaloceanspaces.com/%E2%81%A0publimotos_tienda_production/uploads/2024/03/Honda-XR-150L-2025-01.webpñ',
 
     aniosDisponibles: [
         2015,

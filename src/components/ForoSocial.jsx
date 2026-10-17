@@ -2827,7 +2827,7 @@ const CreatePostModal = memo(({
 
           <textarea
             className="premium-input mb-3"
-            rows="4"
+            rows="3"
             placeholder="¿Qué tienes en mente?"
             value={content}
             onChange={e =>

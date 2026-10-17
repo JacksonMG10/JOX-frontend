@@ -215,18 +215,19 @@ small.text-muted {
 .upload-preview {
   position: relative;
   width: 100%;
-  height: 250px;
+  max-height: 250px;
   border-radius: 12px;
   overflow: hidden;
   background: #111;
   display: flex;
   justify-content: center;
+  align-items: center;
 }
 
 .upload-preview img {
   width: 100%;
-  height: 100%;
-  object-fit: cover;
+  max-height: 250px;
+  object-fit: contain;
 }
 
 .upload-preview .remove-btn {
@@ -263,7 +264,13 @@ small.text-muted {
   padding: 16px;
 }
 
-.modal-content { width: 100%; max-width: 550px; padding: 32px; }
+.modal-content {
+  width: 100%;
+  max-width: 550px;
+  max-height: 90vh;
+  overflow-y: auto;
+  padding: 32px;
+}
 
 /* Floating Action Button (FAB) */
 .fab-button {
