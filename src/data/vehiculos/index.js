@@ -1,59 +1,60 @@
 // =========================================================
-// 1. IMPORTACIÓN DIRECTA DE MÓDULOS
+// 1. IMPORTACIÓN NOMBRADA DE VEHÍCULOS INDIVIDUALES
 // =========================================================
 
 // CARROS
-import renaultDusterObj from './renaultDuster';
-import chevroletOnixObj from './chevroletOnix';
-import mazdaCx30Obj from './mazdaCx30';
-import suzukiSwiftObj from './suzukiSwift';
-import kiaPicantoObj from './kiaPicanto';
-import toyotaCorollaObj from './toyotaCorolla';
-import mazda2Obj from './mazda2';
-import chevroletJoyObj from './chevroletJoy';
-import renaultStepwayObj from './renaultStepway';
-import nissanFrontierObj from './nissanFrontier';
+import { renaultDuster } from './renaultDuster';
+import { chevroletOnix } from './chevroletOnix';
+import { mazdaCx30 } from './mazdaCx30';
+import { suzukiSwift } from './suzukiSwift';
+import { kiaPicanto } from './kiaPicanto';
+import { toyotaCorolla } from './toyotaCorolla';
+import { mazda2 } from './mazda2';
+import { chevroletJoy } from './chevroletJoy';
+import { renaultStepway } from './renaultStepway';
+import { nissanFrontier } from './nissanFrontier';
 
 // MOTOS
-import aktNkd125Obj from './aktNkd125';
-import yamahaNmax155Obj from './yamahaNmax155';
-import bajajCt100Obj from './bajajCt100';
-import suzukiGn125Obj from './suzukiGn125';
-import hondaCb125fObj from './hondaCb125f';
-import yamahaFzsObj from './yamahaFzs';
-import bajajPulsarNs200Obj from './bajajPulsarNs200';
-import tvsRaider125Obj from './tvsRaider125';
-import yamahaXtz150Obj from './yamahaXtz150';
-import hondaXr150lObj from './hondaXr150l';
+import { aktNKD125 } from './aktNkd125';
+import { yamahaNmax155 } from './yamahaNmax155';
+import { bajajCt100 } from './bajajCt100';
+import { suzukiGn125 } from './suzukiGn125';
+import { hondaCb125f } from './hondaCb125f';
+import { yamahaFzs } from './yamahaFzs';
+import { bajajPulsarNs200 } from './bajajPulsarNs200';
+import { tvsRaider125 } from './tvsRaider125';
+import { yamahaXtz150 } from './yamahaXtz150';
+import { hondaXr150l } from './hondaXr150l';
+
+// Alias para evitar errores si en otros componentes se usa 'aktNkd125'
+export const aktNkd125 = aktNKD125;
+
+// Re-exportación individual
+export {
+    renaultDuster,
+    chevroletOnix,
+    mazdaCx30,
+    suzukiSwift,
+    kiaPicanto,
+    toyotaCorolla,
+    mazda2,
+    chevroletJoy,
+    renaultStepway,
+    nissanFrontier,
+    aktNKD125,
+    yamahaNmax155,
+    bajajCt100,
+    suzukiGn125,
+    hondaCb125f,
+    yamahaFzs,
+    bajajPulsarNs200,
+    tvsRaider125,
+    yamahaXtz150,
+    hondaXr150l
+};
 
 // =========================================================
-// 2. EXPORTACIÓN INDIVIDUAL SEGURA
-// =========================================================
-
-export const renaultDuster = renaultDusterObj;
-export const chevroletOnix = chevroletOnixObj;
-export const mazdaCx30 = mazdaCx30Obj;
-export const suzukiSwift = suzukiSwiftObj;
-export const kiaPicanto = kiaPicantoObj;
-export const toyotaCorolla = toyotaCorollaObj;
-export const mazda2 = mazda2Obj;
-export const chevroletJoy = chevroletJoyObj;
-export const renaultStepway = renaultStepwayObj;
-export const nissanFrontier = nissanFrontierObj;
-
-export const aktNkd125 = aktNkd125Obj;
-export const yamahaNmax155 = yamahaNmax155Obj;
-export const bajajCt100 = bajajCt100Obj;
-export const suzukiGn125 = suzukiGn125Obj;
-export const hondaCb125f = hondaCb125fObj;
-export const yamahaFzs = yamahaFzsObj;
-export const bajajPulsarNs200 = bajajPulsarNs200Obj;
-export const tvsRaider125 = tvsRaider125Obj;
-export const yamahaXtz150 = yamahaXtz150Obj;
-export const hondaXr150l = hondaXr150lObj;
-
-// =========================================================
-// 3. LISTAS TOP 10
+// 2. LISTAS DESTACADAS (TOP 10)
 // =========================================================
 
 export const topCarros = [
@@ -83,69 +84,69 @@ export const topMotos = [
 ];
 
 // =========================================================
-// 4. BASE DE DATOS UNIFICADA
+// 3. BASE DE DATOS UNIFICADA
 // =========================================================
 
 export const baseDatosVehiculos = {
     // --- CARROS ---
-    'c1': renaultDusterObj,
-    'renault-duster': renaultDusterObj,
+    'c1': renaultDuster,
+    'renault-duster': renaultDuster,
 
-    'c2': chevroletOnixObj,
-    'chevrolet-onix': chevroletOnixObj,
+    'c2': chevroletOnix,
+    'chevrolet-onix': chevroletOnix,
 
-    'c3': mazdaCx30Obj,
-    'mazda-cx-30': mazdaCx30Obj,
+    'c3': mazdaCx30,
+    'mazda-cx-30': mazdaCx30,
 
-    'c4': suzukiSwiftObj,
-    'suzuki-swift': suzukiSwiftObj,
+    'c4': suzukiSwift,
+    'suzuki-swift': suzukiSwift,
 
-    'c5': kiaPicantoObj,
-    'kia-picanto': kiaPicantoObj,
+    'c5': kiaPicanto,
+    'kia-picanto': kiaPicanto,
 
-    'c6': toyotaCorollaObj,
-    'toyota-corolla': toyotaCorollaObj,
+    'c6': toyotaCorolla,
+    'toyota-corolla': toyotaCorolla,
 
-    'c7': mazda2Obj,
-    'mazda-2': mazda2Obj,
+    'c7': mazda2,
+    'mazda-2': mazda2,
 
-    'c8': chevroletJoyObj,
-    'chevrolet-joy': chevroletJoyObj,
+    'c8': chevroletJoy,
+    'chevrolet-joy': chevroletJoy,
 
-    'c9': renaultStepwayObj,
-    'renault-stepway': renaultStepwayObj,
+    'c9': renaultStepway,
+    'renault-stepway': renaultStepway,
 
-    'c10': nissanFrontierObj,
-    'nissan-frontier': nissanFrontierObj,
+    'c10': nissanFrontier,
+    'nissan-frontier': nissanFrontier,
 
     // --- MOTOS ---
-    'm1': aktNkd125Obj,
-    'akt-nkd-125': aktNkd125Obj,
+    'm1': aktNKD125,
+    'akt-nkd-125': aktNKD125,
 
-    'm2': yamahaNmax155Obj,
-    'yamaha-nmax-155': yamahaNmax155Obj,
+    'm2': yamahaNmax155,
+    'yamaha-nmax-155': yamahaNmax155,
 
-    'm3': bajajCt100Obj,
-    'bajaj-ct-100': bajajCt100Obj,
+    'm3': bajajCt100,
+    'bajaj-ct-100': bajajCt100,
 
-    'm4': suzukiGn125Obj,
-    'suzuki-gn-125': suzukiGn125Obj,
+    'm4': suzukiGn125,
+    'suzuki-gn-125': suzukiGn125,
 
-    'm5': hondaCb125fObj,
-    'honda-cb-125f': hondaCb125fObj,
+    'm5': hondaCb125f,
+    'honda-cb-125f': hondaCb125f,
 
-    'm6': yamahaFzsObj,
-    'yamaha-fz-s': yamahaFzsObj,
+    'm6': yamahaFzs,
+    'yamaha-fz-s': yamahaFzs,
 
-    'm7': bajajPulsarNs200Obj,
-    'bajaj-pulsar-ns-200': bajajPulsarNs200Obj,
+    'm7': bajajPulsarNs200,
+    'bajaj-pulsar-ns-200': bajajPulsarNs200,
 
-    'm8': tvsRaider125Obj,
-    'tvs-raider-125': tvsRaider125Obj,
+    'm8': tvsRaider125,
+    'tvs-raider-125': tvsRaider125,
 
-    'm9': yamahaXtz150Obj,
-    'yamaha-xtz-150': yamahaXtz150Obj,
+    'm9': yamahaXtz150,
+    'yamaha-xtz-150': yamahaXtz150,
 
-    'm10': hondaXr150lObj,
-    'honda-xr-150l': hondaXr150lObj,
+    'm10': hondaXr150l,
+    'honda-xr-150l': hondaXr150l,
 };
