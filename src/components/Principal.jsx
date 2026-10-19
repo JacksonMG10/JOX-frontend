@@ -61,8 +61,8 @@ function Introduccion() {
 
                         <div className="hero-stats">
                             <div className="stat-item">
-                                <span className="stat-number">+10K</span>
-                                <span className="stat-label">Vehículos registrados</span>
+                                <span className="stat-number"></span>
+                                <span className="stat-label"></span>
                             </div>
                             <div className="stat-divider"></div>
                             <div className="stat-item">
