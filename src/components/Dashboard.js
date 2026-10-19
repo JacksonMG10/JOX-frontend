@@ -631,10 +631,15 @@ const Dashboard = () => {
                                         </div>
                                     </>
                                 ) : (
-                                    <div className="col-md-12 col-lg-4 d-flex align-items-center">
-                                        <div className="alert alert-info py-2 px-3 mb-0 border-0 text-white w-100 style-sm">
-                                            ⚡ <strong>Vehículo Eléctrico:</strong> No requiere cambios de aceite de motor térmico. Se enfoca en batería, frenos regenerativos y sistemas dieléctricos.
-                                        </div>
+                                        <div className="col-md-12 col-lg-4 d-flex align-items-center">
+                                            <div className="alert py-2 px-3 mb-0 w-100 style-sm"style={{
+                                           backgroundColor: '#1a2736',
+                                           border: '1px solid #0d6efd',
+                                           color: '#9ec5fe',
+                                           borderRadius: '0.375rem'
+                                       }}>
+                                         ⚡ <strong>Vehículo Eléctrico:</strong> No requiere cambios de aceite de motor térmico. Se enfoca en batería, frenos regenerativos y sistemas dieléctricos.
+                                         </div>
                                     </div>
                                 )}
 
