@@ -85,15 +85,13 @@ export default function Perfil() {
                 }
             });
 
-            // Actualizar datos de usuario en sesión
             if (res.data.usuario) {
                 localStorage.setItem('user', JSON.stringify(res.data.usuario));
             }
 
-            setMensaje({ texto: '¡Perfil actualizado exitosamente!', tipo: 'success' });
+            setMensaje({ texto: '✨ ¡Perfil actualizado exitosamente!', tipo: 'success' });
         } catch (err) {
             console.error("Error al actualizar perfil:", err);
-            // El backend retorna un status 400 o 409 si el username ya está en uso
             const msg = err.response?.data?.mensaje || 'El nombre de usuario ya está registrado por otra persona. Elige otro.';
             setMensaje({ texto: msg, tipo: 'danger' });
         } finally {
@@ -103,115 +101,176 @@ export default function Perfil() {
 
     if (!usuario) {
         return (
-            <div className="dash-layout d-flex justify-content-center align-items-center">
-                <h4 className="text-gold">Cargando perfil...</h4>
+            <div className="dash-layout d-flex justify-content-center align-items-center" style={{ minHeight: '100vh', backgroundColor: '#0d0d0d' }}>
+                <div className="text-center">
+                    <div className="spinner-border text-warning mb-3" role="status" style={{ width: '3rem', height: '3rem' }}></div>
+                    <h4 className="text-gold fw-bold">Cargando tu Perfil...</h4>
+                </div>
             </div>
         );
     }
 
     return (
-        <div className="dash-layout fade-in">
-            <nav className="dash-nav">
-                <div className="d-flex align-items-center cursor-pointer" onClick={() => navigate('/dashboard')}>
-                    <img src={logo} alt="JOX" className="dash-logo" />
-                    <h4 className="text-gold fw-bold mb-0 dash-logo-text">JOX</h4>
+        <div className="dash-layout fade-in" style={{ backgroundColor: '#0a0a0a', minHeight: '100vh', color: '#e0e0e0' }}>
+            
+            {/* NAVBAR */}
+            <nav className="dash-nav px-4 py-3 d-flex justify-content-between align-items-center" style={{ backgroundColor: '#121212', borderBottom: '1px solid rgba(212, 175, 55, 0.25)' }}>
+                <div className="d-flex align-items-center cursor-pointer" onClick={() => navigate('/dashboard')} style={{ cursor: 'pointer' }}>
+                    <img src={logo} alt="JOX" className="dash-logo" style={{ height: '40px' }} />
+                    <h4 className="text-gold fw-bold mb-0 ms-2 dash-logo-text" style={{ color: '#D4AF37', letterSpacing: '1px' }}>JOX</h4>
                 </div>
-                <button onClick={() => navigate('/dashboard')} className="btn-outline-gold btn-sm">
-                    ⬅ Volver al Dashboard
+                <button onClick={() => navigate('/dashboard')} className="btn btn-outline-warning btn-sm rounded-pill px-3 fw-bold" style={{ borderColor: '#D4AF37', color: '#D4AF37' }}>
+                    ❮ Volver al Dashboard
                 </button>
             </nav>
 
-            <div className="dash-content d-flex justify-content-center">
-                <div className="dash-card col-md-8 col-lg-6 mt-4 p-4">
-                    <h2 className="text-gold fw-bold mb-4 text-center">⚙️ Editar Mi Perfil</h2>
-
-                    {mensaje.texto && (
-                        <div className={`alert alert-${mensaje.tipo} mb-4 text-center`}>
-                            {mensaje.texto}
-                        </div>
-                    )}
-
-                    <form onSubmit={handleSubmit}>
-                        {/* FOTO DE PERFIL */}
-                        <div className="text-center mb-4">
-                            <div className="position-relative d-inline-block">
-                                {previewUrl ? (
-                                    <img 
-                                        src={previewUrl} 
-                                        alt="Avatar" 
-                                        className="rounded-circle object-fit-cover shadow-lg"
-                                        style={{ width: '110px', height: '110px', border: '3px solid #D4AF37' }}
-                                    />
-                                ) : (
-                                    <div 
-                                        className="rounded-circle bg-warning text-dark fw-bold d-flex align-items-center justify-content-center mx-auto shadow-lg"
-                                        style={{ width: '110px', height: '110px', fontSize: '2.5rem' }}
-                                    >
-                                        {usuario.nombre ? usuario.nombre.charAt(0).toUpperCase() : 'U'}
-                                    </div>
-                                )}
+            {/* CONTENIDO PRINCIPAL DE PERFIL */}
+            <div className="dash-content container py-5 d-flex justify-content-center">
+                <div className="col-12 col-md-10 col-lg-7">
+                    
+                    <div className="card border-0 shadow-lg" style={{ backgroundColor: '#141414', borderRadius: '20px', border: '1px solid rgba(212, 175, 55, 0.3)', overflow: 'hidden' }}>
+                        
+                        {/* BANNER SUPERIOR DECORATIVO */}
+                        <div style={{ height: '120px', background: 'linear-gradient(135deg, #1f1a0a 0%, #3a2e0b 50%, #141414 100%)', borderBottom: '1px solid rgba(212, 175, 55, 0.2)', position: 'relative' }}>
+                            <div className="position-absolute top-50 start-50 translate-middle text-center w-100">
+                                <span className="badge bg-dark text-warning border border-warning px-3 py-1 rounded-pill fw-bold" style={{ fontSize: '0.75rem', letterSpacing: '1px' }}>
+                                    PERFIL DE USUARIO JOX
+                                </span>
                             </div>
-                            <div className="mt-3">
-                                <label className="btn btn-sm btn-outline-warning rounded-pill">
-                                    📷 Cambiar Foto de Perfil
+                        </div>
+
+                        <div className="card-body px-4 px-md-5 pb-5 position-relative" style={{ marginTop: '-60px' }}>
+                            
+                            {/* FOTO DE PERFIL / AVATAR */}
+                            <div className="text-center mb-4">
+                                <div className="position-relative d-inline-block">
+                                    {previewUrl ? (
+                                        <img 
+                                            src={previewUrl} 
+                                            alt="Avatar" 
+                                            className="rounded-circle object-fit-cover shadow"
+                                            style={{ width: '120px', height: '120px', border: '4px solid #D4AF37', backgroundColor: '#1a1a1a' }}
+                                        />
+                                    ) : (
+                                        <div 
+                                            className="rounded-circle fw-bold d-flex align-items-center justify-content-center mx-auto shadow"
+                                            style={{ width: '120px', height: '120px', fontSize: '2.8rem', backgroundColor: '#D4AF37', color: '#000', border: '4px solid #fff' }}
+                                        >
+                                            {usuario.nombre ? usuario.nombre.charAt(0).toUpperCase() : 'U'}
+                                        </div>
+                                    )}
+
+                                    <label 
+                                        htmlFor="avatar-upload" 
+                                        className="position-absolute bottom-0 end-0 bg-warning text-dark rounded-circle p-2 shadow cursor-pointer"
+                                        style={{ width: '38px', height: '38px', cursor: 'pointer', border: '2px solid #000' }}
+                                        title="Cambiar Foto"
+                                    >
+                                        📷
+                                    </label>
                                     <input 
+                                        id="avatar-upload"
                                         type="file" 
                                         accept="image/png, image/jpeg, image/webp" 
                                         className="d-none" 
                                         onChange={handleFotoChange} 
                                     />
-                                </label>
-                            </div>
-                        </div>
+                                </div>
 
-                        {/* NOMBRE DE USUARIO (ÚNICO) */}
-                        <div className="mb-3">
-                            <label className="form-label text-light fw-bold">
-                                Nombre de Usuario <span className="text-danger">*</span>
-                            </label>
-                            <div className="input-group">
-                                <span className="input-group-text bg-dark text-gold border-warning">@</span>
-                                <input 
-                                    type="text" 
-                                    className="form-control bg-dark text-white border-warning" 
-                                    placeholder="ej: prueba_jox"
-                                    value={username}
-                                    onChange={(e) => setUsername(e.target.value)}
-                                    required
-                                />
+                                <h3 className="text-white fw-bold mt-3 mb-0">
+                                    {nombre} {apellido}
+                                </h3>
+                                <p className="text-muted small">@{username || 'usuario'}</p>
                             </div>
-                            <small className="text-muted">Este nombre debe ser único en la plataforma.</small>
-                        </div>
 
-                        <div className="row g-3 mb-4">
-                            <div className="col-md-6">
-                                <label className="form-label text-light fw-bold">Nombre:</label>
-                                <input 
-                                    type="text" 
-                                    className="form-control bg-dark text-white border-warning" 
-                                    value={nombre}
-                                    onChange={(e) => setNombre(e.target.value)}
-                                />
+                            {/* ESTADÍSTICAS RÁPIDAS DEL PERFIL */}
+                            <div className="row g-2 mb-4 text-center">
+                                <div className="col-6">
+                                    <div className="p-2 rounded" style={{ backgroundColor: 'rgba(255, 255, 255, 0.03)', border: '1px solid rgba(255,255,255,0.08)' }}>
+                                        <small className="text-muted d-block style-sm">Tipo de Cuenta</small>
+                                        <span className="text-warning fw-bold text-uppercase">{usuario.tipo_usuario || 'Común'}</span>
+                                    </div>
+                                </div>
+                                <div className="col-6">
+                                    <div className="p-2 rounded" style={{ backgroundColor: 'rgba(255, 255, 255, 0.03)', border: '1px solid rgba(255,255,255,0.08)' }}>
+                                        <small className="text-muted d-block style-sm">Estado</small>
+                                        <span className="text-success fw-bold">Active ✓</span>
+                                    </div>
+                                </div>
                             </div>
-                            <div className="col-md-6">
-                                <label className="form-label text-light fw-bold">Apellido:</label>
-                                <input 
-                                    type="text" 
-                                    className="form-control bg-dark text-white border-warning" 
-                                    value={apellido}
-                                    onChange={(e) => setApellido(e.target.value)}
-                                />
-                            </div>
-                        </div>
 
-                        <button 
-                            type="submit" 
-                            className="btn btn-solid-gold w-100 py-2 fw-bold"
-                            disabled={cargando}
-                        >
-                            {cargando ? 'Guardando cambios...' : '💾 Guardar Cambios'}
-                        </button>
-                    </form>
+                            {/* MENSAJES DE ALERTA */}
+                            {mensaje.texto && (
+                                <div className={`alert alert-${mensaje.tipo === 'success' ? 'success' : 'danger'} mb-4 text-center rounded-3 border-0 py-2`} style={{ backgroundColor: mensaje.tipo === 'success' ? 'rgba(25, 135, 84, 0.2)' : 'rgba(220, 53, 69, 0.2)', color: mensaje.tipo === 'success' ? '#2ec4b6' : '#ff6b6b' }}>
+                                    {mensaje.texto}
+                                </div>
+                            )}
+
+                            {/* FORMULARIO DE EDICIÓN */}
+                            <form onSubmit={handleSubmit}>
+                                
+                                <div className="mb-4">
+                                    <label className="form-label text-warning fw-bold small text-uppercase" style={{ letterSpacing: '0.5px' }}>
+                                        Nombre de Usuario <span className="text-danger">*</span>
+                                    </label>
+                                    <div className="input-group">
+                                        <span className="input-group-text bg-dark border-warning text-warning fw-bold">@</span>
+                                        <input 
+                                            type="text" 
+                                            className="form-control bg-dark text-white border-warning py-2" 
+                                            placeholder="ej: prueba_jox"
+                                            value={username}
+                                            onChange={(e) => setUsername(e.target.value)}
+                                            style={{ backgroundColor: '#1a1a1a', borderLeft: 'none' }}
+                                            required
+                                        />
+                                    </div>
+                                    <small className="text-muted style-sm mt-1 d-block">Identificador único dentro de la comunidad JOX.</small>
+                                </div>
+
+                                <div className="row g-3 mb-4">
+                                    <div className="col-md-6">
+                                        <label className="form-label text-light fw-bold small text-uppercase">Nombre:</label>
+                                        <input 
+                                            type="text" 
+                                            className="form-control bg-dark text-white border-secondary py-2" 
+                                            value={nombre}
+                                            onChange={(e) => setNombre(e.target.value)}
+                                            style={{ backgroundColor: '#1a1a1a' }}
+                                        />
+                                    </div>
+                                    <div className="col-md-6">
+                                        <label className="form-label text-light fw-bold small text-uppercase">Apellido:</label>
+                                        <input 
+                                            type="text" 
+                                            className="form-control bg-dark text-white border-secondary py-2" 
+                                            value={apellido}
+                                            onChange={(e) => setApellido(e.target.value)}
+                                            style={{ backgroundColor: '#1a1a1a' }}
+                                        />
+                                    </div>
+                                </div>
+
+                                <button 
+                                    type="submit" 
+                                    className="btn w-100 py-3 fw-bold rounded-pill text-dark shadow mt-2"
+                                    style={{ backgroundColor: '#D4AF37', border: 'none', transition: 'all 0.3s' }}
+                                    disabled={cargando}
+                                >
+                                    {cargando ? (
+                                        <span>
+                                            <span className="spinner-border spinner-border-sm me-2" role="status"></span>
+                                            Guardando cambios...
+                                        </span>
+                                    ) : (
+                                        '💾 Guardar Cambios del Perfil'
+                                    )}
+                                </button>
+                            </form>
+
+                        </div>
+                    </div>
+
                 </div>
             </div>
         </div>
