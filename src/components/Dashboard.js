@@ -324,7 +324,27 @@ const Dashboard = () => {
             </div>
         </div>
     );
-
+    {/* Reemplazar el bloque <div className="user-profile-mini d-none d-md-flex"> por este: */}
+<div 
+    className="user-profile-mini d-none d-md-flex align-items-center cursor-pointer" 
+    onClick={() => navigate('/perfil')}
+    style={{ cursor: 'pointer' }}
+    title="Ir a Mi Perfil"
+>
+    {usuario.avatar_url ? (
+        <img 
+            src={usuario.avatar_url.startsWith('http') ? usuario.avatar_url : `${API_BASE_URL}/${usuario.avatar_url}`} 
+            alt="Foto de Perfil" 
+            className="rounded-circle object-fit-cover"
+            style={{ width: '36px', height: '36px', border: '1px solid #D4AF37' }}
+        />
+    ) : (
+        <div className="user-avatar">{usuario.nombre ? usuario.nombre.charAt(0).toUpperCase() : 'U'}</div>
+    )}
+    <span className="text-light-gray mx-2">
+        Hola, <span className="text-white fw-bold">{usuario.username || usuario.nombre}</span>
+    </span>
+</div>
     const esTaller = usuario.tipo_usuario === 'taller' || usuario.tipo_usuario === 'dueno_taller';
 
     let fechaSoatTexto = 'Sin registrar';

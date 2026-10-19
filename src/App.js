@@ -10,6 +10,8 @@ import ExplorarVehiculo from './components/ExplorarVehiculo';
 import ForoSocial from './components/ForoSocial';
 import Introduccion from './components/Principal'
 import Emergencias from './components/Emergencias';
+import Perfil from './components/perfil';
+
 
 function App() {
   return (
@@ -25,6 +27,7 @@ function App() {
             <Route path="/explorar-vehiculo/:id" element={<ExplorarVehiculo />} />
             <Route path="/comunidad" element={<ForoSocial />} />
             <Route path="/emergencias" element={<Emergencias />} />
+            <Route path="/perfil" element={<Perfil />} />
           </Routes>
       </div>
     </Router>
