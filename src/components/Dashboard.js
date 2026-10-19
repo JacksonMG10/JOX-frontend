@@ -5,6 +5,7 @@ import logo from '../assets/Logo.png';
 import './Dashboard.css';
 
 const API_BASE_URL = process.env.REACT_APP_API_URL || 'https://jox-f0u1.onrender.com';
+
 const Dashboard = () => {
     const [usuario, setUsuario] = useState(null);
     const [busqueda, setBusqueda] = useState('');
@@ -20,9 +21,9 @@ const Dashboard = () => {
     
     // Estados para la Calculadora de Mantenimiento Personalizada
     const [kilometrajeUsuario, setKilometrajeUsuario] = useState('');
-    const [tipoVehiculo, setTipoVehiculo] = useState('carro_gasolina'); // carro_gasolina, moto_gasolina, carro_electrico, moto_electrica
+    const [tipoVehiculo, setTipoVehiculo] = useState('carro_gasolina'); 
     const [marcaVehiculo, setMarcaVehiculo] = useState('');
-    const [tipoAceite, setTipoAceite] = useState('sintetico'); // mineral, semisintetico, sintetico
+    const [tipoAceite, setTipoAceite] = useState('sintetico'); 
     const [marcaAceite, setMarcaAceite] = useState('Mobil');
 
     const [metricas, setMetricas] = useState({
@@ -68,7 +69,7 @@ const Dashboard = () => {
         try {
             const vehiculoActual = listaVehiculos.length > 0 ? listaVehiculos[indiceVehiculo] : null;
 
-            const response = await axios.post( `${API_BASE_URL}/api/ia/consultar`, {
+            const response = await axios.post(`${API_BASE_URL}/api/ia/consultar`, {
                 mensaje: mensajeUsuario,
                 vehiculo: vehiculoActual,
                 historial: historialChat
@@ -193,22 +194,19 @@ const Dashboard = () => {
             }
 
             try {
-            const resUsuario = await axios.get(`${API_BASE_URL}/api/usuarios/perfil`, {
-                headers: { Authorization: `Bearer ${token}` }
-            });
-            setUsuario(resUsuario.data);
+                const resUsuario = await axios.get(`${API_BASE_URL}/api/usuarios/perfil`, {
+                    headers: { Authorization: `Bearer ${token}` }
+                });
+                setUsuario(resUsuario.data);
 
-            const resVehiculos = await axios.get(`${API_BASE_URL}/api/vehiculos`, {
-                headers: { Authorization: `Bearer ${token}` }
-            });
+                const resVehiculos = await axios.get(`${API_BASE_URL}/api/vehiculos`, {
+                    headers: { Authorization: `Bearer ${token}` }
+                });
 
-            // Validamos que sea un arreglo antes de asignarlo
-            const vehiculos = Array.isArray(resVehiculos.data) ? resVehiculos.data : [];
-            setListaVehiculos(vehiculos);
+                const vehiculos = Array.isArray(resVehiculos.data) ? resVehiculos.data : [];
+                setListaVehiculos(vehiculos);
 
                 if (vehiculos.length > 0) {
-                    setListaVehiculos(vehiculos);
-
                     const vehiculosConSoat = vehiculos.filter(v => v.vencimiento_soat != null);
                     if (vehiculosConSoat.length > 0) {
                         vehiculosConSoat.sort((a, b) => new Date(a.vencimiento_soat) - new Date(b.vencimiento_soat));
@@ -243,7 +241,6 @@ const Dashboard = () => {
         navigate('/login');
     };
 
-    // FUNCIÓN DE CÁLCULO DE MANTENIMIENTO SEGÚN SELECCIÓN DE VEHÍCULO Y ACEITE
     const calcularProximosMantenimientos = (km, tipoVeh, marcaVeh, tAceite, mAceite) => {
         const kmNum = parseInt(km, 10);
         if (isNaN(kmNum) || kmNum <= 0) return null;
@@ -251,7 +248,6 @@ const Dashboard = () => {
         const esElectrico = tipoVeh === 'carro_electrico' || tipoVeh === 'moto_electrica';
         const esMoto = tipoVeh === 'moto_gasolina' || tipoVeh === 'moto_electrica';
 
-        // LÓGICA PARA VEHÍCULOS ELÉCTRICOS (CARRO Y MOTO)
         if (esElectrico) {
             const proxRefrigerante = Math.ceil((kmNum + 1) / 40000) * 40000;
             const proxFrenosReg = Math.ceil((kmNum + 1) / 15000) * 15000;
@@ -268,7 +264,6 @@ const Dashboard = () => {
             ];
 
             if (esMoto) {
-                // Ajustes específicos para moto eléctrica (correa/cadena de transmisión directa)
                 const proxTransmisionMoto = Math.ceil((kmNum + 1) / 5000) * 5000;
                 listaEV.push({ id: 6, servicio: 'Revisión y Ajuste de Transmisión Directa / Correa Moto EV', proximoKm: proxTransmisionMoto, faltan: proxTransmisionMoto - kmNum, intervalo: 'cada 5,000 km' });
             }
@@ -276,8 +271,7 @@ const Dashboard = () => {
             return listaEV;
         }
 
-        // LÓGICA PARA VEHÍCULOS A COMBUSTIÓN (GASOLINA / DIÉSEL)
-        let intervaloAceite = 5000; // Por defecto mineral
+        let intervaloAceite = 5000;
         if (tAceite === 'semisintetico') {
             intervaloAceite = esMoto ? 5000 : 7500;
         } else if (tAceite === 'sintetico') {
@@ -324,27 +318,7 @@ const Dashboard = () => {
             </div>
         </div>
     );
-    {/* Reemplazar el bloque <div className="user-profile-mini d-none d-md-flex"> por este: */}
-<div 
-    className="user-profile-mini d-none d-md-flex align-items-center cursor-pointer" 
-    onClick={() => navigate('/perfil')}
-    style={{ cursor: 'pointer' }}
-    title="Ir a Mi Perfil"
->
-    {usuario.avatar_url ? (
-        <img 
-            src={usuario.avatar_url.startsWith('http') ? usuario.avatar_url : `${API_BASE_URL}/${usuario.avatar_url}`} 
-            alt="Foto de Perfil" 
-            className="rounded-circle object-fit-cover"
-            style={{ width: '36px', height: '36px', border: '1px solid #D4AF37' }}
-        />
-    ) : (
-        <div className="user-avatar">{usuario.nombre ? usuario.nombre.charAt(0).toUpperCase() : 'U'}</div>
-    )}
-    <span className="text-light-gray mx-2">
-        Hola, <span className="text-white fw-bold">{usuario.username || usuario.nombre}</span>
-    </span>
-</div>
+
     const esTaller = usuario.tipo_usuario === 'taller' || usuario.tipo_usuario === 'dueno_taller';
 
     let fechaSoatTexto = 'Sin registrar';
@@ -419,12 +393,28 @@ const Dashboard = () => {
                     </div>
 
                     <div className="d-flex align-items-center gap-3">
-                        <div className="user-profile-mini d-none d-md-flex">
-                            <div className="user-avatar">{usuario.nombre.charAt(0).toUpperCase()}</div>
+                        {/* CONTENEDOR DEL PERFIL CLICKABLE HACIA /perfil */}
+                        <div 
+                            className="user-profile-mini d-none d-md-flex align-items-center" 
+                            onClick={() => navigate('/perfil')}
+                            style={{ cursor: 'pointer' }}
+                            title="Ir a Mi Perfil"
+                        >
+                            {usuario.avatar_url ? (
+                                <img 
+                                    src={usuario.avatar_url.startsWith('http') ? usuario.avatar_url : `${API_BASE_URL}/${usuario.avatar_url}`} 
+                                    alt="Foto de Perfil" 
+                                    className="rounded-circle object-fit-cover"
+                                    style={{ width: '36px', height: '36px', border: '1px solid #D4AF37' }}
+                                />
+                            ) : (
+                                <div className="user-avatar">{usuario.nombre ? usuario.nombre.charAt(0).toUpperCase() : 'U'}</div>
+                            )}
                             <span className="text-light-gray mx-2">
-                                Hola, <span className="text-white fw-bold">{usuario.nombre}</span>
+                                Hola, <span className="text-white fw-bold">{usuario.username || usuario.nombre}</span>
                             </span>
                         </div>
+
                         <button onClick={cerrarSesion} className="btn-outline-gold btn-sm">
                             Cerrar Sesión
                         </button>
@@ -587,7 +577,7 @@ const Dashboard = () => {
                             </div>
                         )}
 
-                        {/* NUEVO APARTADO: CONTROL Y CALCULADORA DE KILOMETRAJE PERSONALIZADA */}
+                        {/* CALCULADORA DE KILOMETRAJE PERSONALIZADA */}
                         <div className="dash-card mb-4">
                             <div className="d-flex align-items-center gap-2 mb-3">
                                 <span className="fs-3">🚘</span>
@@ -597,7 +587,6 @@ const Dashboard = () => {
                                 </div>
                             </div>
 
-                            {/* FILTROS Y PARÁMETROS DEL VEHÍCULO */}
                             <div className="row g-3 mb-4">
                                 <div className="col-md-6 col-lg-3">
                                     <label className="form-label text-light fw-bold">1. Tipo de Vehículo:</label>
@@ -651,15 +640,15 @@ const Dashboard = () => {
                                         </div>
                                     </>
                                 ) : (
-                                        <div className="col-md-12 col-lg-4 d-flex align-items-center">
-                                            <div className="alert py-2 px-3 mb-0 w-100 style-sm"style={{
-                                           backgroundColor: '#1a2736',
-                                           border: '1px solid #0d6efd',
-                                           color: '#9ec5fe',
-                                           borderRadius: '0.375rem'
-                                       }}>
-                                         ⚡ <strong>Vehículo Eléctrico:</strong> No requiere cambios de aceite de motor térmico. Se enfoca en batería, frenos regenerativos y sistemas dieléctricos.
-                                         </div>
+                                    <div className="col-md-12 col-lg-4 d-flex align-items-center">
+                                        <div className="alert py-2 px-3 mb-0 w-100 style-sm" style={{
+                                            backgroundColor: '#1a2736',
+                                            border: '1px solid #0d6efd',
+                                            color: '#9ec5fe',
+                                            borderRadius: '0.375rem'
+                                        }}>
+                                            ⚡ <strong>Vehículo Eléctrico:</strong> No requiere cambios de aceite de motor térmico. Se enfoca en batería, frenos regenerativos y sistemas dieléctricos.
+                                        </div>
                                     </div>
                                 )}
 
@@ -678,7 +667,6 @@ const Dashboard = () => {
                                 </div>
                             </div>
 
-                            {/* RESULTADOS Y ALERTAS DE MANTENIMIENTO */}
                             {recomendacionesKm ? (
                                 <div>
                                     <h5 className="text-gold fw-bold mb-3">
@@ -718,7 +706,6 @@ const Dashboard = () => {
                             </div>
                         )}
 
-                        {/* SECCIÓN MI GARAJE */}
                         {mostrarSeccionGaraje && (
                             <div className="dash-card">
                                 <h3 className="text-gold fw-bold mb-3">🚗 Mi Garaje</h3>
@@ -742,7 +729,6 @@ const Dashboard = () => {
                             </div>
                         )}
 
-                        {/* SECCIÓN TOP VEHÍCULOS COLOMBIA */}
                         {mostrarSeccionTop && (
                             <div className="dash-card mt-4">
                                 <h3 className="text-gold fw-bold mb-2">🇨🇴 Top Vehículos en Colombia</h3>
