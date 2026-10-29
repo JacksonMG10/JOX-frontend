@@ -33,12 +33,13 @@ export default function Perfil() {
                 setUsername(res.data.username || res.data.nombre || '');
                 setNombre(res.data.nombre || '');
                 setApellido(res.data.apellido || '');
-                if (res.data.avatar_url) {
-                    const url = res.data.avatar_url.startsWith('http') 
-                        ? res.data.avatar_url 
-                        : `${API_BASE_URL}/${res.data.avatar_url}`;
-                    setPreviewUrl(url);
-                }
+            if (res.data.avatar_url) {
+                const avatar = res.data.avatar_url;
+                const url = (avatar.startsWith('http://') || avatar.startsWith('https://')) 
+                ? avatar 
+                : `${API_BASE_URL.replace('/api', '')}/${avatar.startsWith('/') ? avatar.slice(1) : avatar}`;
+                setPreviewUrl(url);
+            }
             } catch (err) {
                 console.error("Error al cargar perfil:", err);
             }
@@ -89,7 +90,7 @@ export default function Perfil() {
                 localStorage.setItem('user', JSON.stringify(res.data.usuario));
             }
 
-            setMensaje({ texto: '✨ ¡Perfil actualizado exitosamente!', tipo: 'success' });
+            setMensaje({ texto: '¡Perfil actualizado exitosamente!', tipo: 'success' });
         } catch (err) {
             console.error("Error al actualizar perfil:", err);
             const msg = err.response?.data?.mensaje || 'El nombre de usuario ya está registrado por otra persona. Elige otro.';
